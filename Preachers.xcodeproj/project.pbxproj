@@ -1,0 +1,842 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		B41A3A6F3BDDE3F8B3F12900 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6FB4A3FDBF6AE6C0CEB8383 /* Pods.framework */; };
+		B5072A0C1BC5572400612B51 /* PEditChurchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5072A0B1BC5572400612B51 /* PEditChurchVC.swift */; };
+		B514D3141BADD144000AAE32 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B514D3131BADD144000AAE32 /* Utils.swift */; };
+		B51D4FED1BFCA7EF0071B0B4 /* ADVSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51D4FEC1BFCA7EF0071B0B4 /* ADVSegmentedControl.swift */; };
+		B5525BA61BF9BAD4008554BC /* PChurchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5525BA51BF9BAD4008554BC /* PChurchVC.swift */; };
+		B57BACEB1BABF301009781B0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57BACEA1BABF301009781B0 /* AppDelegate.swift */; };
+		B57BACF01BABF301009781B0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B57BACEE1BABF301009781B0 /* Main.storyboard */; };
+		B57BACF21BABF301009781B0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B57BACF11BABF301009781B0 /* Assets.xcassets */; };
+		B57BACF51BABF301009781B0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B57BACF31BABF301009781B0 /* LaunchScreen.storyboard */; };
+		B57BAD001BABF301009781B0 /* PreachersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57BACFF1BABF301009781B0 /* PreachersTests.swift */; };
+		B57BAD0B1BABF301009781B0 /* PreachersUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57BAD0A1BABF301009781B0 /* PreachersUITests.swift */; };
+		B57BAD291BABF4D9009781B0 /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B57BAD281BABF4D9009781B0 /* Login.storyboard */; };
+		B57BAD301BAC0E5A009781B0 /* PLandingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57BAD2F1BAC0E5A009781B0 /* PLandingVC.swift */; };
+		B57BAD331BAC1124009781B0 /* PMainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57BAD321BAC1124009781B0 /* PMainVC.swift */; };
+		B57BAD351BAC1134009781B0 /* PLoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57BAD341BAC1134009781B0 /* PLoginVC.swift */; };
+		B57BAD371BAC1B9B009781B0 /* PSetProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57BAD361BAC1B9B009781B0 /* PSetProfileVC.swift */; };
+		B57DF59E1BB4117900B9E3ED /* PForgotPassVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57DF59D1BB4117900B9E3ED /* PForgotPassVC.swift */; };
+		B57DF5A11BB411A600B9E3ED /* PConfirmForgotPassVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57DF5A01BB411A600B9E3ED /* PConfirmForgotPassVC.swift */; };
+		B59A0B331BBAE59D00F410D6 /* PChangeUsernameVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59A0B321BBAE59C00F410D6 /* PChangeUsernameVC.swift */; };
+		B59A0B3B1BBC835D00F410D6 /* PChurchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59A0B3A1BBC835D00F410D6 /* PChurchCell.swift */; };
+		B59A0B3D1BBC99FF00F410D6 /* PAddChurchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59A0B3C1BBC99FF00F410D6 /* PAddChurchVC.swift */; };
+		B5C9496F1BCE69640085BDA8 /* Preach.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C9496E1BCE69640085BDA8 /* Preach.swift */; };
+		B5C949711BCE69800085BDA8 /* Church.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C949701BCE69800085BDA8 /* Church.swift */; };
+		B5C949731BCE9D490085BDA8 /* PEditVisitVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C949721BCE9D490085BDA8 /* PEditVisitVC.swift */; };
+		B5C949751BCEA5B10085BDA8 /* PPreachVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C949741BCEA5B10085BDA8 /* PPreachVC.swift */; };
+		B5C9497A1BCF1D9D0085BDA8 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C949791BCF1D9D0085BDA8 /* UIColor.swift */; };
+		B5E04AD51C201C4A00422E17 /* PPreachCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E04AD41C201C4A00422E17 /* PPreachCell.swift */; };
+		B5FACC851BB9F1DD001C44C7 /* PSettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FACC841BB9F1DD001C44C7 /* PSettingsVC.swift */; };
+		B5FACC871BB9F20B001C44C7 /* PChangePassVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FACC861BB9F20B001C44C7 /* PChangePassVC.swift */; };
+		B5FACC891BB9F227001C44C7 /* PEditProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FACC881BB9F227001C44C7 /* PEditProfileVC.swift */; };
+		B5FCED5F1BCD16500035D092 /* PAddVisitVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FCED5E1BCD16500035D092 /* PAddVisitVC.swift */; };
+		B5FDB0281BB13D7200243DA0 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FDB0271BB13D7200243DA0 /* Constants.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		B57BACFC1BABF301009781B0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B57BACDF1BABF301009781B0 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B57BACE61BABF301009781B0;
+			remoteInfo = Preachers;
+		};
+		B57BAD071BABF301009781B0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B57BACDF1BABF301009781B0 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B57BACE61BABF301009781B0;
+			remoteInfo = Preachers;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		22684A5E6E4A9A6BF9EA6BF4 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		501105494FF0BF9ADFB4F9D6 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		B5072A0B1BC5572400612B51 /* PEditChurchVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PEditChurchVC.swift; path = Preachers/Classes/MVC/Controller/Main_Module/PEditChurchVC.swift; sourceTree = "<group>"; };
+		B514D3131BADD144000AAE32 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Utils.swift; path = Preachers/Classes/Utils/Utils.swift; sourceTree = "<group>"; };
+		B51D4FEC1BFCA7EF0071B0B4 /* ADVSegmentedControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ADVSegmentedControl.swift; path = Preachers/Classes/MVC/View/ADVSegmentedControl.swift; sourceTree = "<group>"; };
+		B5525BA51BF9BAD4008554BC /* PChurchVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PChurchVC.swift; path = Preachers/Classes/MVC/Controller/Main_Module/PChurchVC.swift; sourceTree = "<group>"; };
+		B5525BAB1BF9E791008554BC /* ProximaNovaBlack.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = ProximaNovaBlack.otf; sourceTree = "<group>"; };
+		B5525BAC1BF9E791008554BC /* ProximaNovaBlackItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = ProximaNovaBlackItalic.otf; sourceTree = "<group>"; };
+		B5525BAD1BF9E791008554BC /* ProximaNovaBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = ProximaNovaBold.otf; sourceTree = "<group>"; };
+		B5525BAE1BF9E791008554BC /* ProximaNovaBoldItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = ProximaNovaBoldItalic.otf; sourceTree = "<group>"; };
+		B5525BAF1BF9E791008554BC /* ProximaNovaLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = ProximaNovaLight.otf; sourceTree = "<group>"; };
+		B5525BB01BF9E791008554BC /* ProximaNovaLightItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = ProximaNovaLightItalic.otf; sourceTree = "<group>"; };
+		B5525BB11BF9E791008554BC /* ProximaNovaRegular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = ProximaNovaRegular.otf; sourceTree = "<group>"; };
+		B5525BB21BF9E791008554BC /* ProximaNovaRegularItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = ProximaNovaRegularItalic.otf; sourceTree = "<group>"; };
+		B5525BB31BF9E791008554BC /* ProximaNovaSemibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = ProximaNovaSemibold.otf; sourceTree = "<group>"; };
+		B5525BB41BF9E791008554BC /* ProximaNovaSemiboldItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = ProximaNovaSemiboldItalic.otf; sourceTree = "<group>"; };
+		B5525BB51BF9E791008554BC /* ProximaNovaThin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = ProximaNovaThin.otf; sourceTree = "<group>"; };
+		B5525BB61BF9E791008554BC /* ProximaNovaThinItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = ProximaNovaThinItalic.otf; sourceTree = "<group>"; };
+		B57BACE71BABF301009781B0 /* Preachers.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Preachers.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B57BACEA1BABF301009781B0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		B57BACEF1BABF301009781B0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		B57BACF11BABF301009781B0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = Preachers/Assets.xcassets; sourceTree = "<group>"; };
+		B57BACF41BABF301009781B0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		B57BACF61BABF301009781B0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B57BACFB1BABF301009781B0 /* PreachersTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PreachersTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B57BACFF1BABF301009781B0 /* PreachersTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreachersTests.swift; sourceTree = "<group>"; };
+		B57BAD011BABF301009781B0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B57BAD061BABF301009781B0 /* PreachersUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PreachersUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B57BAD0A1BABF301009781B0 /* PreachersUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreachersUITests.swift; sourceTree = "<group>"; };
+		B57BAD0C1BABF301009781B0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B57BAD281BABF4D9009781B0 /* Login.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Login.storyboard; path = Preachers/Resources/Storyboards/Login.storyboard; sourceTree = "<group>"; };
+		B57BAD2F1BAC0E5A009781B0 /* PLandingVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLandingVC.swift; sourceTree = "<group>"; };
+		B57BAD321BAC1124009781B0 /* PMainVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PMainVC.swift; path = Preachers/Classes/MVC/Controller/Main_Module/PMainVC.swift; sourceTree = "<group>"; };
+		B57BAD341BAC1134009781B0 /* PLoginVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PLoginVC.swift; path = Preachers/Classes/MVC/Controller/Login_Module/PLoginVC.swift; sourceTree = "<group>"; };
+		B57BAD361BAC1B9B009781B0 /* PSetProfileVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PSetProfileVC.swift; path = Preachers/Classes/MVC/Controller/Login_Module/PSetProfileVC.swift; sourceTree = "<group>"; };
+		B57DF59D1BB4117900B9E3ED /* PForgotPassVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PForgotPassVC.swift; path = Preachers/Classes/MVC/Controller/Login_Module/PForgotPassVC.swift; sourceTree = "<group>"; };
+		B57DF5A01BB411A600B9E3ED /* PConfirmForgotPassVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PConfirmForgotPassVC.swift; path = Preachers/Classes/MVC/Controller/Login_Module/PConfirmForgotPassVC.swift; sourceTree = "<group>"; };
+		B59A0B321BBAE59C00F410D6 /* PChangeUsernameVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PChangeUsernameVC.swift; path = Preachers/Classes/MVC/Controller/Settings_Module/PChangeUsernameVC.swift; sourceTree = "<group>"; };
+		B59A0B3A1BBC835D00F410D6 /* PChurchCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PChurchCell.swift; path = Preachers/Classes/MVC/View/Cells/PChurchCell.swift; sourceTree = "<group>"; };
+		B59A0B3C1BBC99FF00F410D6 /* PAddChurchVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PAddChurchVC.swift; path = Preachers/Classes/MVC/Controller/Main_Module/PAddChurchVC.swift; sourceTree = "<group>"; };
+		B5C9496E1BCE69640085BDA8 /* Preach.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Preach.swift; path = Preachers/Libs/Preach.swift; sourceTree = "<group>"; };
+		B5C949701BCE69800085BDA8 /* Church.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Church.swift; path = Preachers/Libs/Church.swift; sourceTree = "<group>"; };
+		B5C949721BCE9D490085BDA8 /* PEditVisitVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PEditVisitVC.swift; path = Preachers/Classes/MVC/Controller/Main_Module/PEditVisitVC.swift; sourceTree = "<group>"; };
+		B5C949741BCEA5B10085BDA8 /* PPreachVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PPreachVC.swift; path = Preachers/Classes/MVC/Controller/Main_Module/PPreachVC.swift; sourceTree = "<group>"; };
+		B5C949791BCF1D9D0085BDA8 /* UIColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIColor.swift; path = Preachers/Classes/Utils/UIColor.swift; sourceTree = "<group>"; };
+		B5E04AD41C201C4A00422E17 /* PPreachCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PPreachCell.swift; path = Preachers/Classes/MVC/View/Cells/PPreachCell.swift; sourceTree = "<group>"; };
+		B5FACC841BB9F1DD001C44C7 /* PSettingsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PSettingsVC.swift; path = Preachers/Classes/MVC/Controller/Settings_Module/PSettingsVC.swift; sourceTree = "<group>"; };
+		B5FACC861BB9F20B001C44C7 /* PChangePassVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PChangePassVC.swift; path = Preachers/Classes/MVC/Controller/Settings_Module/PChangePassVC.swift; sourceTree = "<group>"; };
+		B5FACC881BB9F227001C44C7 /* PEditProfileVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PEditProfileVC.swift; path = Preachers/Classes/MVC/Controller/Settings_Module/PEditProfileVC.swift; sourceTree = "<group>"; };
+		B5FCED5E1BCD16500035D092 /* PAddVisitVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PAddVisitVC.swift; path = Preachers/Classes/MVC/Controller/Main_Module/PAddVisitVC.swift; sourceTree = "<group>"; };
+		B5FDB0271BB13D7200243DA0 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Constants.swift; path = Preachers/Classes/Utils/Constants.swift; sourceTree = "<group>"; };
+		B6FB4A3FDBF6AE6C0CEB8383 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		B57BACE41BABF301009781B0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B41A3A6F3BDDE3F8B3F12900 /* Pods.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B57BACF81BABF301009781B0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B57BAD031BABF301009781B0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		58946F82E1960AB73D49C4FD /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B6FB4A3FDBF6AE6C0CEB8383 /* Pods.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		5E2A1EA5ED1EBD9DDA01C217 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				22684A5E6E4A9A6BF9EA6BF4 /* Pods.debug.xcconfig */,
+				501105494FF0BF9ADFB4F9D6 /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		B5525BAA1BF9E782008554BC /* Proxima Nova */ = {
+			isa = PBXGroup;
+			children = (
+				B5525BAB1BF9E791008554BC /* ProximaNovaBlack.otf */,
+				B5525BAC1BF9E791008554BC /* ProximaNovaBlackItalic.otf */,
+				B5525BAD1BF9E791008554BC /* ProximaNovaBold.otf */,
+				B5525BAE1BF9E791008554BC /* ProximaNovaBoldItalic.otf */,
+				B5525BAF1BF9E791008554BC /* ProximaNovaLight.otf */,
+				B5525BB01BF9E791008554BC /* ProximaNovaLightItalic.otf */,
+				B5525BB11BF9E791008554BC /* ProximaNovaRegular.otf */,
+				B5525BB21BF9E791008554BC /* ProximaNovaRegularItalic.otf */,
+				B5525BB31BF9E791008554BC /* ProximaNovaSemibold.otf */,
+				B5525BB41BF9E791008554BC /* ProximaNovaSemiboldItalic.otf */,
+				B5525BB51BF9E791008554BC /* ProximaNovaThin.otf */,
+				B5525BB61BF9E791008554BC /* ProximaNovaThinItalic.otf */,
+			);
+			name = "Proxima Nova";
+			sourceTree = "<group>";
+		};
+		B57BACDE1BABF301009781B0 = {
+			isa = PBXGroup;
+			children = (
+				B57BACE91BABF301009781B0 /* Preachers */,
+				B57BACFE1BABF301009781B0 /* PreachersTests */,
+				B57BAD091BABF301009781B0 /* PreachersUITests */,
+				B57BACE81BABF301009781B0 /* Products */,
+				5E2A1EA5ED1EBD9DDA01C217 /* Pods */,
+				58946F82E1960AB73D49C4FD /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		B57BACE81BABF301009781B0 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B57BACE71BABF301009781B0 /* Preachers.app */,
+				B57BACFB1BABF301009781B0 /* PreachersTests.xctest */,
+				B57BAD061BABF301009781B0 /* PreachersUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B57BACE91BABF301009781B0 /* Preachers */ = {
+			isa = PBXGroup;
+			children = (
+				B57BACEA1BABF301009781B0 /* AppDelegate.swift */,
+				B57BAD2F1BAC0E5A009781B0 /* PLandingVC.swift */,
+				B57BACF61BABF301009781B0 /* Info.plist */,
+				B57BAD181BABF310009781B0 /* Classes */,
+				B57BAD1A1BABF315009781B0 /* Libs */,
+				B57BAD191BABF313009781B0 /* Resources */,
+			);
+			path = Preachers;
+			sourceTree = "<group>";
+		};
+		B57BACFE1BABF301009781B0 /* PreachersTests */ = {
+			isa = PBXGroup;
+			children = (
+				B57BACFF1BABF301009781B0 /* PreachersTests.swift */,
+				B57BAD011BABF301009781B0 /* Info.plist */,
+			);
+			path = PreachersTests;
+			sourceTree = "<group>";
+		};
+		B57BAD091BABF301009781B0 /* PreachersUITests */ = {
+			isa = PBXGroup;
+			children = (
+				B57BAD0A1BABF301009781B0 /* PreachersUITests.swift */,
+				B57BAD0C1BABF301009781B0 /* Info.plist */,
+			);
+			path = PreachersUITests;
+			sourceTree = "<group>";
+		};
+		B57BAD181BABF310009781B0 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				B57BAD1F1BABF358009781B0 /* Managers */,
+				B57BAD1E1BABF356009781B0 /* Classes */,
+				B57BAD1D1BABF353009781B0 /* Utils */,
+			);
+			name = Classes;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		B57BAD191BABF313009781B0 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				B57BACF11BABF301009781B0 /* Assets.xcassets */,
+				B57BAD1C1BABF336009781B0 /* Storyboards */,
+				B57BAD1B1BABF334009781B0 /* Files */,
+			);
+			name = Resources;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		B57BAD1A1BABF315009781B0 /* Libs */ = {
+			isa = PBXGroup;
+			children = (
+				B5C9496E1BCE69640085BDA8 /* Preach.swift */,
+				B5C949701BCE69800085BDA8 /* Church.swift */,
+			);
+			name = Libs;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		B57BAD1B1BABF334009781B0 /* Files */ = {
+			isa = PBXGroup;
+			children = (
+				B5525BAA1BF9E782008554BC /* Proxima Nova */,
+			);
+			name = Files;
+			sourceTree = "<group>";
+		};
+		B57BAD1C1BABF336009781B0 /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				B57BACEE1BABF301009781B0 /* Main.storyboard */,
+				B57BACF31BABF301009781B0 /* LaunchScreen.storyboard */,
+				B57BAD281BABF4D9009781B0 /* Login.storyboard */,
+			);
+			name = Storyboards;
+			sourceTree = "<group>";
+		};
+		B57BAD1D1BABF353009781B0 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				B514D3131BADD144000AAE32 /* Utils.swift */,
+				B5FDB0271BB13D7200243DA0 /* Constants.swift */,
+				B5C949791BCF1D9D0085BDA8 /* UIColor.swift */,
+			);
+			name = Utils;
+			sourceTree = "<group>";
+		};
+		B57BAD1E1BABF356009781B0 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				B57BAD221BABF378009781B0 /* Controller */,
+				B57BAD211BABF375009781B0 /* Model */,
+				B57BAD201BABF373009781B0 /* View */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
+		B57BAD1F1BABF358009781B0 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Managers;
+			sourceTree = "<group>";
+		};
+		B57BAD201BABF373009781B0 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				B51D4FEC1BFCA7EF0071B0B4 /* ADVSegmentedControl.swift */,
+				B57BAD251BABF3A2009781B0 /* Cells */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		B57BAD211BABF375009781B0 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		B57BAD221BABF378009781B0 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				B57BAD311BAC1084009781B0 /* Main_Module */,
+				B5FACC831BB9F16B001C44C7 /* Settings_Module */,
+				B57BAD241BABF392009781B0 /* Login_Module */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		B57BAD241BABF392009781B0 /* Login_Module */ = {
+			isa = PBXGroup;
+			children = (
+				B57BAD341BAC1134009781B0 /* PLoginVC.swift */,
+				B57BAD361BAC1B9B009781B0 /* PSetProfileVC.swift */,
+				B57DF59D1BB4117900B9E3ED /* PForgotPassVC.swift */,
+				B57DF5A01BB411A600B9E3ED /* PConfirmForgotPassVC.swift */,
+			);
+			name = Login_Module;
+			sourceTree = "<group>";
+		};
+		B57BAD251BABF3A2009781B0 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				B59A0B3A1BBC835D00F410D6 /* PChurchCell.swift */,
+				B5E04AD41C201C4A00422E17 /* PPreachCell.swift */,
+			);
+			name = Cells;
+			sourceTree = "<group>";
+		};
+		B57BAD311BAC1084009781B0 /* Main_Module */ = {
+			isa = PBXGroup;
+			children = (
+				B57BAD321BAC1124009781B0 /* PMainVC.swift */,
+				B59A0B3C1BBC99FF00F410D6 /* PAddChurchVC.swift */,
+				B5072A0B1BC5572400612B51 /* PEditChurchVC.swift */,
+				B5FCED5E1BCD16500035D092 /* PAddVisitVC.swift */,
+				B5C949721BCE9D490085BDA8 /* PEditVisitVC.swift */,
+				B5C949741BCEA5B10085BDA8 /* PPreachVC.swift */,
+				B5525BA51BF9BAD4008554BC /* PChurchVC.swift */,
+			);
+			name = Main_Module;
+			sourceTree = "<group>";
+		};
+		B5FACC831BB9F16B001C44C7 /* Settings_Module */ = {
+			isa = PBXGroup;
+			children = (
+				B5FACC841BB9F1DD001C44C7 /* PSettingsVC.swift */,
+				B5FACC861BB9F20B001C44C7 /* PChangePassVC.swift */,
+				B5FACC881BB9F227001C44C7 /* PEditProfileVC.swift */,
+				B59A0B321BBAE59C00F410D6 /* PChangeUsernameVC.swift */,
+			);
+			name = Settings_Module;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		B57BACE61BABF301009781B0 /* Preachers */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B57BAD0F1BABF301009781B0 /* Build configuration list for PBXNativeTarget "Preachers" */;
+			buildPhases = (
+				3618C1E49EA387584AA383A2 /* Check Pods Manifest.lock */,
+				B57BACE31BABF301009781B0 /* Sources */,
+				B57BACE41BABF301009781B0 /* Frameworks */,
+				B57BACE51BABF301009781B0 /* Resources */,
+				2DAB72A8A4D34EB70D14A4F2 /* Embed Pods Frameworks */,
+				1397734272B7968AB00AD84D /* Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Preachers;
+			productName = Preachers;
+			productReference = B57BACE71BABF301009781B0 /* Preachers.app */;
+			productType = "com.apple.product-type.application";
+		};
+		B57BACFA1BABF301009781B0 /* PreachersTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B57BAD121BABF301009781B0 /* Build configuration list for PBXNativeTarget "PreachersTests" */;
+			buildPhases = (
+				B57BACF71BABF301009781B0 /* Sources */,
+				B57BACF81BABF301009781B0 /* Frameworks */,
+				B57BACF91BABF301009781B0 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B57BACFD1BABF301009781B0 /* PBXTargetDependency */,
+			);
+			name = PreachersTests;
+			productName = PreachersTests;
+			productReference = B57BACFB1BABF301009781B0 /* PreachersTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		B57BAD051BABF301009781B0 /* PreachersUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B57BAD151BABF301009781B0 /* Build configuration list for PBXNativeTarget "PreachersUITests" */;
+			buildPhases = (
+				B57BAD021BABF301009781B0 /* Sources */,
+				B57BAD031BABF301009781B0 /* Frameworks */,
+				B57BAD041BABF301009781B0 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B57BAD081BABF301009781B0 /* PBXTargetDependency */,
+			);
+			name = PreachersUITests;
+			productName = PreachersUITests;
+			productReference = B57BAD061BABF301009781B0 /* PreachersUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		B57BACDF1BABF301009781B0 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0700;
+				ORGANIZATIONNAME = "Abel Anca";
+				TargetAttributes = {
+					B57BACE61BABF301009781B0 = {
+						CreatedOnToolsVersion = 7.0;
+						DevelopmentTeam = 9A2GTY3B59;
+					};
+					B57BACFA1BABF301009781B0 = {
+						CreatedOnToolsVersion = 7.0;
+						TestTargetID = B57BACE61BABF301009781B0;
+					};
+					B57BAD051BABF301009781B0 = {
+						CreatedOnToolsVersion = 7.0;
+						TestTargetID = B57BACE61BABF301009781B0;
+					};
+				};
+			};
+			buildConfigurationList = B57BACE21BABF301009781B0 /* Build configuration list for PBXProject "Preachers" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = B57BACDE1BABF301009781B0;
+			productRefGroup = B57BACE81BABF301009781B0 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				B57BACE61BABF301009781B0 /* Preachers */,
+				B57BACFA1BABF301009781B0 /* PreachersTests */,
+				B57BAD051BABF301009781B0 /* PreachersUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		B57BACE51BABF301009781B0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B57BAD291BABF4D9009781B0 /* Login.storyboard in Resources */,
+				B57BACF51BABF301009781B0 /* LaunchScreen.storyboard in Resources */,
+				B57BACF21BABF301009781B0 /* Assets.xcassets in Resources */,
+				B57BACF01BABF301009781B0 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B57BACF91BABF301009781B0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B57BAD041BABF301009781B0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		1397734272B7968AB00AD84D /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		2DAB72A8A4D34EB70D14A4F2 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		3618C1E49EA387584AA383A2 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		B57BACE31BABF301009781B0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B5FCED5F1BCD16500035D092 /* PAddVisitVC.swift in Sources */,
+				B5C949731BCE9D490085BDA8 /* PEditVisitVC.swift in Sources */,
+				B57BACEB1BABF301009781B0 /* AppDelegate.swift in Sources */,
+				B57DF59E1BB4117900B9E3ED /* PForgotPassVC.swift in Sources */,
+				B51D4FED1BFCA7EF0071B0B4 /* ADVSegmentedControl.swift in Sources */,
+				B5072A0C1BC5572400612B51 /* PEditChurchVC.swift in Sources */,
+				B5FACC871BB9F20B001C44C7 /* PChangePassVC.swift in Sources */,
+				B59A0B3B1BBC835D00F410D6 /* PChurchCell.swift in Sources */,
+				B5C949751BCEA5B10085BDA8 /* PPreachVC.swift in Sources */,
+				B5E04AD51C201C4A00422E17 /* PPreachCell.swift in Sources */,
+				B5FACC891BB9F227001C44C7 /* PEditProfileVC.swift in Sources */,
+				B57BAD351BAC1134009781B0 /* PLoginVC.swift in Sources */,
+				B5C9496F1BCE69640085BDA8 /* Preach.swift in Sources */,
+				B5C9497A1BCF1D9D0085BDA8 /* UIColor.swift in Sources */,
+				B57BAD331BAC1124009781B0 /* PMainVC.swift in Sources */,
+				B57BAD301BAC0E5A009781B0 /* PLandingVC.swift in Sources */,
+				B5525BA61BF9BAD4008554BC /* PChurchVC.swift in Sources */,
+				B5FDB0281BB13D7200243DA0 /* Constants.swift in Sources */,
+				B57BAD371BAC1B9B009781B0 /* PSetProfileVC.swift in Sources */,
+				B59A0B331BBAE59D00F410D6 /* PChangeUsernameVC.swift in Sources */,
+				B57DF5A11BB411A600B9E3ED /* PConfirmForgotPassVC.swift in Sources */,
+				B5C949711BCE69800085BDA8 /* Church.swift in Sources */,
+				B5FACC851BB9F1DD001C44C7 /* PSettingsVC.swift in Sources */,
+				B514D3141BADD144000AAE32 /* Utils.swift in Sources */,
+				B59A0B3D1BBC99FF00F410D6 /* PAddChurchVC.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B57BACF71BABF301009781B0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B57BAD001BABF301009781B0 /* PreachersTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B57BAD021BABF301009781B0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B57BAD0B1BABF301009781B0 /* PreachersUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		B57BACFD1BABF301009781B0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B57BACE61BABF301009781B0 /* Preachers */;
+			targetProxy = B57BACFC1BABF301009781B0 /* PBXContainerItemProxy */;
+		};
+		B57BAD081BABF301009781B0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B57BACE61BABF301009781B0 /* Preachers */;
+			targetProxy = B57BAD071BABF301009781B0 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		B57BACEE1BABF301009781B0 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B57BACEF1BABF301009781B0 /* Base */,
+			);
+			name = Main.storyboard;
+			path = Preachers;
+			sourceTree = "<group>";
+		};
+		B57BACF31BABF301009781B0 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B57BACF41BABF301009781B0 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			path = Preachers;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		B57BAD0D1BABF301009781B0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		B57BAD0E1BABF301009781B0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		B57BAD101BABF301009781B0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 22684A5E6E4A9A6BF9EA6BF4 /* Pods.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				INFOPLIST_FILE = Preachers/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.assetwatch.client;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "040a93f2-9004-4579-a693-24bbd3f6323a";
+			};
+			name = Debug;
+		};
+		B57BAD111BABF301009781B0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 501105494FF0BF9ADFB4F9D6 /* Pods.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				INFOPLIST_FILE = Preachers/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.assetwatch.client;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "1b32d6f5-788e-401c-9ae6-1277fd928edb";
+			};
+			name = Release;
+		};
+		B57BAD131BABF301009781B0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = PreachersTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = P.PreachersTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Preachers.app/Preachers";
+			};
+			name = Debug;
+		};
+		B57BAD141BABF301009781B0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = PreachersTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = P.PreachersTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Preachers.app/Preachers";
+			};
+			name = Release;
+		};
+		B57BAD161BABF301009781B0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = PreachersUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = P.PreachersUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = Preachers;
+				USES_XCTRUNNER = YES;
+			};
+			name = Debug;
+		};
+		B57BAD171BABF301009781B0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = PreachersUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = P.PreachersUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = Preachers;
+				USES_XCTRUNNER = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		B57BACE21BABF301009781B0 /* Build configuration list for PBXProject "Preachers" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B57BAD0D1BABF301009781B0 /* Debug */,
+				B57BAD0E1BABF301009781B0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B57BAD0F1BABF301009781B0 /* Build configuration list for PBXNativeTarget "Preachers" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B57BAD101BABF301009781B0 /* Debug */,
+				B57BAD111BABF301009781B0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B57BAD121BABF301009781B0 /* Build configuration list for PBXNativeTarget "PreachersTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B57BAD131BABF301009781B0 /* Debug */,
+				B57BAD141BABF301009781B0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B57BAD151BABF301009781B0 /* Build configuration list for PBXNativeTarget "PreachersUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B57BAD161BABF301009781B0 /* Debug */,
+				B57BAD171BABF301009781B0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = B57BACDF1BABF301009781B0 /* Project object */;
+}
