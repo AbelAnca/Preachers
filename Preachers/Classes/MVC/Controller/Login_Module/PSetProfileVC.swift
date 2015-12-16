@@ -187,6 +187,14 @@ class PSetProfileVC: UIViewController, UITextFieldDelegate {
     // MARK: - Action Methods
 
     @IBAction func btnStart_Action(sender: AnyObject) {
+        // Check internet connection
+        if appDelegate.bIsNetworkReachable == false {
+            let alertView = Utils.noNetworkConnectioAlert()
+            self.presentViewController(alertView, animated: true, completion: nil)
+            
+            return
+        }
+        
         login_APICall()
     }
     

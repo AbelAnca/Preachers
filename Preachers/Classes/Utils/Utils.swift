@@ -24,5 +24,10 @@ class Utils: NSObject {
         return result
     }
     
-    
+    class func noNetworkConnectioAlert() -> UIAlertController {
+        let alert = UIAlertController(title: "No Internet Connection", message: "Please reestablish your Internet connection and try again.", preferredStyle:.Alert)
+        alert.addAction(UIAlertAction(title: "Close", style: .Cancel, handler: nil))
+        
+        return alert
+    }
 }

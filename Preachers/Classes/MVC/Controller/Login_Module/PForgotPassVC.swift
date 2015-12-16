@@ -76,12 +76,32 @@ class PForgotPassVC: UIViewController, UITextFieldDelegate {
         return false
     }
     
-    // MARK: - Action Methods
-    @IBAction func btnBack_Action(sender: AnyObject) {
-        self.navigationController?.popViewControllerAnimated(true)
+    func hideNoInternetConnectionView() {
+        UIView.animateWithDuration(0.5, delay: 0.0, options: UIViewAnimationOptions.CurveEaseIn, animations: { () -> Void in
+            self.constXOriginNoNetworkView.constant = -50
+            self.viewNoNetworkConnection.alpha = 0
+            //self.viewNoNetworkConnection.hidden = true
+            self.view.layoutIfNeeded()
+            }) { (finished) -> Void in
+                
+        }
     }
     
-    @IBAction func btnRequest_Action() {
+    func showNoInternetConnectionView() {
+        UIView.animateWithDuration(0.5, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
+            self.constXOriginNoNetworkView.constant = 0
+            self.viewNoNetworkConnection.alpha = 1
+            //self.viewNoNetworkConnection.hidden = false
+            
+            self.view.layoutIfNeeded()
+            }) { (finished) -> Void in
+                
+        }
+    }
+    
+    // MARK: - API Methods
+    
+    func requestUsername_APICall() {
         if verifyEmail() == true {
             if let email = txfEmail.text {
                 KVNProgress.showWithStatus("Waiting...")
@@ -106,28 +126,23 @@ class PForgotPassVC: UIViewController, UITextFieldDelegate {
             self.presentViewController(alert, animated: true, completion: nil)
         }
     }
+
     
-    func hideNoInternetConnectionView() {
-        UIView.animateWithDuration(0.5, delay: 0.0, options: UIViewAnimationOptions.CurveEaseIn, animations: { () -> Void in
-            self.constXOriginNoNetworkView.constant = -50
-            self.viewNoNetworkConnection.alpha = 0
-            //self.viewNoNetworkConnection.hidden = true
-            self.view.layoutIfNeeded()
-            }) { (finished) -> Void in
-                
-        }
+    // MARK: - Action Methods
+    @IBAction func btnBack_Action(sender: AnyObject) {
+        self.navigationController?.popViewControllerAnimated(true)
     }
     
-    func showNoInternetConnectionView() {
-        UIView.animateWithDuration(0.5, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
-            self.constXOriginNoNetworkView.constant = 0
-            self.viewNoNetworkConnection.alpha = 1
-            //self.viewNoNetworkConnection.hidden = false
+    @IBAction func btnRequest_Action() {
+        // Check internet connection
+        if appDelegate.bIsNetworkReachable == false {
+            let alertView = Utils.noNetworkConnectioAlert()
+            self.presentViewController(alertView, animated: true, completion: nil)
             
-            self.view.layoutIfNeeded()
-            }) { (finished) -> Void in
-                
+            return
         }
+        
+        requestUsername_APICall()
     }
     
     // MARK: - UITextFieldDelegate Methods

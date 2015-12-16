@@ -42,7 +42,7 @@
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                             <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="k4C-Of-8Yg" userLabel="View - No Internet">
-                                <rect key="frame" x="0.0" y="-20" width="320" height="40"/>
+                                <rect key="frame" x="0.0" y="24" width="320" height="40"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Internet Connection" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aKb-tY-8OA">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="40"/>
@@ -51,10 +51,12 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
+                                    <constraint firstItem="aKb-tY-8OA" firstAttribute="top" secondItem="k4C-Of-8Yg" secondAttribute="top" id="7Xr-hp-dVU"/>
                                     <constraint firstItem="aKb-tY-8OA" firstAttribute="top" secondItem="k4C-Of-8Yg" secondAttribute="top" id="BBg-WS-uzd"/>
                                     <constraint firstAttribute="trailing" secondItem="aKb-tY-8OA" secondAttribute="trailing" id="DGe-N5-AxC"/>
+                                    <constraint firstAttribute="bottom" secondItem="aKb-tY-8OA" secondAttribute="bottom" id="J5H-TT-54p"/>
                                     <constraint firstAttribute="bottom" secondItem="aKb-tY-8OA" secondAttribute="bottom" id="SHe-vY-syZ"/>
                                     <constraint firstAttribute="height" constant="40" id="aZa-rX-CZW"/>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="hI3-Av-J5t"/>
@@ -63,6 +65,8 @@
                                 <variation key="default">
                                     <mask key="constraints">
                                         <exclude reference="hI3-Av-J5t"/>
+                                        <exclude reference="BBg-WS-uzd"/>
+                                        <exclude reference="SHe-vY-syZ"/>
                                     </mask>
                                 </variation>
                             </view>
@@ -197,14 +201,14 @@
                             <constraint firstItem="Hw9-Yb-5uc" firstAttribute="top" secondItem="vKs-wd-mEd" secondAttribute="bottom" id="K5f-go-ow0"/>
                             <constraint firstAttribute="trailing" secondItem="s1E-9V-v03" secondAttribute="trailing" id="XML-BZ-Q7Y"/>
                             <constraint firstAttribute="trailing" secondItem="aYh-a1-PGI" secondAttribute="trailing" id="Xjr-Ey-LsJ"/>
+                            <constraint firstItem="k4C-Of-8Yg" firstAttribute="top" secondItem="aYh-a1-PGI" secondAttribute="bottom" constant="-40" id="ZGw-Rn-9mi"/>
                             <constraint firstAttribute="trailing" secondItem="vKs-wd-mEd" secondAttribute="trailing" id="e3w-1m-mG5"/>
                             <constraint firstItem="Hw9-Yb-5uc" firstAttribute="top" secondItem="s1E-9V-v03" secondAttribute="bottom" id="e9O-Tg-ANk"/>
+                            <constraint firstItem="I44-Gr-MZt" firstAttribute="top" secondItem="k4C-Of-8Yg" secondAttribute="bottom" id="gnI-TY-Ejl"/>
                             <constraint firstAttribute="trailing" secondItem="I44-Gr-MZt" secondAttribute="trailing" id="jo4-2q-Kgm"/>
-                            <constraint firstItem="k4C-Of-8Yg" firstAttribute="top" secondItem="78C-FB-5D5" secondAttribute="bottom" constant="-40" id="jy6-ep-HvL"/>
                             <constraint firstItem="k4C-Of-8Yg" firstAttribute="leading" secondItem="2DI-QY-QI1" secondAttribute="leading" id="kR9-fL-i0Q"/>
                             <constraint firstItem="vKs-wd-mEd" firstAttribute="leading" secondItem="2DI-QY-QI1" secondAttribute="leading" id="oie-B8-Lh0"/>
                             <constraint firstItem="vKs-wd-mEd" firstAttribute="top" secondItem="2DI-QY-QI1" secondAttribute="top" id="pgD-Ef-8iE"/>
-                            <constraint firstItem="I44-Gr-MZt" firstAttribute="top" secondItem="aYh-a1-PGI" secondAttribute="bottom" id="plm-9p-trv"/>
                             <constraint firstItem="s1E-9V-v03" firstAttribute="top" secondItem="2DI-QY-QI1" secondAttribute="top" id="q6d-1j-oKc"/>
                             <constraint firstItem="aYh-a1-PGI" firstAttribute="top" secondItem="2DI-QY-QI1" secondAttribute="top" id="urG-N0-UCw"/>
                             <constraint firstAttribute="bottom" secondItem="I44-Gr-MZt" secondAttribute="bottom" id="yaN-at-W4c"/>
@@ -214,14 +218,14 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
                         <outlet property="btnRequest" destination="MVj-lQ-RTQ" id="V0r-Ol-bUw"/>
-                        <outlet property="constXOriginNoNetworkView" destination="jy6-ep-HvL" id="8ry-P3-5tS"/>
+                        <outlet property="constXOriginNoNetworkView" destination="ZGw-Rn-9mi" id="gBw-Nw-JIN"/>
                         <outlet property="txfEmail" destination="Huu-Sg-0oK" id="Y6u-8q-7oV"/>
                         <outlet property="viewNoNetworkConnection" destination="k4C-Of-8Yg" id="7qw-iv-zJh"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4l0-lC-KzT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2713" y="1585"/>
+            <point key="canvasLocation" x="3848" y="1277"/>
         </scene>
         <!--Confirm Forgot PassVC-->
         <scene sceneID="6FN-KX-DFc">
@@ -331,7 +335,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7Cd-cH-krs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3386" y="1585"/>
+            <point key="canvasLocation" x="4465" y="1277"/>
         </scene>
         <!--LoginVC-->
         <scene sceneID="xzS-Jf-7cY">
@@ -361,11 +365,11 @@
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Internet Connection" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zWL-UU-n5W">
                                                 <rect key="frame" x="0.0" y="0.0" width="320" height="40"/>
                                                 <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="16"/>
-                                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="2jV-Rk-iJm"/>
                                             <constraint firstAttribute="bottom" secondItem="zWL-UU-n5W" secondAttribute="bottom" id="EF8-sl-vCO"/>
@@ -834,7 +838,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="FWN-Sx-mbg"/>
                                     <constraint firstItem="llT-7I-4Wl" firstAttribute="top" secondItem="EHI-HN-SgV" secondAttribute="top" id="Md9-bq-INI"/>

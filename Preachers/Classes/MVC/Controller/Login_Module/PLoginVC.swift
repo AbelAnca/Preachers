@@ -219,6 +219,14 @@ class PLoginVC: UIViewController, UITextFieldDelegate {
     // MARK: - Action Methods
     
     @IBAction func btnGo_Action() {
+        // Check internet connection
+        if appDelegate.bIsNetworkReachable == false {
+            let alertView = Utils.noNetworkConnectioAlert()
+            self.presentViewController(alertView, animated: true, completion: nil)
+            
+            return
+        }
+        
         if checkUsernameAndPassIsValid() == true {
             if isLoginSelected == false {
                 signUp_APICall()
