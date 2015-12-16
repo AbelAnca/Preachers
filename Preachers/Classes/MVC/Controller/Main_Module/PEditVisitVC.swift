@@ -9,7 +9,13 @@
 import UIKit
 import Parse
 
+protocol PEditVisitVCDelegate {
+    func didCancelEditVC(index: Int)
+}
+
 class PEditVisitVC: UIViewController {
+    
+    var delegate: PEditVisitVCDelegate?
 
     @IBOutlet var txfBiblicalText: UITextField!
     @IBOutlet var txvMyPreach: UITextView!
@@ -19,6 +25,7 @@ class PEditVisitVC: UIViewController {
     var objId: String?
     var currentPreach: PFObject?
     var date: String?
+    var index: Int?
     
     // MARK: - ViewController Methods
     override func viewDidLoad() {
@@ -69,7 +76,11 @@ class PEditVisitVC: UIViewController {
     
     // MARK: - Action Methods
     @IBAction func btnBack_Action(sender: AnyObject) {
-        dismissViewControllerAnimated(true, completion: nil)
+        self.dismissViewControllerAnimated(true, completion: { () -> Void in
+            if let index = self.index {
+                self.delegate?.didCancelEditVC(index)
+            }
+        })
     }
     
     @IBAction func btnSave_Action(sender: AnyObject) {
@@ -81,7 +92,11 @@ class PEditVisitVC: UIViewController {
             preach.saveInBackgroundWithBlock { (success, error) -> Void in
                 if error == nil {
                     if success {
-                        self.dismissViewControllerAnimated(true, completion: nil)
+                        self.dismissViewControllerAnimated(true, completion: { () -> Void in
+                            if let index = self.index {
+                                self.delegate?.didCancelEditVC(index)
+                            }
+                        })
                     }
                 }
                 else {

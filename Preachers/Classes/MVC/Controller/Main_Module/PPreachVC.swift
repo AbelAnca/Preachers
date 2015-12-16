@@ -9,7 +9,14 @@
 import UIKit
 import Parse
 
+protocol PPreachVCDelegate {
+    func didCancelPopover()
+    func didEditPreach(objectID: String)
+}
+
 class PPreachVC: UIViewController, UITextFieldDelegate, UITextViewDelegate {
+    
+    var delegate: PPreachVCDelegate?
 
     @IBOutlet var txfBiblicalText: UITextField!
     @IBOutlet var txfPreach: UITextView!
@@ -20,8 +27,8 @@ class PPreachVC: UIViewController, UITextFieldDelegate, UITextViewDelegate {
     
     var objId: String?
     var currentPreach: PFObject?
-    
-    var isEdit                 = false
+    var currentChurch: PFObject?
+    var index: Int?
     
     // MARK: - ViewController Methods
     override func viewDidLoad() {
@@ -58,16 +65,43 @@ class PPreachVC: UIViewController, UITextFieldDelegate, UITextViewDelegate {
     
     // MARK: - Action Methods
     @IBAction func btnBack_Action(sender: AnyObject) {
-        dismissViewControllerAnimated(true, completion: nil)
+        delegate?.didCancelPopover()
     }
     
     @IBAction func btnEdit_Action(sender: AnyObject) {
-        let editChurchVC         = self.storyboard?.instantiateViewControllerWithIdentifier("PEditVisitVC") as! PEditVisitVC
-        if let preach            = currentPreach {
-            editChurchVC.objId   = preach.objectId
+        if let objectId = objId {
+            delegate?.didEditPreach(objectId)
         }
+    }
+    
+    @IBAction func btnShare_Action(sender: AnyObject) {
         
-        presentViewController(editChurchVC, animated: true, completion: nil)
+    }
+    
+    @IBAction func btnDelete_Action(sender: AnyObject) {
+        
+        let alert = UIAlertController(title: "Attention", message: "Are you sure you want to permanently delete this sermon?", preferredStyle: .Alert)
+        
+        alert.addAction(UIAlertAction(title: "Delete", style: .Destructive, handler: { (action) -> Void in
+            let query = PFQuery(className:"Preach")
+            if let church = self.currentChurch {
+                query.whereKey("church", equalTo: church)
+                query.findObjectsInBackgroundWithBlock { (objects, error) -> Void in
+                    if error == nil {
+                        if let index = self.index {
+                            if let objects = objects {
+                                let object = objects[index]
+                                object.deleteInBackground()
+                                self.delegate?.didCancelPopover()
+                            }
+                        }
+                    }
+                }
+            }
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+        
+        presentViewController(alert, animated: true, completion: nil)
     }
     
     // MARK: - UITextFieldDelegate Methods

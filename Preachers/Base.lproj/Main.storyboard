@@ -399,7 +399,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rrz-jO-7xh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3712.5" y="797.25"/>
+            <point key="canvasLocation" x="3712" y="797.25"/>
         </scene>
         <!--Change PassVC-->
         <scene sceneID="lcO-Qg-u87">
@@ -1136,7 +1136,7 @@
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0NV-fu-UaS">
                                                 <rect key="frame" x="0.0" y="0.0" width="320" height="70"/>
                                                 <fontDescription key="fontDescription" name="ProximaNovaSemibold" family="Proxima Nova Semibold" pointSize="15"/>
-                                                <state key="normal" title="Add visit"/>
+                                                <state key="normal" title="ADD SERMON"/>
                                                 <connections>
                                                     <action selector="btnAddVisits_Action:" destination="sHf-Gt-tO1" eventType="touchUpInside" id="XpH-gs-8og"/>
                                                 </connections>
@@ -1452,7 +1452,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="97L-dl-vGC" userLabel="View - Background">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TUI-YQ-EUd">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TUI-YQ-EUd" userLabel="Button - Back">
                                         <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="c3v-S4-bPf">
@@ -1485,7 +1485,6 @@
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B2n-do-uq2">
                                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip </string>
                                                 <fontDescription key="fontDescription" name="ProximaNovaRegular" family="Proxima Nova Regular" pointSize="15"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                 <connections>
@@ -1505,7 +1504,6 @@
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="300" id="mOZ-IM-Tdy"/>
                                                 </constraints>
-                                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate </string>
                                                 <fontDescription key="fontDescription" name="ProximaNovaRegular" family="Proxima Nova Regular" pointSize="15"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                 <variation key="default">
@@ -1580,7 +1578,7 @@
                                             </mask>
                                         </variation>
                                     </view>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Label" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="TZF-Ak-Mk5">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="TZF-Ak-Mk5">
                                         <rect key="frame" x="-25" y="-30" width="97" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="L9y-5G-j2N"/>
@@ -1606,70 +1604,140 @@
                                             <outlet property="delegate" destination="cpB-fA-lF7" id="kMO-RO-xu1"/>
                                         </connections>
                                     </textField>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T95-x7-UpZ">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pXb-fS-r3b" userLabel="Button - Delete">
                                         <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="40" id="DIC-EY-Oso"/>
-                                            <constraint firstAttribute="width" constant="40" id="OY6-a2-AQT"/>
+                                            <constraint firstAttribute="height" constant="50" id="hfb-qQ-DCf">
+                                                <variation key="heightClass=regular" constant="40"/>
+                                            </constraint>
+                                            <constraint firstAttribute="width" constant="50" id="kSg-jc-yOm">
+                                                <variation key="heightClass=regular" constant="40"/>
+                                            </constraint>
                                         </constraints>
-                                        <state key="normal" image="btn_newPost"/>
+                                        <state key="normal" image="icon_options_delete"/>
                                         <variation key="default">
                                             <mask key="constraints">
-                                                <exclude reference="DIC-EY-Oso"/>
-                                                <exclude reference="OY6-a2-AQT"/>
+                                                <exclude reference="hfb-qQ-DCf"/>
+                                                <exclude reference="kSg-jc-yOm"/>
                                             </mask>
                                         </variation>
                                         <variation key="heightClass=regular">
                                             <mask key="constraints">
-                                                <include reference="DIC-EY-Oso"/>
-                                                <include reference="OY6-a2-AQT"/>
+                                                <include reference="hfb-qQ-DCf"/>
+                                                <include reference="kSg-jc-yOm"/>
                                             </mask>
                                         </variation>
                                         <connections>
-                                            <action selector="btnEdit_Action:" destination="cpB-fA-lF7" eventType="touchUpInside" id="LOb-Xp-ijj"/>
+                                            <action selector="btnDelete_Action:" destination="cpB-fA-lF7" eventType="touchUpInside" id="dyA-Vk-f9l"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="99C-L6-Uti" userLabel="Button - Delete">
+                                        <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="G7x-g0-z96">
+                                                <variation key="heightClass=regular" constant="40"/>
+                                            </constraint>
+                                            <constraint firstAttribute="width" constant="50" id="Gjw-H5-BKE">
+                                                <variation key="heightClass=regular" constant="40"/>
+                                            </constraint>
+                                        </constraints>
+                                        <state key="normal" image="icon_options_share"/>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="G7x-g0-z96"/>
+                                                <exclude reference="Gjw-H5-BKE"/>
+                                            </mask>
+                                        </variation>
+                                        <variation key="heightClass=regular">
+                                            <mask key="constraints">
+                                                <include reference="G7x-g0-z96"/>
+                                                <include reference="Gjw-H5-BKE"/>
+                                            </mask>
+                                        </variation>
+                                        <connections>
+                                            <action selector="btnShare_Action:" destination="cpB-fA-lF7" eventType="touchUpInside" id="5Gj-0o-NIo"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rlP-mo-6il" userLabel="Button - Delete">
+                                        <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="50" id="Rov-QU-BVt">
+                                                <variation key="heightClass=regular" constant="40"/>
+                                            </constraint>
+                                            <constraint firstAttribute="height" constant="50" id="hsh-BS-RFl">
+                                                <variation key="heightClass=regular" constant="40"/>
+                                            </constraint>
+                                        </constraints>
+                                        <state key="normal" image="icon_options_edit"/>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="hsh-BS-RFl"/>
+                                                <exclude reference="Rov-QU-BVt"/>
+                                            </mask>
+                                        </variation>
+                                        <variation key="heightClass=regular">
+                                            <mask key="constraints">
+                                                <include reference="hsh-BS-RFl"/>
+                                                <include reference="Rov-QU-BVt"/>
+                                            </mask>
+                                        </variation>
+                                        <connections>
+                                            <action selector="btnEdit_Action:" destination="cpB-fA-lF7" eventType="touchUpInside" id="Gkb-GG-UQI"/>
                                         </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="TUI-YQ-EUd" firstAttribute="top" secondItem="97L-dl-vGC" secondAttribute="top" id="0Tj-CB-FO3"/>
+                                    <constraint firstAttribute="trailing" secondItem="pXb-fS-r3b" secondAttribute="trailing" id="2TO-gN-PBA"/>
                                     <constraint firstAttribute="bottom" secondItem="RzQ-lJ-vvU" secondAttribute="bottom" constant="20" id="38h-vY-TIz">
-                                        <variation key="heightClass=regular" constant="8"/>
+                                        <variation key="heightClass=regular" constant="40"/>
                                     </constraint>
+                                    <constraint firstItem="99C-L6-Uti" firstAttribute="leading" secondItem="97L-dl-vGC" secondAttribute="leading" id="3h7-sn-K3R"/>
                                     <constraint firstItem="TZF-Ak-Mk5" firstAttribute="top" secondItem="97L-dl-vGC" secondAttribute="top" constant="5" id="BrQ-VG-lK8"/>
+                                    <constraint firstAttribute="bottom" secondItem="rlP-mo-6il" secondAttribute="bottom" id="DfE-rA-g9G"/>
                                     <constraint firstAttribute="trailing" secondItem="RzQ-lJ-vvU" secondAttribute="trailing" constant="20" id="JYC-cg-WAl">
                                         <variation key="heightClass=regular" constant="8"/>
                                     </constraint>
                                     <constraint firstItem="RzQ-lJ-vvU" firstAttribute="leading" secondItem="97L-dl-vGC" secondAttribute="leading" constant="20" id="QBQ-Yl-FCl">
                                         <variation key="heightClass=regular" constant="8"/>
                                     </constraint>
-                                    <constraint firstItem="T95-x7-UpZ" firstAttribute="leading" secondItem="97L-dl-vGC" secondAttribute="leading" id="Y6M-f0-Bdi"/>
+                                    <constraint firstAttribute="bottom" secondItem="99C-L6-Uti" secondAttribute="bottom" id="ZTP-TS-nrc"/>
+                                    <constraint firstAttribute="bottom" secondItem="pXb-fS-r3b" secondAttribute="bottom" id="aLb-mP-YIr"/>
                                     <constraint firstItem="RzQ-lJ-vvU" firstAttribute="top" secondItem="97L-dl-vGC" secondAttribute="top" constant="20" id="bKb-Vy-Jng">
                                         <variation key="heightClass=regular" constant="40"/>
                                     </constraint>
-                                    <constraint firstItem="T95-x7-UpZ" firstAttribute="top" secondItem="97L-dl-vGC" secondAttribute="top" id="i7G-bf-Nqt"/>
                                     <constraint firstAttribute="trailing" secondItem="TUI-YQ-EUd" secondAttribute="trailing" id="kTK-jr-qbe"/>
                                     <constraint firstItem="TZF-Ak-Mk5" firstAttribute="centerX" secondItem="97L-dl-vGC" secondAttribute="centerX" id="uB6-Mr-88T"/>
+                                    <constraint firstItem="rlP-mo-6il" firstAttribute="centerX" secondItem="97L-dl-vGC" secondAttribute="centerX" id="wK0-of-wSw"/>
                                 </constraints>
                                 <variation key="default">
                                     <mask key="subviews">
                                         <exclude reference="TUI-YQ-EUd"/>
                                         <exclude reference="RzQ-lJ-vvU"/>
                                         <exclude reference="TZF-Ak-Mk5"/>
-                                        <exclude reference="T95-x7-UpZ"/>
+                                        <exclude reference="pXb-fS-r3b"/>
+                                        <exclude reference="99C-L6-Uti"/>
+                                        <exclude reference="rlP-mo-6il"/>
                                     </mask>
                                     <mask key="constraints">
-                                        <exclude reference="BrQ-VG-lK8"/>
-                                        <exclude reference="uB6-Mr-88T"/>
-                                        <exclude reference="Y6M-f0-Bdi"/>
-                                        <exclude reference="i7G-bf-Nqt"/>
-                                        <exclude reference="0Tj-CB-FO3"/>
-                                        <exclude reference="kTK-jr-qbe"/>
                                         <exclude reference="38h-vY-TIz"/>
                                         <exclude reference="JYC-cg-WAl"/>
                                         <exclude reference="QBQ-Yl-FCl"/>
                                         <exclude reference="bKb-Vy-Jng"/>
+                                        <exclude reference="BrQ-VG-lK8"/>
+                                        <exclude reference="uB6-Mr-88T"/>
+                                        <exclude reference="0Tj-CB-FO3"/>
+                                        <exclude reference="kTK-jr-qbe"/>
+                                        <exclude reference="3h7-sn-K3R"/>
+                                        <exclude reference="ZTP-TS-nrc"/>
+                                        <exclude reference="DfE-rA-g9G"/>
+                                        <exclude reference="wK0-of-wSw"/>
+                                        <exclude reference="2TO-gN-PBA"/>
+                                        <exclude reference="aLb-mP-YIr"/>
                                     </mask>
                                 </variation>
                                 <variation key="heightClass=regular">
@@ -1677,19 +1745,25 @@
                                         <include reference="TUI-YQ-EUd"/>
                                         <include reference="RzQ-lJ-vvU"/>
                                         <include reference="TZF-Ak-Mk5"/>
-                                        <include reference="T95-x7-UpZ"/>
+                                        <include reference="pXb-fS-r3b"/>
+                                        <include reference="99C-L6-Uti"/>
+                                        <include reference="rlP-mo-6il"/>
                                     </mask>
                                     <mask key="constraints">
-                                        <include reference="BrQ-VG-lK8"/>
-                                        <include reference="uB6-Mr-88T"/>
-                                        <include reference="Y6M-f0-Bdi"/>
-                                        <include reference="i7G-bf-Nqt"/>
-                                        <include reference="0Tj-CB-FO3"/>
-                                        <include reference="kTK-jr-qbe"/>
                                         <include reference="38h-vY-TIz"/>
                                         <include reference="JYC-cg-WAl"/>
                                         <include reference="QBQ-Yl-FCl"/>
                                         <include reference="bKb-Vy-Jng"/>
+                                        <include reference="BrQ-VG-lK8"/>
+                                        <include reference="uB6-Mr-88T"/>
+                                        <include reference="0Tj-CB-FO3"/>
+                                        <include reference="kTK-jr-qbe"/>
+                                        <include reference="3h7-sn-K3R"/>
+                                        <include reference="ZTP-TS-nrc"/>
+                                        <include reference="DfE-rA-g9G"/>
+                                        <include reference="wK0-of-wSw"/>
+                                        <include reference="2TO-gN-PBA"/>
+                                        <include reference="aLb-mP-YIr"/>
                                     </mask>
                                 </variation>
                             </view>
@@ -1726,8 +1800,6 @@
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
-                        <outlet property="btnBack" destination="T95-x7-UpZ" id="6st-rY-Kqc"/>
-                        <outlet property="btnEdit" destination="T95-x7-UpZ" id="NAO-f8-BYn"/>
                         <outlet property="txfBiblicalText" destination="TZF-Ak-Mk5" id="TTl-lm-QMY"/>
                         <outlet property="txfNote" destination="B2n-do-uq2" id="Iyr-y7-6fT"/>
                         <outlet property="txfPreach" destination="1Bd-fG-cXJ" id="vKN-np-HMB"/>
@@ -1781,7 +1853,7 @@
                                                     <action selector="btnBack_Action:" destination="yu7-fG-AKg" eventType="touchUpInside" id="3o2-CL-JJ6"/>
                                                 </connections>
                                             </button>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add visit" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BiZ-9i-KxV">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add sermon" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BiZ-9i-KxV">
                                                 <rect key="frame" x="113" y="0.0" width="95" height="44"/>
                                                 <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="23"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -2954,7 +3026,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zh4-S5-EQp">
                                         <rect key="frame" x="0.0" y="20" width="320" height="44"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Edit visit" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Nq-4U-BTN">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Edit sermon" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Nq-4U-BTN">
                                                 <rect key="frame" x="113" y="0.0" width="94" height="44"/>
                                                 <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="23"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -3192,8 +3264,10 @@
         <image name="Fish" width="250" height="250"/>
         <image name="btnClosePopup" width="26" height="26"/>
         <image name="btn_back_gray" width="34" height="34"/>
-        <image name="btn_newPost" width="19" height="18"/>
         <image name="churchICO" width="100" height="100"/>
+        <image name="icon_options_delete" width="20" height="20"/>
+        <image name="icon_options_edit" width="20" height="20"/>
+        <image name="icon_options_share" width="20" height="20"/>
         <image name="myfeedIcon" width="19" height="15"/>
         <image name="no_user" width="100" height="100"/>
         <image name="userAccountIcon" width="19" height="18"/>

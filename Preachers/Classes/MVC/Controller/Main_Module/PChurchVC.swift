@@ -14,7 +14,7 @@ enum PChurchTab: Int {
     case Visits, Place, Details
 }
 
-class PChurchVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, WYPopoverControllerDelegate {
+class PChurchVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, WYPopoverControllerDelegate, PPreachVCDelegate, PEditVisitVCDelegate {
     
     lazy var popover                = WYPopoverController()
     
@@ -42,6 +42,7 @@ class PChurchVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     
     var arrPreaches: [PFObject]?
     var currentChurch: PFObject?
+    var index: Int?
     
     var nrVisits: Int?
     var objId: String?
@@ -212,15 +213,21 @@ class PChurchVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
 
     }
     
-    // MARK: - UICollectionViewDelegate Methods
-    
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        
+    func selectItemAtIndex(index: Int) {
         let editChurchVC         = self.storyboard?.instantiateViewControllerWithIdentifier("PPreachVC") as! PPreachVC
         if let preachs           = arrPreaches {
-            let preach           = preachs[indexPath.row]
+            let preach           = preachs[index]
             editChurchVC.objId   = preach.objectId
         }
+        
+        if let ind = self.index {
+            editChurchVC.index = ind
+        }
+        
+        if let currentChurch = currentChurch {
+            editChurchVC.currentChurch = currentChurch
+        }
+        editChurchVC.delegate    = self
         
         let grayColor                               = UIColor.color(26, green: 26, blue: 26, alpha: 1)
         
@@ -231,8 +238,16 @@ class PChurchVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         popoverBackgroundView.outerStrokeColor      = UIColor.clearColor()
         popoverBackgroundView.innerStrokeColor      = UIColor.clearColor()
         
-        popover = WYPopoverController(contentViewController: editChurchVC)
+        popover                                     = WYPopoverController(contentViewController: editChurchVC)
+        popover.delegate                            = self
         popover.presentPopoverFromRect(self.view.bounds, inView: self.view, permittedArrowDirections: .None, animated: true)
+    }
+    
+    // MARK: - UICollectionViewDelegate Methods
+    
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        self.index = indexPath.row
+        selectItemAtIndex(indexPath.row)
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
@@ -281,6 +296,36 @@ class PChurchVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     
     @IBAction func btnBack_Action(sender: AnyObject) {
         dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    // MARK: - PPreachVCDelegate Methods
+    
+    func didCancelPopover() {
+        popover.dismissPopoverAnimated(true)
+        loadParams()
+    }
+    
+    func didEditPreach(objectID: String) {
+        popover.dismissPopoverAnimated(true)
+        
+        let editChurchVC         = self.storyboard?.instantiateViewControllerWithIdentifier("PEditVisitVC") as! PEditVisitVC
+        editChurchVC.objId       = objectID
+        editChurchVC.delegate    = self
+        editChurchVC.index       = self.index
+        
+        presentViewController(editChurchVC, animated: true, completion: nil)
+    }
+    
+    // MARK: - WYPopoverControllerDelegate Methods
+    
+    func popoverControllerShouldDismissPopover(popoverController: WYPopoverController!) -> Bool {
+        return true
+    }
+    
+    // MARK: - PEditVisitVCDelegate Methods
+    
+    func didCancelEditVC(index: Int) {
+        selectItemAtIndex(index)
     }
     
     // MARK: - StatusBar Methods

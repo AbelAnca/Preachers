@@ -33,28 +33,43 @@ class PAddVisitVC: UIViewController {
         date = dateFormatter.stringFromDate(currentDate)
     }
     
+    func verifyBiblicalText() -> Bool {
+        if txfBiblicalText.text?.utf16.count < 3 {
+            return false
+        }
+        else {
+            return true
+        }
+    }
+    
     // MARK: - API Methods
     
     func saveVisit_APICall() {
-        let preach                    = Preach()
-        preach.biblicalText           = txfBiblicalText.text
-        preach.myPreach               = txvMyPreach.text
-        preach.observation            = txvObservation.text
-        preach.date                   = date
-        preach.church                 = self.currentChurch!
-        preach.saveInBackgroundWithBlock { (success, error) -> Void in
-            if error == nil {
-                if success {
-                    self.dismissViewControllerAnimated(true, completion: nil)
+        if verifyBiblicalText() == true {
+            let preach                    = Preach()
+            preach.biblicalText           = txfBiblicalText.text
+            preach.myPreach               = txvMyPreach.text
+            preach.observation            = txvObservation.text
+            preach.date                   = date
+            preach.church                 = self.currentChurch!
+            preach.saveInBackgroundWithBlock { (success, error) -> Void in
+                if error == nil {
+                    if success {
+                        self.dismissViewControllerAnimated(true, completion: nil)
+                    }
+                }
+                else {
+                    if let error = error {
+                        let errorString     = error.userInfo["error"] as! String
+                        let alert           = Utils.okAlert("Error", message: errorString)
+                        self.presentViewController(alert, animated: true, completion: nil)
+                    }
                 }
             }
-            else {
-                if let error = error {
-                    let errorString     = error.userInfo["error"] as! String
-                    let alert           = Utils.okAlert("Error", message: errorString)
-                    self.presentViewController(alert, animated: true, completion: nil)
-                }
-            }
+        }
+        else {
+            let alert = Utils.okAlert("Upss", message: "The biblical text is required")
+            presentViewController(alert, animated: true, completion: nil)
         }
     }
     
