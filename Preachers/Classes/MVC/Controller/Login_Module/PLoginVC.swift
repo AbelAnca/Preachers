@@ -13,8 +13,8 @@ import ReachabilitySwift
 
 class PLoginVC: UIViewController, UITextFieldDelegate {
 
-    //@IBOutlet weak private var viewNoNetworkConnection: UIView!
-    //@IBOutlet weak var constXOriginNoNetworkView: NSLayoutConstraint!
+    @IBOutlet weak private var viewNoNetworkConnection: UIView!
+    @IBOutlet weak var constXOriginNoNetworkView: NSLayoutConstraint!
     
     // IBOutlet
     
@@ -45,29 +45,29 @@ class PLoginVC: UIViewController, UITextFieldDelegate {
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
-//        // Initial reachability check
-//        if let reachability = appDelegate.reachability {
-//            if reachability.isReachable() {
-//                hideNoInternetConnectionView()
-//            }
-//            else {
-//                showNoInternetConnectionView()
-//            }
-//        }
+        // Initial reachability check
+        if let reachability = appDelegate.reachability {
+            if reachability.isReachable() {
+                hideNoInternetConnectionView()
+            }
+            else {
+                showNoInternetConnectionView()
+            }
+        }
     }
     
-//    // MARK: - Notification Methods
-//    
-//    func reachabilityChanged_Notification(notification: NSNotification) {
-//        if let reachability = notification.object as? Reachability {
-//            if reachability.isReachable() {
-//                hideNoInternetConnectionView()
-//            }
-//            else {
-//                showNoInternetConnectionView()
-//            }
-//        }
-//    }
+    // MARK: - Notification Methods
+    
+    func reachabilityChanged_Notification(notification: NSNotification) {
+        if let reachability = notification.object as? Reachability {
+            if reachability.isReachable() {
+                hideNoInternetConnectionView()
+            }
+            else {
+                showNoInternetConnectionView()
+            }
+        }
+    }
 
     
     // MARK: - Custom Methods
@@ -131,28 +131,28 @@ class PLoginVC: UIViewController, UITextFieldDelegate {
         isLoginSelected         = true
     }
     
-//    func hideNoInternetConnectionView() {
-//        UIView.animateWithDuration(0.5, delay: 0.0, options: UIViewAnimationOptions.CurveEaseIn, animations: { () -> Void in
-//            self.constXOriginNoNetworkView.constant = -20
-//            self.viewNoNetworkConnection.alpha = 0
-//            //self.viewNoNetworkConnection.hidden = true
-//            self.view.layoutIfNeeded()
-//            }) { (finished) -> Void in
-//                
-//        }
-//    }
-//    
-//    func showNoInternetConnectionView() {
-//        UIView.animateWithDuration(0.5, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
-//            self.constXOriginNoNetworkView.constant = 20
-//            self.viewNoNetworkConnection.alpha = 1
-//            //self.viewNoNetworkConnection.hidden = false
-//            
-//            self.view.layoutIfNeeded()
-//            }) { (finished) -> Void in
-//                
-//        }
-//    }
+    func hideNoInternetConnectionView() {
+        UIView.animateWithDuration(0.5, delay: 0.0, options: UIViewAnimationOptions.CurveEaseIn, animations: { () -> Void in
+            self.constXOriginNoNetworkView.constant = -20
+            self.viewNoNetworkConnection.alpha = 0
+            //self.viewNoNetworkConnection.hidden = true
+            self.view.layoutIfNeeded()
+            }) { (finished) -> Void in
+                
+        }
+    }
+    
+    func showNoInternetConnectionView() {
+        UIView.animateWithDuration(0.5, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
+            self.constXOriginNoNetworkView.constant = 20
+            self.viewNoNetworkConnection.alpha = 1
+            //self.viewNoNetworkConnection.hidden = false
+            
+            self.view.layoutIfNeeded()
+            }) { (finished) -> Void in
+                
+        }
+    }
     
     // MARK: - API Methods
     
@@ -216,28 +216,6 @@ class PLoginVC: UIViewController, UITextFieldDelegate {
         KVNProgress.dismiss()
     }
     
-    func browseAnonymously_APICall() {
-        KVNProgress.showWithStatus("Waiting...")
-        PFAnonymousUtils.logInWithBlock {
-            (user: PFUser?, error: NSError?) -> Void in
-            if error != nil || user == nil {
-                print("Anonymous login failed.")
-                KVNProgress.dismiss()
-            } else {
-                print("Anonymous user logged in.")
-                appDelegate.curUserID     = k_UserAnonymous
-                
-                //>     Save user's ID locally, to know which user is logged in
-                appDelegate.defaults.setObject(appDelegate.curUserID, forKey: k_UserDef_LoggedInUserID)
-                appDelegate.defaults.synchronize()
-
-                self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
-                KVNProgress.dismiss()
-            }
-            KVNProgress.dismiss()
-        }
-    }
-    
     // MARK: - Action Methods
     
     @IBAction func btnGo_Action() {
@@ -266,11 +244,6 @@ class PLoginVC: UIViewController, UITextFieldDelegate {
 
     @IBAction func btnLogin_Action(sender: AnyObject) {
         selectLogin()
-    }
-    
-    
-    @IBAction func btnBrowseAnonymously_Action(sender: AnyObject) {
-        browseAnonymously_APICall()
     }
     
     // MARK: - UITextFieldDelegate Methods
