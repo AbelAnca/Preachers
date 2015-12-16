@@ -78,7 +78,7 @@ class PForgotPassVC: UIViewController, UITextFieldDelegate {
     
     func hideNoInternetConnectionView() {
         UIView.animateWithDuration(0.5, delay: 0.0, options: UIViewAnimationOptions.CurveEaseIn, animations: { () -> Void in
-            self.constXOriginNoNetworkView.constant = -50
+            self.constXOriginNoNetworkView.constant = -40
             self.viewNoNetworkConnection.alpha = 0
             //self.viewNoNetworkConnection.hidden = true
             self.view.layoutIfNeeded()

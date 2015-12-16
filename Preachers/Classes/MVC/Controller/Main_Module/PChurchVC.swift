@@ -22,19 +22,18 @@ class PChurchVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     @IBOutlet var imgChurch: UIImageView!
     
     @IBOutlet var lblName: UILabel!
-    //@IBOutlet var lblCity: UILabel!
-    //@IBOutlet var lblPastor: UILabel!
-    //@IBOutlet var lblAddress: UILabel!
+    @IBOutlet var lblCity: UILabel!
+    @IBOutlet var lblPastor: UILabel!
+    @IBOutlet var lblAddress: UILabel!
     //@IBOutlet var lblDistance: UILabel!
     //@IBOutlet var lblVisits: UILabel!
-    //@IBOutlet var lblNote: UITextView!
+    @IBOutlet var lblNote: UITextView!
     
     @IBOutlet var btnAddVisit: UIButton!
-    //@IBOutlet var btnEditVisits: UIButton!
     
     @IBOutlet var viewVisits: UIView!
     //@IBOutlet var viewPlace: UIView!
-    //@IBOutlet var viewDetails: UIView!
+    @IBOutlet var viewDetails: UIView!
     @IBOutlet var viewBackgroundImgChurch: UIView!
     
     @IBOutlet var segmentControl: ADVSegmentedControl!
@@ -78,19 +77,19 @@ class PChurchVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         if curSelectedTab() == PChurchTab.Visits.rawValue {
             viewVisits.hidden = false
             //viewPlace.hidden = true
-            //viewDetails.hidden = true
+            viewDetails.hidden = true
         }
         else
             if curSelectedTab() == PChurchTab.Place.rawValue {
                 viewVisits.hidden = true
-                //viewPlace.hidden = false
-                //viewDetails.hidden = true
+                //viewPlace.hidden = true
+                viewDetails.hidden = false
         }
         else
                 if curSelectedTab() == PChurchTab.Details.rawValue {
                     viewVisits.hidden = true
-                    //viewPlace.hidden = true
-                   // viewDetails.hidden = false
+                    //viewPlace.hidden = false
+                    viewDetails.hidden = true
         }
     }
     
@@ -119,30 +118,30 @@ class PChurchVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
                 lblName.text = "\(name)"
             }
             
-//            let city = church.objectForKey("city") as? String
-//            if let city = city {
-//                lblCity.text = "\(city)"
-//            }
-//            
-//            let address = church.objectForKey("address") as? String
-//            if let address = address {
-//                lblAddress.text     = "\(address)"
-//            }
+            let city = church.objectForKey("city") as? String
+            if let city = city {
+                lblCity.text = "\(city)"
+            }
+            
+            let address = church.objectForKey("address") as? String
+            if let address = address {
+                lblAddress.text     = "\(address)"
+            }
             
 //            let distance = church.objectForKey("distance") as? String
 //            if let distance = distance {
 //                lblDistance.text    = "\(distance)"
 //            }
             
-//            let pastor = church.objectForKey("pastor") as? String
-//            if let pastor = pastor {
-//                lblPastor.text          = "\(pastor)"
-//            }
-//            
-//            let note = church.objectForKey("note") as? String
-//            if let note = note {
-//                lblNote.text        = note
-//            }
+            let pastor = church.objectForKey("pastor") as? String
+            if let pastor = pastor {
+                lblPastor.text          = "\(pastor)"
+            }
+            
+            let note = church.objectForKey("note") as? String
+            if let note = note {
+                lblNote.text        = note
+            }
             
             if let userPicture = church.objectForKey("image") as? PFFile {
                 userPicture.getDataInBackgroundWithBlock({ (data, error) -> Void in
@@ -151,7 +150,6 @@ class PChurchVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
                             if let image = UIImage(data:imageData) {
                                 if image.size == CGSizeMake(200, 200) {
                                     self.imgChurch.backgroundColor  = UIColor.blackColor()
-                                    //self.imgChurch.image            = UIImage(named: "Old_Church")
                                     self.imgChurch.image            = UIImage(named: "churchICO")
                                 }
                                 else {

@@ -352,7 +352,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9To-eH-Bp3">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="redraw" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Background login" translatesAutoresizingMaskIntoConstraints="NO" id="O1G-Vw-XmA">
+                                    <imageView userInteractionEnabled="NO" contentMode="redraw" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Background login" translatesAutoresizingMaskIntoConstraints="NO" id="O1G-Vw-XmA">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                     </imageView>
                                     <view alpha="0.40000000000000002" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jp1-Pf-by5">
@@ -530,10 +530,14 @@
                                 <constraints>
                                     <constraint firstItem="uNc-wm-75j" firstAttribute="leading" secondItem="9To-eH-Bp3" secondAttribute="leading" id="10A-pi-Jxc"/>
                                     <constraint firstAttribute="bottom" secondItem="Jp1-Pf-by5" secondAttribute="bottom" id="3vS-QB-X8h"/>
+                                    <constraint firstItem="O1G-Vw-XmA" firstAttribute="leading" secondItem="9To-eH-Bp3" secondAttribute="leading" id="4mw-tb-Uoj"/>
                                     <constraint firstItem="Jp1-Pf-by5" firstAttribute="leading" secondItem="9To-eH-Bp3" secondAttribute="leading" id="FUR-AB-LhC"/>
                                     <constraint firstAttribute="trailing" secondItem="Jp1-Pf-by5" secondAttribute="trailing" id="PD8-by-xQo"/>
                                     <constraint firstItem="Jp1-Pf-by5" firstAttribute="top" secondItem="9To-eH-Bp3" secondAttribute="top" id="V9m-19-pST"/>
                                     <constraint firstAttribute="trailing" secondItem="1QM-GU-20G" secondAttribute="trailing" id="ZLS-6X-IQc"/>
+                                    <constraint firstItem="O1G-Vw-XmA" firstAttribute="top" secondItem="9To-eH-Bp3" secondAttribute="top" id="cFj-iT-JK8"/>
+                                    <constraint firstAttribute="trailing" secondItem="O1G-Vw-XmA" secondAttribute="trailing" id="k1C-hl-qni"/>
+                                    <constraint firstAttribute="bottom" secondItem="O1G-Vw-XmA" secondAttribute="bottom" id="kDe-GF-55F"/>
                                     <constraint firstItem="uNc-wm-75j" firstAttribute="top" secondItem="9To-eH-Bp3" secondAttribute="top" constant="-20" id="ltV-zc-mmG"/>
                                     <constraint firstItem="1QM-GU-20G" firstAttribute="leading" secondItem="9To-eH-Bp3" secondAttribute="leading" id="mE7-89-Fmm"/>
                                     <constraint firstAttribute="trailing" secondItem="uNc-wm-75j" secondAttribute="trailing" id="vtq-rV-TAc"/>
