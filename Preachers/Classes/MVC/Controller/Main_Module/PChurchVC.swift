@@ -32,9 +32,11 @@ class PChurchVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     @IBOutlet var btnAddVisit: UIButton!
     
     @IBOutlet var viewVisits: UIView!
-    //@IBOutlet var viewPlace: UIView!
+    @IBOutlet var viewPlace: UIView!
     @IBOutlet var viewDetails: UIView!
     @IBOutlet var viewBackgroundImgChurch: UIView!
+    
+    @IBOutlet var constraintsOfPlace: NSLayoutConstraint!
     
     @IBOutlet var segmentControl: ADVSegmentedControl!
     
@@ -76,20 +78,47 @@ class PChurchVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     private func loadScreenForCurSelectedTab() {
         if curSelectedTab() == PChurchTab.Visits.rawValue {
             viewVisits.hidden = false
-            //viewPlace.hidden = true
+            viewPlace.hidden = true
             viewDetails.hidden = true
+            
+            constraintsOfPlace.constant = 0
+            
+            UIView.animateWithDuration(0.8, animations: { () -> Void in
+                self.view.layoutIfNeeded()
+                }) { (finished) -> Void in
+                    self.imgChurch.hidden = false
+                    self.viewBackgroundImgChurch.hidden = false
+            }
         }
         else
             if curSelectedTab() == PChurchTab.Place.rawValue {
                 viewVisits.hidden = true
-                //viewPlace.hidden = true
+                viewPlace.hidden = true
                 viewDetails.hidden = false
+                
+                constraintsOfPlace.constant = 0
+                
+                UIView.animateWithDuration(0.8, animations: { () -> Void in
+                    self.view.layoutIfNeeded()
+                    }) { (finished) -> Void in
+                        self.imgChurch.hidden = false
+                        self.viewBackgroundImgChurch.hidden = false
+                }
         }
         else
                 if curSelectedTab() == PChurchTab.Details.rawValue {
                     viewVisits.hidden = true
-                    //viewPlace.hidden = false
+                    viewPlace.hidden = false
                     viewDetails.hidden = true
+                    
+                    constraintsOfPlace.constant = -160
+                    self.imgChurch.hidden = true
+                    self.viewBackgroundImgChurch.hidden = true
+                    
+                    UIView.animateWithDuration(0.8, animations: { () -> Void in
+                        self.view.layoutIfNeeded()
+                        }) { (finished) -> Void in
+                    }
         }
     }
     

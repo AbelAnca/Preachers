@@ -31,7 +31,6 @@
             <string>HelveticaNeue</string>
             <string>HelveticaNeue</string>
             <string>HelveticaNeue</string>
-            <string>HelveticaNeue</string>
             <string>HelveticaNeue-Bold</string>
             <string>HelveticaNeue</string>
             <string>HelveticaNeue</string>
@@ -65,6 +64,7 @@
             <string>HelveticaNeue</string>
             <string>HelveticaNeue</string>
             <string>HelveticaNeue-Bold</string>
+            <string>HelveticaNeue</string>
             <string>HelveticaNeue</string>
             <string>HelveticaNeue</string>
             <string>HelveticaNeue</string>
@@ -1674,33 +1674,18 @@
                                             <action selector="didSelectNewTab_Action:" destination="sHf-Gt-tO1" eventType="valueChanged" id="rnL-30-vRQ"/>
                                         </connections>
                                     </view>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YgF-Gw-QXk">
-                                        <rect key="frame" x="8" y="20" width="40" height="40"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="40" id="1wM-el-jMr"/>
-                                            <constraint firstAttribute="width" constant="40" id="elL-ps-fIu"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="18"/>
-                                        <state key="normal" image="btn_back_gray">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="btnBack_Action:" destination="keU-UG-Wj1" eventType="touchUpInside" id="4cG-W2-KB6"/>
-                                            <action selector="btnBack_Action:" destination="sHf-Gt-tO1" eventType="touchUpInside" id="lKK-Sc-SgX"/>
-                                        </connections>
-                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="002-Sl-0cW" firstAttribute="leading" secondItem="xMl-FB-g4t" secondAttribute="leading" id="2e5-wh-WUP"/>
                                     <constraint firstItem="gQv-x6-Mls" firstAttribute="top" secondItem="xMl-FB-g4t" secondAttribute="top" constant="30" id="8gb-yL-yPA"/>
                                     <constraint firstItem="1qF-gD-Ba6" firstAttribute="leading" secondItem="xMl-FB-g4t" secondAttribute="leading" constant="20" id="EC3-qN-G5r"/>
-                                    <constraint firstAttribute="height" constant="256" id="Keb-PR-owx"/>
+                                    <constraint firstAttribute="height" constant="256" id="Keb-PR-owx">
+                                        <variation key="heightClass=regular" constant="256"/>
+                                    </constraint>
                                     <constraint firstAttribute="bottom" secondItem="002-Sl-0cW" secondAttribute="bottom" id="Kon-0N-9Gh"/>
                                     <constraint firstItem="gQv-x6-Mls" firstAttribute="centerX" secondItem="xMl-FB-g4t" secondAttribute="centerX" id="OvT-Oy-gVN"/>
                                     <constraint firstItem="d8C-NI-lYR" firstAttribute="leading" secondItem="xMl-FB-g4t" secondAttribute="leading" id="RPf-lB-AcC"/>
-                                    <constraint firstItem="YgF-Gw-QXk" firstAttribute="leading" secondItem="xMl-FB-g4t" secondAttribute="leading" constant="8" id="RRx-fL-w3B"/>
-                                    <constraint firstItem="YgF-Gw-QXk" firstAttribute="top" secondItem="xMl-FB-g4t" secondAttribute="top" constant="20" id="TMK-aV-Xfk"/>
                                     <constraint firstAttribute="trailing" secondItem="002-Sl-0cW" secondAttribute="trailing" id="TVA-Hw-VPf"/>
                                     <constraint firstItem="sBM-gw-cJC" firstAttribute="centerX" secondItem="xMl-FB-g4t" secondAttribute="centerX" id="ekr-rN-MMc"/>
                                     <constraint firstAttribute="trailing" secondItem="d8C-NI-lYR" secondAttribute="trailing" id="fA2-DS-9Sl"/>
@@ -1711,41 +1696,83 @@
                                     <constraint firstAttribute="trailing" secondItem="1qF-gD-Ba6" secondAttribute="trailing" constant="20" id="vDM-zf-fSJ"/>
                                 </constraints>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YgF-Gw-QXk">
+                                <rect key="frame" x="8" y="20" width="40" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="1wM-el-jMr"/>
+                                    <constraint firstAttribute="width" constant="40" id="elL-ps-fIu"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="18"/>
+                                <state key="normal" image="btn_back_gray">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="btnBack_Action:" destination="sHf-Gt-tO1" eventType="touchUpInside" id="lKK-Sc-SgX"/>
+                                </connections>
+                            </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4Kf-Ym-lrS">
+                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                <color key="backgroundColor" red="0.20000000000000001" green="0.63137254899999995" blue="0.89411764709999997" alpha="1" colorSpace="calibratedRGB"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="xMl-FB-g4t" secondAttribute="trailing" id="1qi-b3-x43"/>
                             <constraint firstItem="xMl-FB-g4t" firstAttribute="leading" secondItem="wXk-zL-n6z" secondAttribute="leading" id="9DW-LW-XbW"/>
                             <constraint firstItem="GQx-7E-AjW" firstAttribute="top" secondItem="O1l-Gd-Xa2" secondAttribute="bottom" id="EaS-xw-kDM"/>
+                            <constraint firstItem="4Kf-Ym-lrS" firstAttribute="leading" secondItem="wXk-zL-n6z" secondAttribute="leading" id="Jf2-Ry-yrI"/>
+                            <constraint firstItem="YgF-Gw-QXk" firstAttribute="leading" secondItem="wXk-zL-n6z" secondAttribute="leading" constant="8" id="ORZ-aN-QkC"/>
                             <constraint firstAttribute="trailing" secondItem="sfT-Ex-DDu" secondAttribute="trailing" id="Y4D-eN-eHV"/>
                             <constraint firstItem="sfT-Ex-DDu" firstAttribute="top" secondItem="xMl-FB-g4t" secondAttribute="bottom" id="Yvv-sd-JIA"/>
-                            <constraint firstItem="xMl-FB-g4t" firstAttribute="top" secondItem="wXk-zL-n6z" secondAttribute="top" id="a1U-lV-kFJ"/>
+                            <constraint firstItem="xMl-FB-g4t" firstAttribute="top" secondItem="wXk-zL-n6z" secondAttribute="top" id="a1U-lV-kFJ">
+                                <variation key="heightClass=regular" constant="0.0"/>
+                            </constraint>
                             <constraint firstItem="sfT-Ex-DDu" firstAttribute="leading" secondItem="wXk-zL-n6z" secondAttribute="leading" id="ciz-E8-Ybq"/>
                             <constraint firstAttribute="trailing" secondItem="O1l-Gd-Xa2" secondAttribute="trailing" id="eBI-i4-Moa"/>
+                            <constraint firstItem="4Kf-Ym-lrS" firstAttribute="top" secondItem="xMl-FB-g4t" secondAttribute="bottom" id="kVe-bL-2UJ"/>
+                            <constraint firstAttribute="trailing" secondItem="4Kf-Ym-lrS" secondAttribute="trailing" id="q0z-6f-Dwa"/>
                             <constraint firstItem="O1l-Gd-Xa2" firstAttribute="leading" secondItem="wXk-zL-n6z" secondAttribute="leading" id="v2W-gJ-gI3"/>
+                            <constraint firstItem="YgF-Gw-QXk" firstAttribute="top" secondItem="cAJ-wx-wAN" secondAttribute="bottom" id="wqW-1R-3wY"/>
                             <constraint firstItem="GQx-7E-AjW" firstAttribute="top" secondItem="sfT-Ex-DDu" secondAttribute="bottom" id="x9s-kz-9qD"/>
                             <constraint firstItem="O1l-Gd-Xa2" firstAttribute="top" secondItem="xMl-FB-g4t" secondAttribute="bottom" id="xxS-Mi-oYx"/>
+                            <constraint firstItem="GQx-7E-AjW" firstAttribute="top" secondItem="4Kf-Ym-lrS" secondAttribute="bottom" id="y7W-kN-GKG"/>
                         </constraints>
                         <variation key="default">
                             <mask key="subviews">
                                 <exclude reference="O1l-Gd-Xa2"/>
+                                <exclude reference="YgF-Gw-QXk"/>
+                                <exclude reference="4Kf-Ym-lrS"/>
                             </mask>
                             <mask key="constraints">
+                                <exclude reference="ORZ-aN-QkC"/>
+                                <exclude reference="wqW-1R-3wY"/>
                                 <exclude reference="eBI-i4-Moa"/>
                                 <exclude reference="v2W-gJ-gI3"/>
                                 <exclude reference="xxS-Mi-oYx"/>
+                                <exclude reference="Jf2-Ry-yrI"/>
+                                <exclude reference="kVe-bL-2UJ"/>
+                                <exclude reference="q0z-6f-Dwa"/>
                                 <exclude reference="EaS-xw-kDM"/>
+                                <exclude reference="y7W-kN-GKG"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular">
                             <mask key="subviews">
                                 <include reference="O1l-Gd-Xa2"/>
+                                <include reference="YgF-Gw-QXk"/>
+                                <include reference="4Kf-Ym-lrS"/>
                             </mask>
                             <mask key="constraints">
+                                <include reference="ORZ-aN-QkC"/>
+                                <include reference="wqW-1R-3wY"/>
                                 <include reference="eBI-i4-Moa"/>
                                 <include reference="v2W-gJ-gI3"/>
                                 <include reference="xxS-Mi-oYx"/>
+                                <include reference="Jf2-Ry-yrI"/>
+                                <include reference="kVe-bL-2UJ"/>
+                                <include reference="q0z-6f-Dwa"/>
                                 <include reference="EaS-xw-kDM"/>
+                                <include reference="y7W-kN-GKG"/>
                             </mask>
                         </variation>
                     </view>
@@ -1753,6 +1780,7 @@
                     <connections>
                         <outlet property="btnAddVisit" destination="0NV-fu-UaS" id="8o9-09-NVJ"/>
                         <outlet property="collectionView" destination="U3Y-nk-reP" id="CQq-N0-rsE"/>
+                        <outlet property="constraintsOfPlace" destination="a1U-lV-kFJ" id="IfO-5E-2pw"/>
                         <outlet property="imgChurch" destination="gQv-x6-Mls" id="ypW-Ef-Nr8"/>
                         <outlet property="lblAddress" destination="QQQ-Jb-fqg" id="FDJ-E4-AkV"/>
                         <outlet property="lblCity" destination="ynV-aB-bGY" id="DxI-Xp-3of"/>
@@ -1762,6 +1790,7 @@
                         <outlet property="segmentControl" destination="d8C-NI-lYR" id="x2X-Gu-ndR"/>
                         <outlet property="viewBackgroundImgChurch" destination="sBM-gw-cJC" id="s7h-sW-4S1"/>
                         <outlet property="viewDetails" destination="O1l-Gd-Xa2" id="tgX-aK-6m3"/>
+                        <outlet property="viewPlace" destination="4Kf-Ym-lrS" id="190-iF-3XV"/>
                         <outlet property="viewVisits" destination="sfT-Ex-DDu" id="r2a-Qe-f4l"/>
                     </connections>
                 </viewController>
