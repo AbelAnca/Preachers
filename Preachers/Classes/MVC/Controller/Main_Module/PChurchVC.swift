@@ -8,13 +8,15 @@
 
 import UIKit
 import Parse
+import MapKit
 import WYPopoverController
+import CoreLocation
 
 enum PChurchTab: Int {
     case Visits, Place, Details
 }
 
-class PChurchVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, WYPopoverControllerDelegate, PPreachVCDelegate, PEditVisitVCDelegate {
+class PChurchVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, WYPopoverControllerDelegate, PPreachVCDelegate, PEditVisitVCDelegate, MKMapViewDelegate, CLLocationManagerDelegate, UISearchBarDelegate {
     
     lazy var popover                = WYPopoverController()
     
@@ -25,11 +27,11 @@ class PChurchVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     @IBOutlet var lblCity: UILabel!
     @IBOutlet var lblPastor: UILabel!
     @IBOutlet var lblAddress: UILabel!
-    //@IBOutlet var lblDistance: UILabel!
-    //@IBOutlet var lblVisits: UILabel!
+    
     @IBOutlet var lblNote: UITextView!
     
     @IBOutlet var btnAddVisit: UIButton!
+    @IBOutlet var btnShowSearchBar: UIButton!
     
     @IBOutlet var viewVisits: UIView!
     @IBOutlet var viewPlace: UIView!
@@ -40,6 +42,17 @@ class PChurchVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     
     @IBOutlet var segmentControl: ADVSegmentedControl!
     
+    @IBOutlet var mapView: MKMapView!
+    let locationManager = CLLocationManager()
+    
+    var searchController:UISearchController!
+    var annotation:MKAnnotation!
+    var localSearchRequest:MKLocalSearchRequest!
+    var localSearch:MKLocalSearch!
+    var localSearchResponse:MKLocalSearchResponse!
+    var error:NSError!
+    var pointAnnotation:MKPointAnnotation!
+    var pinAnnotationView:MKPinAnnotationView!
     
     var arrPreaches: [PFObject]?
     var currentChurch: PFObject?
@@ -52,6 +65,7 @@ class PChurchVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        setupMapView()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -69,10 +83,21 @@ class PChurchVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         imgChurch.clipsToBounds                = true
         
         viewBackgroundImgChurch.layer.cornerRadius = 69
-        viewBackgroundImgChurch.clipsToBounds = true
+        viewBackgroundImgChurch.clipsToBounds      = true
+        
+        btnShowSearchBar.layer.cornerRadius        = 20
+        btnShowSearchBar.clipsToBounds             = true
         
         
         loadScreenForCurSelectedTab()
+    }
+    
+    func setupMapView() {
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
+        mapView.showsUserLocation = true
     }
     
     private func loadScreenForCurSelectedTab() {
@@ -80,45 +105,18 @@ class PChurchVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
             viewVisits.hidden = false
             viewPlace.hidden = true
             viewDetails.hidden = true
-            
-            constraintsOfPlace.constant = 0
-            
-            UIView.animateWithDuration(0.8, animations: { () -> Void in
-                self.view.layoutIfNeeded()
-                }) { (finished) -> Void in
-                    self.imgChurch.hidden = false
-                    self.viewBackgroundImgChurch.hidden = false
-            }
         }
         else
             if curSelectedTab() == PChurchTab.Place.rawValue {
                 viewVisits.hidden = true
                 viewPlace.hidden = true
                 viewDetails.hidden = false
-                
-                constraintsOfPlace.constant = 0
-                
-                UIView.animateWithDuration(0.8, animations: { () -> Void in
-                    self.view.layoutIfNeeded()
-                    }) { (finished) -> Void in
-                        self.imgChurch.hidden = false
-                        self.viewBackgroundImgChurch.hidden = false
-                }
         }
         else
                 if curSelectedTab() == PChurchTab.Details.rawValue {
                     viewVisits.hidden = true
                     viewPlace.hidden = false
                     viewDetails.hidden = true
-                    
-                    constraintsOfPlace.constant = -160
-                    self.imgChurch.hidden = true
-                    self.viewBackgroundImgChurch.hidden = true
-                    
-                    UIView.animateWithDuration(0.8, animations: { () -> Void in
-                        self.view.layoutIfNeeded()
-                        }) { (finished) -> Void in
-                    }
         }
     }
     
@@ -287,28 +285,6 @@ class PChurchVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         return CGSizeMake(width / 2 - 6, 54)
     }
     
-//    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-//        if editingStyle == UITableViewCellEditingStyle.Delete {
-//            
-//            let query = PFQuery(className:"Preach")
-//            if let church = currentChurch {
-//                query.whereKey("church", equalTo: church)
-//                query.findObjectsInBackgroundWithBlock { (objects, error) -> Void in
-//                    if error == nil {
-//                        if let objects = objects {
-//                            let object = objects[indexPath.row]
-//                            object.deleteInBackground()
-//                        }
-//                    }
-//                }
-//                
-//                arrPreaches?.removeAtIndex(indexPath.row)
-//                tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
-//            }
-//        }
-//    }
-    
-    
     // MARK: - Action Methods
     
     @IBAction func btnAddVisits_Action(sender: AnyObject) {
@@ -323,6 +299,35 @@ class PChurchVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     
     @IBAction func btnBack_Action(sender: AnyObject) {
         dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    @IBAction func upGestureRecognizer_Action(sender: AnyObject) {
+        constraintsOfPlace.constant = -160
+        self.imgChurch.hidden = true
+        self.viewBackgroundImgChurch.hidden = true
+        
+        UIView.animateWithDuration(1.0, animations: { () -> Void in
+            self.view.layoutIfNeeded()
+            }) { (finished) -> Void in
+        }
+    }
+    
+    @IBAction func downGestureRecognizer_Action(sender: AnyObject) {
+        constraintsOfPlace.constant = 0
+        
+        UIView.animateWithDuration(1.0, animations: { () -> Void in
+            self.view.layoutIfNeeded()
+            }) { (finished) -> Void in
+                self.imgChurch.hidden = false
+                self.viewBackgroundImgChurch.hidden = false
+        }
+    }
+    
+    @IBAction func showSearcBar_Action(sender: AnyObject) {
+        searchController = UISearchController(searchResultsController: nil)
+        searchController.hidesNavigationBarDuringPresentation = false
+        searchController.searchBar.delegate = self
+        presentViewController(searchController, animated: true, completion: nil)
     }
     
     // MARK: - PPreachVCDelegate Methods
@@ -354,6 +359,42 @@ class PChurchVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     func didCancelEditVC(index: Int) {
         selectItemAtIndex(index)
     }
+    
+    // MARK: - Location Delegate Methods
+    
+    // MARK: - UISearchBarDelegate Methods
+    
+    func searchBarSearchButtonClicked(searchBar: UISearchBar){
+        searchBar.resignFirstResponder()
+        dismissViewControllerAnimated(true, completion: nil)
+        if self.mapView.annotations.count != 0{
+            annotation = self.mapView.annotations[0]
+            self.mapView.removeAnnotation(annotation)
+        }
+        
+        localSearchRequest = MKLocalSearchRequest()
+        localSearchRequest.naturalLanguageQuery = searchBar.text
+        localSearch = MKLocalSearch(request: localSearchRequest)
+        localSearch.startWithCompletionHandler { (localSearchResponse, error) -> Void in
+            
+            if localSearchResponse == nil{
+                let alertController = UIAlertController(title: nil, message: "Place Not Found", preferredStyle: UIAlertControllerStyle.Alert)
+                alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default, handler: nil))
+                self.presentViewController(alertController, animated: true, completion: nil)
+                return
+            }
+            
+            self.pointAnnotation = MKPointAnnotation()
+            self.pointAnnotation.title = searchBar.text
+            self.pointAnnotation.coordinate = CLLocationCoordinate2D(latitude: localSearchResponse!.boundingRegion.center.latitude, longitude:     localSearchResponse!.boundingRegion.center.longitude)
+            
+            
+            self.pinAnnotationView = MKPinAnnotationView(annotation: self.pointAnnotation, reuseIdentifier: nil)
+            self.mapView.centerCoordinate = self.pointAnnotation.coordinate
+            self.mapView.addAnnotation(self.pinAnnotationView.annotation!)
+        }
+    }
+
     
     // MARK: - StatusBar Methods
     
