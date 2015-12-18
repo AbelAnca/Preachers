@@ -12,6 +12,19 @@
 		B514D3141BADD144000AAE32 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B514D3131BADD144000AAE32 /* Utils.swift */; };
 		B51D4FED1BFCA7EF0071B0B4 /* ADVSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51D4FEC1BFCA7EF0071B0B4 /* ADVSegmentedControl.swift */; };
 		B5525BA61BF9BAD4008554BC /* PChurchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5525BA51BF9BAD4008554BC /* PChurchVC.swift */; };
+		B56549EE1C241BB800532079 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B56549ED1C241BB800532079 /* AVFoundation.framework */; };
+		B56549F01C241BCA00532079 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B56549EF1C241BCA00532079 /* CoreData.framework */; };
+		B56549F21C241BD600532079 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B56549F11C241BD600532079 /* CoreLocation.framework */; };
+		B56549F41C241BDF00532079 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B56549F31C241BDF00532079 /* CoreText.framework */; };
+		B56549F61C241BEB00532079 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B56549F51C241BEB00532079 /* GLKit.framework */; };
+		B56549F81C241BF400532079 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B56549F71C241BF400532079 /* ImageIO.framework */; };
+		B56549FA1C241C0E00532079 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = B56549F91C241C0E00532079 /* libc++.tbd */; };
+		B56549FC1C241C1B00532079 /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = B56549FB1C241C1B00532079 /* libicucore.tbd */; };
+		B56549FE1C241C2300532079 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = B56549FD1C241C2300532079 /* libz.tbd */; };
+		B5654A001C241C2E00532079 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B56549FF1C241C2E00532079 /* OpenGLES.framework */; };
+		B5654A021C241C3800532079 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5654A011C241C3800532079 /* QuartzCore.framework */; };
+		B5654A041C241C4F00532079 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5654A031C241C4F00532079 /* SystemConfiguration.framework */; };
+		B5654A061C241DDD00532079 /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5654A051C241DDD00532079 /* Place.swift */; };
 		B57BACEB1BABF301009781B0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57BACEA1BABF301009781B0 /* AppDelegate.swift */; };
 		B57BACF01BABF301009781B0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B57BACEE1BABF301009781B0 /* Main.storyboard */; };
 		B57BACF21BABF301009781B0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B57BACF11BABF301009781B0 /* Assets.xcassets */; };
@@ -77,6 +90,19 @@
 		B5525BB41BF9E791008554BC /* ProximaNovaSemiboldItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = ProximaNovaSemiboldItalic.otf; sourceTree = "<group>"; };
 		B5525BB51BF9E791008554BC /* ProximaNovaThin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = ProximaNovaThin.otf; sourceTree = "<group>"; };
 		B5525BB61BF9E791008554BC /* ProximaNovaThinItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = ProximaNovaThinItalic.otf; sourceTree = "<group>"; };
+		B56549ED1C241BB800532079 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		B56549EF1C241BCA00532079 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		B56549F11C241BD600532079 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		B56549F31C241BDF00532079 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		B56549F51C241BEB00532079 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
+		B56549F71C241BF400532079 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
+		B56549F91C241C0E00532079 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
+		B56549FB1C241C1B00532079 /* libicucore.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libicucore.tbd; path = usr/lib/libicucore.tbd; sourceTree = SDKROOT; };
+		B56549FD1C241C2300532079 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		B56549FF1C241C2E00532079 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
+		B5654A011C241C3800532079 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		B5654A031C241C4F00532079 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		B5654A051C241DDD00532079 /* Place.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
 		B57BACE71BABF301009781B0 /* Preachers.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Preachers.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B57BACEA1BABF301009781B0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B57BACEF1BABF301009781B0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -118,6 +144,18 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B5654A041C241C4F00532079 /* SystemConfiguration.framework in Frameworks */,
+				B5654A021C241C3800532079 /* QuartzCore.framework in Frameworks */,
+				B5654A001C241C2E00532079 /* OpenGLES.framework in Frameworks */,
+				B56549FE1C241C2300532079 /* libz.tbd in Frameworks */,
+				B56549FC1C241C1B00532079 /* libicucore.tbd in Frameworks */,
+				B56549FA1C241C0E00532079 /* libc++.tbd in Frameworks */,
+				B56549F81C241BF400532079 /* ImageIO.framework in Frameworks */,
+				B56549F61C241BEB00532079 /* GLKit.framework in Frameworks */,
+				B56549F41C241BDF00532079 /* CoreText.framework in Frameworks */,
+				B56549F21C241BD600532079 /* CoreLocation.framework in Frameworks */,
+				B56549F01C241BCA00532079 /* CoreData.framework in Frameworks */,
+				B56549EE1C241BB800532079 /* AVFoundation.framework in Frameworks */,
 				B41A3A6F3BDDE3F8B3F12900 /* Pods.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -142,6 +180,18 @@
 		58946F82E1960AB73D49C4FD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B5654A031C241C4F00532079 /* SystemConfiguration.framework */,
+				B5654A011C241C3800532079 /* QuartzCore.framework */,
+				B56549FF1C241C2E00532079 /* OpenGLES.framework */,
+				B56549FD1C241C2300532079 /* libz.tbd */,
+				B56549FB1C241C1B00532079 /* libicucore.tbd */,
+				B56549F91C241C0E00532079 /* libc++.tbd */,
+				B56549F71C241BF400532079 /* ImageIO.framework */,
+				B56549F51C241BEB00532079 /* GLKit.framework */,
+				B56549F31C241BDF00532079 /* CoreText.framework */,
+				B56549F11C241BD600532079 /* CoreLocation.framework */,
+				B56549EF1C241BCA00532079 /* CoreData.framework */,
+				B56549ED1C241BB800532079 /* AVFoundation.framework */,
 				B6FB4A3FDBF6AE6C0CEB8383 /* Pods.framework */,
 			);
 			name = Frameworks;
@@ -317,6 +367,7 @@
 		B57BAD211BABF375009781B0 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				B5654A051C241DDD00532079 /* Place.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -560,6 +611,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B5FCED5F1BCD16500035D092 /* PAddVisitVC.swift in Sources */,
+				B5654A061C241DDD00532079 /* Place.swift in Sources */,
 				B5C949731BCE9D490085BDA8 /* PEditVisitVC.swift in Sources */,
 				B57BACEB1BABF301009781B0 /* AppDelegate.swift in Sources */,
 				B57DF59E1BB4117900B9E3ED /* PForgotPassVC.swift in Sources */,
@@ -729,9 +781,9 @@
 				CODE_SIGN_IDENTITY = "";
 				INFOPLIST_FILE = Preachers/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.assetwatch.client;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mumo.mobile;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "040a93f2-9004-4579-a693-24bbd3f6323a";
+				PROVISIONING_PROFILE = "002b2568-76ea-4016-b357-132309356918";
 			};
 			name = Debug;
 		};
@@ -740,12 +792,12 @@
 			baseConfigurationReference = 501105494FF0BF9ADFB4F9D6 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = Preachers/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.assetwatch.client;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mumo.mobile;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "1b32d6f5-788e-401c-9ae6-1277fd928edb";
+				PROVISIONING_PROFILE = "add87902-f686-46b8-8dcb-4f98c9bfd772";
 			};
 			name = Release;
 		};

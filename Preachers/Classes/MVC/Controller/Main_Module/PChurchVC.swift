@@ -43,8 +43,12 @@ class PChurchVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     @IBOutlet var segmentControl: ADVSegmentedControl!
     
     @IBOutlet var mapView: MKMapView!
-    let locationManager = CLLocationManager()
     
+    var manager: CLLocationManager!
+    
+    var geoPoint: PFGeoPoint?
+    
+    // For search bar on Map View
     var searchController:UISearchController!
     var annotation:MKAnnotation!
     var localSearchRequest:MKLocalSearchRequest!
@@ -65,7 +69,6 @@ class PChurchVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        setupMapView()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -92,11 +95,15 @@ class PChurchVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         loadScreenForCurSelectedTab()
     }
     
-    func setupMapView() {
-        locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.requestWhenInUseAuthorization()
-        locationManager.startUpdatingLocation()
+    func setupCoreLocation() {
+//        // Core location
+//        manager = CLLocationManager()
+//        manager.delegate = self
+//        manager.desiredAccuracy = kCLLocationAccuracyBest
+//        manager.requestWhenInUseAuthorization()
+//        manager.startUpdatingLocation()
+        
+        mapView.delegate = self
         mapView.showsUserLocation = true
     }
     
@@ -330,6 +337,37 @@ class PChurchVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         presentViewController(searchController, animated: true, completion: nil)
     }
     
+    @IBAction func btnFindMe_Action(sender: AnyObject) {
+        setupCoreLocation()
+        
+        PFGeoPoint.geoPointForCurrentLocationInBackground { (geoPoint, error) -> Void in
+            if error == nil {
+                self.geoPoint = geoPoint
+            }
+        }
+        
+        if let longitude = self.geoPoint?.longitude {
+            if let latitude = self.geoPoint?.latitude {
+                let latDelta: CLLocationDegrees = 0.05
+                let lonDelta: CLLocationDegrees = 0.05
+                
+                let location: CLLocationCoordinate2D = CLLocationCoordinate2DMake(latitude, longitude)
+                let span: MKCoordinateSpan = MKCoordinateSpanMake(latDelta, lonDelta)
+                let region: MKCoordinateRegion = MKCoordinateRegionMake(location, span)
+                
+                mapView.setRegion(region, animated: true)
+            }
+        } 
+    }
+    
+    @IBAction func btnAddAddress_Action(sender: AnyObject) {
+        
+    }
+    
+    @IBAction func btnShareAddress_Action(sender: AnyObject) {
+        
+    }
+    
     // MARK: - PPreachVCDelegate Methods
     
     func didCancelPopover() {
@@ -360,14 +398,33 @@ class PChurchVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         selectItemAtIndex(index)
     }
     
-    // MARK: - Location Delegate Methods
+//    // MARK: - CLLocationManagerDelegate Methods
+//    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+//        
+//        let userLocation: CLLocation = locations[0] as CLLocation
+//        
+//        let longitude: CLLocationDegrees = userLocation.coordinate.longitude
+//        let latitude: CLLocationDegrees = userLocation.coordinate.latitude
+//        let latDelta: CLLocationDegrees = 0.05
+//        let lonDelta: CLLocationDegrees = 0.05
+//        
+//        let location: CLLocationCoordinate2D = CLLocationCoordinate2DMake(latitude, longitude)
+//        let span: MKCoordinateSpan = MKCoordinateSpanMake(latDelta, lonDelta)
+//        let region: MKCoordinateRegion = MKCoordinateRegionMake(location, span)
+//        
+//        mapView.setRegion(region, animated: true)
+//    }
+//    
+//    func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
+//        print(error)
+//    }
     
     // MARK: - UISearchBarDelegate Methods
     
     func searchBarSearchButtonClicked(searchBar: UISearchBar){
         searchBar.resignFirstResponder()
         dismissViewControllerAnimated(true, completion: nil)
-        if self.mapView.annotations.count != 0{
+        if self.mapView.annotations.count != 0 {
             annotation = self.mapView.annotations[0]
             self.mapView.removeAnnotation(annotation)
         }
@@ -378,9 +435,9 @@ class PChurchVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         localSearch.startWithCompletionHandler { (localSearchResponse, error) -> Void in
             
             if localSearchResponse == nil{
-                let alertController = UIAlertController(title: nil, message: "Place Not Found", preferredStyle: UIAlertControllerStyle.Alert)
-                alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default, handler: nil))
-                self.presentViewController(alertController, animated: true, completion: nil)
+                let alert = Utils.okAlert("Upss", message: "Place Not Found")
+                self.presentViewController(alert, animated: true, completion: nil)
+                
                 return
             }
             
