@@ -33,10 +33,17 @@ class PChurchVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     @IBOutlet var btnAddVisit: UIButton!
     @IBOutlet var btnShowSearchBar: UIButton!
     
+    @IBOutlet var btnSharePlace: UIButton!
+    @IBOutlet var btnAddCancelPlace: UIButton!
+    
+    
     @IBOutlet var viewVisits: UIView!
     @IBOutlet var viewPlace: UIView!
     @IBOutlet var viewDetails: UIView!
     @IBOutlet var viewBackgroundImgChurch: UIView!
+    
+    @IBOutlet var viewTutorialVistis: UIView!
+    
     
     @IBOutlet var constraintsOfPlace: NSLayoutConstraint!
     
@@ -47,6 +54,7 @@ class PChurchVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     var manager: CLLocationManager!
     
     var geoPoint: PFGeoPoint?
+    var isAdd       = false
     
     // For search bar on Map View
     var searchController:UISearchController!
@@ -79,20 +87,28 @@ class PChurchVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     // MARK: - Custom Methods
     
     func setupUI() {
-        imgChurch.backgroundColor              = UIColor.clearColor()
-        imgChurch.layer.cornerRadius           = 75
-        imgChurch.layer.borderWidth            = 6
-        imgChurch.layer.borderColor            = UIColor.whiteColor().CGColor
-        imgChurch.clipsToBounds                = true
+        imgChurch.backgroundColor                   = UIColor.clearColor()
+        imgChurch.layer.cornerRadius                = 75
+        imgChurch.layer.borderWidth                 = 6
+        imgChurch.layer.borderColor                 = UIColor.whiteColor().CGColor
+        imgChurch.clipsToBounds                     = true
         
-        viewBackgroundImgChurch.layer.cornerRadius = 69
-        viewBackgroundImgChurch.clipsToBounds      = true
+        viewBackgroundImgChurch.layer.cornerRadius  = 69
+        viewBackgroundImgChurch.clipsToBounds       = true
         
-        btnShowSearchBar.layer.cornerRadius        = 20
-        btnShowSearchBar.clipsToBounds             = true
+        btnShowSearchBar.layer.cornerRadius         = 22
+        btnShowSearchBar.clipsToBounds              = true
         
+        btnSharePlace.layer.cornerRadius            = 22
+        btnSharePlace.clipsToBounds                 = true
+        
+        btnAddCancelPlace.layer.cornerRadius        = 22
+        btnAddCancelPlace.clipsToBounds             = true
         
         loadScreenForCurSelectedTab()
+        
+        
+        btnAddCancelPlace.transform          = CGAffineTransformMakeRotation(CGFloat(-0.25 * M_PI))
     }
     
     func setupCoreLocation() {
@@ -183,8 +199,8 @@ class PChurchVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
                         if let imageData = data {
                             if let image = UIImage(data:imageData) {
                                 if image.size == CGSizeMake(200, 200) {
-                                    self.imgChurch.backgroundColor  = UIColor.blackColor()
-                                    self.imgChurch.image            = UIImage(named: "churchICO")
+                                    //self.imgChurch.backgroundColor  = UIColor.blackColor()
+                                    //self.imgChurch.image            = UIImage(named: "churchICO")
                                 }
                                 else {
                                     self.imgChurch.image            = image
@@ -197,6 +213,19 @@ class PChurchVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
                 })
             }
         }
+    }
+    
+    func hideOrShowTutorialSermon(hide: Bool) {
+        if hide == true {
+            // Hide tutorial sermon
+            viewTutorialVistis.hidden = true
+        }
+        else {
+            // Show tutorial sermon
+            viewTutorialVistis.hidden = false
+        }
+        
+        
     }
 
     // MARK: - API Methods
@@ -220,8 +249,17 @@ class PChurchVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if let churchs = arrPreaches {
+            if churchs.count == 0 {
+                hideOrShowTutorialSermon(false)
+            }
+            else {
+                hideOrShowTutorialSermon(true)
+            }
+            
             return churchs.count
         }
+        
+        hideOrShowTutorialSermon(true)
         return 0
     }
     
@@ -360,7 +398,23 @@ class PChurchVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         } 
     }
     
-    @IBAction func btnAddAddress_Action(sender: AnyObject) {
+    @IBAction func btnAddCancelAddress_Action(sender: AnyObject) {
+        if isAdd == true {
+            isAdd = false
+            UIView.animateWithDuration(0.3, animations: { () -> Void in
+                self.btnAddCancelPlace.transform          = CGAffineTransformMakeRotation(CGFloat(-0.25 * M_PI))
+                self.btnAddCancelPlace.backgroundColor    = UIColor.preachersBlue()
+            })
+        }
+        else {
+            isAdd = true
+            UIView.animateWithDuration(0.3, animations: { () -> Void in
+                self.btnAddCancelPlace.transform          = CGAffineTransformMakeRotation(CGFloat(0 * M_PI))
+                self.btnAddCancelPlace.backgroundColor    = UIColor.redColor()
+            })
+        }
+        
+        
         
     }
     
