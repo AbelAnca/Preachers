@@ -16,6 +16,7 @@ class PMainVC: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITab
     @IBOutlet var constraints: NSLayoutConstraint!
     @IBOutlet var btnEdit: UIButton!
     @IBOutlet var tblView: UITableView!
+    @IBOutlet var viewTutorial: UIView!
     
     var searchArrChurchs: [PFObject]?
     var arrChurchs: [PFObject]?
@@ -196,6 +197,18 @@ class PMainVC: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITab
     // MARK: - UITableViewDataSource Methods
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        if let churchs = arrChurchs {
+            if churchs.count == 0 {
+                searchBar.hidden = true
+                viewTutorial.hidden = false
+            }
+            else {
+                searchBar.hidden = false
+                viewTutorial.hidden = true
+            }
+        }
+        
         if isSearching == true {
             if let searchChurchs = searchArrChurchs {
                 if searchChurchs.count == 0 {
@@ -204,6 +217,7 @@ class PMainVC: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITab
                 else {
                     btnEdit.hidden      = false
                 }
+                
                 return searchChurchs.count
             }
         }
@@ -218,6 +232,8 @@ class PMainVC: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITab
                 return churchs.count
             }
         }
+        
+
         
         return 0
     }

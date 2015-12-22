@@ -35,6 +35,7 @@ class PChurchVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     
     @IBOutlet var btnSharePlace: UIButton!
     @IBOutlet var btnAddCancelPlace: UIButton!
+    @IBOutlet var btnFindMe: UIButton!
     
     
     @IBOutlet var viewVisits: UIView!
@@ -43,6 +44,7 @@ class PChurchVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     @IBOutlet var viewBackgroundImgChurch: UIView!
     
     @IBOutlet var viewTutorialVistis: UIView!
+    @IBOutlet var viewTutorialPlace: UIView!
     
     
     @IBOutlet var constraintsOfPlace: NSLayoutConstraint!
@@ -51,9 +53,8 @@ class PChurchVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     
     @IBOutlet var mapView: MKMapView!
     
-    var manager: CLLocationManager!
+    var currentLoc: PFGeoPoint = PFGeoPoint()
     
-    var geoPoint: PFGeoPoint?
     var isAdd       = false
     
     // For search bar on Map View
@@ -77,6 +78,7 @@ class PChurchVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        setupCoreLocation()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -96,31 +98,33 @@ class PChurchVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         viewBackgroundImgChurch.layer.cornerRadius  = 69
         viewBackgroundImgChurch.clipsToBounds       = true
         
-        btnShowSearchBar.layer.cornerRadius         = 22
-        btnShowSearchBar.clipsToBounds              = true
-        
-        btnSharePlace.layer.cornerRadius            = 22
-        btnSharePlace.clipsToBounds                 = true
-        
-        btnAddCancelPlace.layer.cornerRadius        = 22
-        btnAddCancelPlace.clipsToBounds             = true
-        
+        setupButtons()
+
         loadScreenForCurSelectedTab()
-        
+    }
+    
+    func setupButton(button: UIButton) {
+        button.layer.cornerRadius        = 22
+        button.clipsToBounds             = true
+    }
+    
+    func setupButtons() {
+        setupButton(btnShowSearchBar)
+        setupButton(btnFindMe)
+        setupButton(btnSharePlace)
+        setupButton(btnAddCancelPlace)
         
         btnAddCancelPlace.transform          = CGAffineTransformMakeRotation(CGFloat(-0.25 * M_PI))
     }
     
     func setupCoreLocation() {
-//        // Core location
-//        manager = CLLocationManager()
-//        manager.delegate = self
-//        manager.desiredAccuracy = kCLLocationAccuracyBest
-//        manager.requestWhenInUseAuthorization()
-//        manager.startUpdatingLocation()
-        
-        mapView.delegate = self
         mapView.showsUserLocation = true
+        mapView.delegate = self
+        
+//        manager = CLLocationManager()
+//        manager!.delegate = self
+//        manager!.desiredAccuracy = kCLLocationAccuracyBest
+//        manager!.startUpdatingLocation()
     }
     
     private func loadScreenForCurSelectedTab() {
@@ -226,6 +230,21 @@ class PChurchVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         }
         
         
+    }
+    
+    func hideOrShowViewPlace(hide: Bool) {
+        if hide == true {
+            mapView.hidden             = true
+            btnSharePlace.hidden       = true
+            btnShowSearchBar.hidden    = true
+            btnFindMe.hidden           = true
+        }
+        else {
+            mapView.hidden             = false
+            btnSharePlace.hidden       = false
+            btnShowSearchBar.hidden    = false
+            btnFindMe.hidden           = false
+        }
     }
 
     // MARK: - API Methods
@@ -376,16 +395,14 @@ class PChurchVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     }
     
     @IBAction func btnFindMe_Action(sender: AnyObject) {
-        setupCoreLocation()
+        //setupCoreLocation()
         
         PFGeoPoint.geoPointForCurrentLocationInBackground { (geoPoint, error) -> Void in
             if error == nil {
-                self.geoPoint = geoPoint
-            }
-        }
-        
-        if let longitude = self.geoPoint?.longitude {
-            if let latitude = self.geoPoint?.latitude {
+                self.currentLoc = geoPoint!
+                
+                let longitude = self.currentLoc.longitude
+                let latitude = self.currentLoc.latitude
                 let latDelta: CLLocationDegrees = 0.05
                 let lonDelta: CLLocationDegrees = 0.05
                 
@@ -393,29 +410,43 @@ class PChurchVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
                 let span: MKCoordinateSpan = MKCoordinateSpanMake(latDelta, lonDelta)
                 let region: MKCoordinateRegion = MKCoordinateRegionMake(location, span)
                 
-                mapView.setRegion(region, animated: true)
+                self.mapView.setRegion(region, animated: true)
             }
-        } 
+        }
+        
+        
+        let longitude = self.currentLoc.longitude
+        let latitude = self.currentLoc.latitude
+        let latDelta: CLLocationDegrees = 0.05
+        let lonDelta: CLLocationDegrees = 0.05
+        
+        let location: CLLocationCoordinate2D = CLLocationCoordinate2DMake(latitude, longitude)
+        let span: MKCoordinateSpan = MKCoordinateSpanMake(latDelta, lonDelta)
+        let region: MKCoordinateRegion = MKCoordinateRegionMake(location, span)
+        
+        mapView.setRegion(region, animated: true)
+        
     }
     
     @IBAction func btnAddCancelAddress_Action(sender: AnyObject) {
         if isAdd == true {
             isAdd = false
-            UIView.animateWithDuration(0.3, animations: { () -> Void in
+            UIView.animateWithDuration(0.5, animations: { () -> Void in
                 self.btnAddCancelPlace.transform          = CGAffineTransformMakeRotation(CGFloat(-0.25 * M_PI))
                 self.btnAddCancelPlace.backgroundColor    = UIColor.preachersBlue()
+                self.hideOrShowViewPlace(true)
+                self.viewTutorialPlace.hidden             = false
             })
         }
         else {
             isAdd = true
-            UIView.animateWithDuration(0.3, animations: { () -> Void in
+            UIView.animateWithDuration(0.5, animations: { () -> Void in
                 self.btnAddCancelPlace.transform          = CGAffineTransformMakeRotation(CGFloat(0 * M_PI))
                 self.btnAddCancelPlace.backgroundColor    = UIColor.redColor()
+                self.hideOrShowViewPlace(false)
+                self.viewTutorialPlace.hidden             = true
             })
         }
-        
-        
-        
     }
     
     @IBAction func btnShareAddress_Action(sender: AnyObject) {
