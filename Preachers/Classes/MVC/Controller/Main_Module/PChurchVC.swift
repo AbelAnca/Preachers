@@ -16,46 +16,42 @@ enum PChurchTab: Int {
     case Visits, Place, Details
 }
 
-class PChurchVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, WYPopoverControllerDelegate, PPreachVCDelegate, PEditVisitVCDelegate, MKMapViewDelegate, CLLocationManagerDelegate, UISearchBarDelegate {
+class PChurchVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, WYPopoverControllerDelegate, PPreachVCDelegate, PEditVisitVCDelegate, MKMapViewDelegate, UISearchBarDelegate {
     
-    lazy var popover                = WYPopoverController()
-    
+    // IBOutlets
     @IBOutlet var collectionView: UICollectionView!
     @IBOutlet var imgChurch: UIImageView!
     
+    // Details View
     @IBOutlet var lblName: UILabel!
     @IBOutlet var lblCity: UILabel!
     @IBOutlet var lblPastor: UILabel!
     @IBOutlet var lblAddress: UILabel!
-    
     @IBOutlet var lblNote: UITextView!
     
+    // Map View
     @IBOutlet var btnAddVisit: UIButton!
     @IBOutlet var btnShowSearchBar: UIButton!
-    
     @IBOutlet var btnSharePlace: UIButton!
     @IBOutlet var btnAddCancelPlace: UIButton!
     @IBOutlet var btnFindMe: UIButton!
+    @IBOutlet var btnFindAddress: UIButton!
     
+    @IBOutlet var mapView: MKMapView!
     
+    // All Views
     @IBOutlet var viewVisits: UIView!
     @IBOutlet var viewPlace: UIView!
     @IBOutlet var viewDetails: UIView!
     @IBOutlet var viewBackgroundImgChurch: UIView!
-    
     @IBOutlet var viewTutorialVistis: UIView!
     @IBOutlet var viewTutorialPlace: UIView!
     
-    
+    // Constraints
     @IBOutlet var constraintsOfPlace: NSLayoutConstraint!
     
+    // Segment Control
     @IBOutlet var segmentControl: ADVSegmentedControl!
-    
-    @IBOutlet var mapView: MKMapView!
-    
-    var currentLoc: PFGeoPoint = PFGeoPoint()
-    
-    var isAdd       = false
     
     // For search bar on Map View
     var searchController:UISearchController!
@@ -69,21 +65,26 @@ class PChurchVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     
     var arrPreaches: [PFObject]?
     var currentChurch: PFObject?
-    var index: Int?
     
+    var index: Int?
     var nrVisits: Int?
     var objId: String?
+    
+    lazy var popover                = WYPopoverController()
+    var isAdd                       = false
+    var anotation: MKPointAnnotation?
 
     // MARK: - ViewController Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        setupCoreLocation()
+        setupGestureRecognizerForMapView()
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         loadParams()
+        findMe_APICall()
     }
     
     // MARK: - Custom Methods
@@ -101,6 +102,8 @@ class PChurchVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         setupButtons()
 
         loadScreenForCurSelectedTab()
+        
+        mapView.showsUserLocation = true
     }
     
     func setupButton(button: UIButton) {
@@ -111,20 +114,41 @@ class PChurchVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     func setupButtons() {
         setupButton(btnShowSearchBar)
         setupButton(btnFindMe)
+        setupButton(btnFindAddress)
         setupButton(btnSharePlace)
         setupButton(btnAddCancelPlace)
         
         btnAddCancelPlace.transform          = CGAffineTransformMakeRotation(CGFloat(-0.25 * M_PI))
     }
     
-    func setupCoreLocation() {
-        mapView.showsUserLocation = true
-        mapView.delegate = self
+    
+    
+    func setupGestureRecognizerForMapView() {
+        let gestureRecognizer = UILongPressGestureRecognizer(target: self, action: "action:")
         
-//        manager = CLLocationManager()
-//        manager!.delegate = self
-//        manager!.desiredAccuracy = kCLLocationAccuracyBest
-//        manager!.startUpdatingLocation()
+        gestureRecognizer.minimumPressDuration = 2.0
+        
+        mapView.addGestureRecognizer(gestureRecognizer)
+    }
+    
+    func action(gestureRecognizer: UIGestureRecognizer) {
+        
+        if let anotation = anotation {
+            mapView.removeAnnotation(anotation)
+        }
+        
+        let touchPoint = gestureRecognizer.locationInView(self.mapView)
+        let newCoordonate: CLLocationCoordinate2D = mapView.convertPoint(touchPoint, toCoordinateFromView: self.mapView)
+        let newAnotation = MKPointAnnotation()
+        
+        newAnotation.coordinate = newCoordonate
+        newAnotation.title = "Title"
+        newAnotation.subtitle = "my address"
+        
+        
+        
+        self.anotation = newAnotation
+        mapView.addAnnotation(newAnotation)
     }
     
     private func loadScreenForCurSelectedTab() {
@@ -202,13 +226,7 @@ class PChurchVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
                     if error == nil {
                         if let imageData = data {
                             if let image = UIImage(data:imageData) {
-                                if image.size == CGSizeMake(200, 200) {
-                                    //self.imgChurch.backgroundColor  = UIColor.blackColor()
-                                    //self.imgChurch.image            = UIImage(named: "churchICO")
-                                }
-                                else {
-                                    self.imgChurch.image            = image
-                                }
+                                self.imgChurch.image            = image
                             }
                         }
                     }
@@ -228,8 +246,6 @@ class PChurchVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
             // Show tutorial sermon
             viewTutorialVistis.hidden = false
         }
-        
-        
     }
     
     func hideOrShowViewPlace(hide: Bool) {
@@ -238,16 +254,46 @@ class PChurchVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
             btnSharePlace.hidden       = true
             btnShowSearchBar.hidden    = true
             btnFindMe.hidden           = true
+            btnFindAddress.hidden      = true
         }
         else {
             mapView.hidden             = false
             btnSharePlace.hidden       = false
             btnShowSearchBar.hidden    = false
             btnFindMe.hidden           = false
+            btnFindAddress.hidden      = false
         }
+    }
+    
+    func zoomToRegion(latitude: Double, longitude: Double) {
+        let location = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        let region = MKCoordinateRegionMakeWithDistance(location, 500.0, 700.0)
+        mapView.setRegion(region, animated: true)
     }
 
     // MARK: - API Methods
+    
+    func findMe_APICall() {
+        PFGeoPoint.geoPointForCurrentLocationInBackground { (geoPoint, error) -> Void in
+            if error == nil {
+                if let latitude = geoPoint?.latitude {
+                    if let longitude = geoPoint?.longitude {
+                        self.zoomToRegion(latitude, longitude: longitude)
+                    }
+                }
+            }
+        }
+    }
+    
+    func findAddress_APICall() {
+        if let anotation = anotation {
+            zoomToRegion(anotation.coordinate.latitude, longitude: anotation.coordinate.longitude)
+        }
+        else {
+            let alert = Utils.okAlert("You don't have the address yet", message: "You have to press more than 2 second on map for create the address.")
+            presentViewController(alert, animated: false, completion: nil)
+        }
+    }
     
     func loadPreach() {
         let query = PFQuery(className:"Preach")
@@ -395,50 +441,35 @@ class PChurchVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     }
     
     @IBAction func btnFindMe_Action(sender: AnyObject) {
-        //setupCoreLocation()
-        
-        PFGeoPoint.geoPointForCurrentLocationInBackground { (geoPoint, error) -> Void in
-            if error == nil {
-                self.currentLoc = geoPoint!
-                
-                let longitude = self.currentLoc.longitude
-                let latitude = self.currentLoc.latitude
-                let latDelta: CLLocationDegrees = 0.05
-                let lonDelta: CLLocationDegrees = 0.05
-                
-                let location: CLLocationCoordinate2D = CLLocationCoordinate2DMake(latitude, longitude)
-                let span: MKCoordinateSpan = MKCoordinateSpanMake(latDelta, lonDelta)
-                let region: MKCoordinateRegion = MKCoordinateRegionMake(location, span)
-                
-                self.mapView.setRegion(region, animated: true)
-            }
-        }
-        
-        
-        let longitude = self.currentLoc.longitude
-        let latitude = self.currentLoc.latitude
-        let latDelta: CLLocationDegrees = 0.05
-        let lonDelta: CLLocationDegrees = 0.05
-        
-        let location: CLLocationCoordinate2D = CLLocationCoordinate2DMake(latitude, longitude)
-        let span: MKCoordinateSpan = MKCoordinateSpanMake(latDelta, lonDelta)
-        let region: MKCoordinateRegion = MKCoordinateRegionMake(location, span)
-        
-        mapView.setRegion(region, animated: true)
-        
+        findMe_APICall()
     }
     
+    @IBAction func btnFindAddress_Action(sender: AnyObject) {
+        findAddress_APICall()
+    }
+
     @IBAction func btnAddCancelAddress_Action(sender: AnyObject) {
         if isAdd == true {
-            isAdd = false
-            UIView.animateWithDuration(0.5, animations: { () -> Void in
-                self.btnAddCancelPlace.transform          = CGAffineTransformMakeRotation(CGFloat(-0.25 * M_PI))
-                self.btnAddCancelPlace.backgroundColor    = UIColor.preachersBlue()
-                self.hideOrShowViewPlace(true)
-                self.viewTutorialPlace.hidden             = false
-            })
+            let alert = UIAlertController(title: "Attention", message: "Are you sure you want to permanently delete this address?", preferredStyle: .Alert)
+            alert.addAction(UIAlertAction(title: "Delete", style: .Destructive, handler: { (action) -> Void in
+                self.isAdd = false
+                UIView.animateWithDuration(0.5, animations: { () -> Void in
+                    self.btnAddCancelPlace.transform          = CGAffineTransformMakeRotation(CGFloat(-0.25 * M_PI))
+                    self.btnAddCancelPlace.backgroundColor    = UIColor.preachersBlue()
+                    self.hideOrShowViewPlace(true)
+                    self.viewTutorialPlace.hidden             = false
+                })
+            }))
+            alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+            
+            presentViewController(alert, animated: true, completion: nil)
         }
         else {
+            let alert = UIAlertController(title: "Attention", message: "You have to press more than 2 second on map for create the address.", preferredStyle: .Alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .Cancel, handler: nil))
+            
+            presentViewController(alert, animated: true, completion: nil)
+            
             isAdd = true
             UIView.animateWithDuration(0.5, animations: { () -> Void in
                 self.btnAddCancelPlace.transform          = CGAffineTransformMakeRotation(CGFloat(0 * M_PI))
@@ -483,36 +514,17 @@ class PChurchVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         selectItemAtIndex(index)
     }
     
-//    // MARK: - CLLocationManagerDelegate Methods
-//    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-//        
-//        let userLocation: CLLocation = locations[0] as CLLocation
-//        
-//        let longitude: CLLocationDegrees = userLocation.coordinate.longitude
-//        let latitude: CLLocationDegrees = userLocation.coordinate.latitude
-//        let latDelta: CLLocationDegrees = 0.05
-//        let lonDelta: CLLocationDegrees = 0.05
-//        
-//        let location: CLLocationCoordinate2D = CLLocationCoordinate2DMake(latitude, longitude)
-//        let span: MKCoordinateSpan = MKCoordinateSpanMake(latDelta, lonDelta)
-//        let region: MKCoordinateRegion = MKCoordinateRegionMake(location, span)
-//        
-//        mapView.setRegion(region, animated: true)
-//    }
-//    
-//    func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
-//        print(error)
-//    }
-    
     // MARK: - UISearchBarDelegate Methods
     
     func searchBarSearchButtonClicked(searchBar: UISearchBar){
         searchBar.resignFirstResponder()
         dismissViewControllerAnimated(true, completion: nil)
+        /*
         if self.mapView.annotations.count != 0 {
             annotation = self.mapView.annotations[0]
             self.mapView.removeAnnotation(annotation)
         }
+        */
         
         localSearchRequest = MKLocalSearchRequest()
         localSearchRequest.naturalLanguageQuery = searchBar.text
@@ -533,7 +545,7 @@ class PChurchVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
             
             self.pinAnnotationView = MKPinAnnotationView(annotation: self.pointAnnotation, reuseIdentifier: nil)
             self.mapView.centerCoordinate = self.pointAnnotation.coordinate
-            self.mapView.addAnnotation(self.pinAnnotationView.annotation!)
+            //self.mapView.addAnnotation(self.pinAnnotationView.annotation!)
         }
     }
 

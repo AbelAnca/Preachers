@@ -1028,12 +1028,12 @@
                                     </mask>
                                     <mask key="constraints">
                                         <exclude reference="k1P-Lz-CM0"/>
+                                        <exclude reference="NdH-I8-gCI"/>
+                                        <exclude reference="yVh-MY-VRQ"/>
                                         <exclude reference="IDE-yE-sga"/>
                                         <exclude reference="ntI-jz-Jqa"/>
                                         <exclude reference="tK8-Zn-u1G"/>
                                         <exclude reference="tzd-ke-GfD"/>
-                                        <exclude reference="NdH-I8-gCI"/>
-                                        <exclude reference="yVh-MY-VRQ"/>
                                         <exclude reference="1LO-66-kvx"/>
                                         <exclude reference="P4L-88-r51"/>
                                     </mask>
@@ -1046,12 +1046,12 @@
                                     </mask>
                                     <mask key="constraints">
                                         <include reference="k1P-Lz-CM0"/>
+                                        <include reference="NdH-I8-gCI"/>
+                                        <include reference="yVh-MY-VRQ"/>
                                         <exclude reference="IDE-yE-sga"/>
                                         <include reference="ntI-jz-Jqa"/>
                                         <exclude reference="tK8-Zn-u1G"/>
                                         <include reference="tzd-ke-GfD"/>
-                                        <include reference="NdH-I8-gCI"/>
-                                        <include reference="yVh-MY-VRQ"/>
                                         <include reference="1LO-66-kvx"/>
                                         <include reference="P4L-88-r51"/>
                                     </mask>
@@ -1593,14 +1593,14 @@
                                         <exclude reference="Rdz-PO-az9"/>
                                     </mask>
                                     <mask key="constraints">
-                                        <exclude reference="Qig-HF-mQs"/>
-                                        <exclude reference="eBK-Uf-kUW"/>
-                                        <exclude reference="pqW-ng-chd"/>
+                                        <exclude reference="7yG-g8-vmO"/>
+                                        <exclude reference="tJE-Zl-FCk"/>
                                         <exclude reference="Vbr-y3-Abr"/>
                                         <exclude reference="abS-wO-ROQ"/>
                                         <exclude reference="dh7-mw-lrq"/>
-                                        <exclude reference="7yG-g8-vmO"/>
-                                        <exclude reference="tJE-Zl-FCk"/>
+                                        <exclude reference="Qig-HF-mQs"/>
+                                        <exclude reference="eBK-Uf-kUW"/>
+                                        <exclude reference="pqW-ng-chd"/>
                                     </mask>
                                 </variation>
                                 <variation key="heightClass=regular">
@@ -1609,14 +1609,14 @@
                                         <include reference="Rdz-PO-az9"/>
                                     </mask>
                                     <mask key="constraints">
-                                        <include reference="Qig-HF-mQs"/>
-                                        <include reference="eBK-Uf-kUW"/>
-                                        <include reference="pqW-ng-chd"/>
+                                        <include reference="7yG-g8-vmO"/>
+                                        <include reference="tJE-Zl-FCk"/>
                                         <include reference="Vbr-y3-Abr"/>
                                         <include reference="abS-wO-ROQ"/>
                                         <include reference="dh7-mw-lrq"/>
-                                        <include reference="7yG-g8-vmO"/>
-                                        <include reference="tJE-Zl-FCk"/>
+                                        <include reference="Qig-HF-mQs"/>
+                                        <include reference="eBK-Uf-kUW"/>
+                                        <include reference="pqW-ng-chd"/>
                                     </mask>
                                 </variation>
                             </view>
@@ -2093,6 +2093,9 @@
                                     </view>
                                     <mapView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="GV9-HM-Vox">
                                         <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="sHf-Gt-tO1" id="uN2-u4-dJs"/>
+                                        </connections>
                                     </mapView>
                                     <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="baI-Lk-tKu">
                                         <rect key="frame" x="-23" y="-15" width="46" height="30"/>
@@ -2193,7 +2196,31 @@
                                             </mask>
                                         </variation>
                                         <connections>
-                                            <action selector="btnFindMe_Action:" destination="sHf-Gt-tO1" eventType="touchUpInside" id="CU6-O6-Ouh"/>
+                                            <action selector="btnFindAddress_Action:" destination="sHf-Gt-tO1" eventType="touchUpInside" id="xCq-bM-8TY"/>
+                                        </connections>
+                                    </button>
+                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a3K-G1-BbO">
+                                        <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="44" id="A8U-F6-3rp"/>
+                                            <constraint firstAttribute="height" constant="44" id="qAu-aY-vGo"/>
+                                        </constraints>
+                                        <state key="normal" image="ico_table_geoloco_grey"/>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="A8U-F6-3rp"/>
+                                                <exclude reference="qAu-aY-vGo"/>
+                                            </mask>
+                                        </variation>
+                                        <variation key="heightClass=regular">
+                                            <mask key="constraints">
+                                                <include reference="A8U-F6-3rp"/>
+                                                <include reference="qAu-aY-vGo"/>
+                                            </mask>
+                                        </variation>
+                                        <connections>
+                                            <action selector="btnFindMe_Action:" destination="sHf-Gt-tO1" eventType="touchUpInside" id="eaj-4u-qC5"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -2208,12 +2235,14 @@
                                     <constraint firstAttribute="trailing" secondItem="GV9-HM-Vox" secondAttribute="trailing" id="UHb-5p-6Wt"/>
                                     <constraint firstAttribute="bottom" secondItem="GV9-HM-Vox" secondAttribute="bottom" id="XC0-2U-609"/>
                                     <constraint firstAttribute="bottom" secondItem="baI-Lk-tKu" secondAttribute="bottom" constant="8" id="b1a-Ta-uMw"/>
+                                    <constraint firstAttribute="bottom" secondItem="a3K-G1-BbO" secondAttribute="bottom" constant="8" id="dlA-Fa-42s"/>
                                     <constraint firstItem="GV9-HM-Vox" firstAttribute="top" secondItem="4Kf-Ym-lrS" secondAttribute="top" id="ipf-lI-bR2"/>
                                     <constraint firstAttribute="trailing" secondItem="jgD-Up-63w" secondAttribute="trailing" constant="8" id="km7-wl-XL4"/>
                                     <constraint firstAttribute="bottom" secondItem="cOC-4D-IUA" secondAttribute="bottom" constant="8" id="krF-Po-dnY"/>
                                     <constraint firstAttribute="bottom" secondItem="jgD-Up-63w" secondAttribute="bottom" constant="8" id="lDT-sm-exc"/>
                                     <constraint firstItem="jgD-Up-63w" firstAttribute="leading" secondItem="EW9-Kq-5xv" secondAttribute="trailing" constant="8" id="oDJ-PT-Lct"/>
                                     <constraint firstItem="baI-Lk-tKu" firstAttribute="leading" secondItem="4Kf-Ym-lrS" secondAttribute="leading" constant="8" id="qs1-PG-HMh"/>
+                                    <constraint firstItem="a3K-G1-BbO" firstAttribute="leading" secondItem="baI-Lk-tKu" secondAttribute="trailing" constant="8" id="wcw-id-NHj"/>
                                     <constraint firstItem="01s-lG-TZw" firstAttribute="centerX" secondItem="4Kf-Ym-lrS" secondAttribute="centerX" id="wtT-Ci-369"/>
                                 </constraints>
                                 <variation key="default">
@@ -2224,6 +2253,7 @@
                                         <exclude reference="jgD-Up-63w"/>
                                         <exclude reference="cOC-4D-IUA"/>
                                         <exclude reference="EW9-Kq-5xv"/>
+                                        <exclude reference="a3K-G1-BbO"/>
                                     </mask>
                                     <mask key="constraints">
                                         <exclude reference="P6c-IU-RwM"/>
@@ -2233,6 +2263,8 @@
                                         <exclude reference="wtT-Ci-369"/>
                                         <exclude reference="b1a-Ta-uMw"/>
                                         <exclude reference="qs1-PG-HMh"/>
+                                        <exclude reference="dlA-Fa-42s"/>
+                                        <exclude reference="wcw-id-NHj"/>
                                         <exclude reference="Tds-dn-M6b"/>
                                         <exclude reference="krF-Po-dnY"/>
                                         <exclude reference="9MU-4w-pNh"/>
@@ -2250,6 +2282,7 @@
                                         <include reference="jgD-Up-63w"/>
                                         <include reference="cOC-4D-IUA"/>
                                         <include reference="EW9-Kq-5xv"/>
+                                        <include reference="a3K-G1-BbO"/>
                                     </mask>
                                     <mask key="constraints">
                                         <include reference="P6c-IU-RwM"/>
@@ -2259,6 +2292,8 @@
                                         <include reference="wtT-Ci-369"/>
                                         <include reference="b1a-Ta-uMw"/>
                                         <include reference="qs1-PG-HMh"/>
+                                        <include reference="dlA-Fa-42s"/>
+                                        <include reference="wcw-id-NHj"/>
                                         <include reference="Tds-dn-M6b"/>
                                         <include reference="krF-Po-dnY"/>
                                         <include reference="9MU-4w-pNh"/>
@@ -2335,7 +2370,8 @@
                     <connections>
                         <outlet property="btnAddCancelPlace" destination="cOC-4D-IUA" id="ETK-Vm-hoX"/>
                         <outlet property="btnAddVisit" destination="0NV-fu-UaS" id="8o9-09-NVJ"/>
-                        <outlet property="btnFindMe" destination="EW9-Kq-5xv" id="Ls8-1K-U1g"/>
+                        <outlet property="btnFindAddress" destination="EW9-Kq-5xv" id="flE-b0-R5M"/>
+                        <outlet property="btnFindMe" destination="a3K-G1-BbO" id="W4I-EJ-Gnk"/>
                         <outlet property="btnSharePlace" destination="baI-Lk-tKu" id="2KR-g2-LqN"/>
                         <outlet property="btnShowSearchBar" destination="jgD-Up-63w" id="8QU-N0-E3M"/>
                         <outlet property="collectionView" destination="U3Y-nk-reP" id="CQq-N0-rsE"/>
@@ -4200,7 +4236,8 @@
         <image name="btn_search" width="17" height="17"/>
         <image name="churchICO" width="100" height="100"/>
         <image name="ic_delete" width="16" height="16"/>
-        <image name="ico_table_address_grey" width="15" height="15"/>
+        <image name="ico_table_address_grey" width="15" height="14"/>
+        <image name="ico_table_geoloco_grey" width="14" height="18"/>
         <image name="icon_back" width="40" height="40"/>
         <image name="icon_options_delete" width="20" height="20"/>
         <image name="icon_options_edit" width="20" height="20"/>
