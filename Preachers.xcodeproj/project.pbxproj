@@ -24,7 +24,6 @@
 		B5654A001C241C2E00532079 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B56549FF1C241C2E00532079 /* OpenGLES.framework */; };
 		B5654A021C241C3800532079 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5654A011C241C3800532079 /* QuartzCore.framework */; };
 		B5654A041C241C4F00532079 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5654A031C241C4F00532079 /* SystemConfiguration.framework */; };
-		B5654A061C241DDD00532079 /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5654A051C241DDD00532079 /* Place.swift */; };
 		B57BACEB1BABF301009781B0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57BACEA1BABF301009781B0 /* AppDelegate.swift */; };
 		B57BACF01BABF301009781B0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B57BACEE1BABF301009781B0 /* Main.storyboard */; };
 		B57BACF21BABF301009781B0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B57BACF11BABF301009781B0 /* Assets.xcassets */; };
@@ -102,7 +101,6 @@
 		B56549FF1C241C2E00532079 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		B5654A011C241C3800532079 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		B5654A031C241C4F00532079 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
-		B5654A051C241DDD00532079 /* Place.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
 		B57BACE71BABF301009781B0 /* Preachers.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Preachers.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B57BACEA1BABF301009781B0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B57BACEF1BABF301009781B0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -367,7 +365,6 @@
 		B57BAD211BABF375009781B0 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				B5654A051C241DDD00532079 /* Place.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -611,7 +608,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				B5FCED5F1BCD16500035D092 /* PAddVisitVC.swift in Sources */,
-				B5654A061C241DDD00532079 /* Place.swift in Sources */,
 				B5C949731BCE9D490085BDA8 /* PEditVisitVC.swift in Sources */,
 				B57BACEB1BABF301009781B0 /* AppDelegate.swift in Sources */,
 				B57DF59E1BB4117900B9E3ED /* PForgotPassVC.swift in Sources */,

@@ -19,6 +19,7 @@ class Church : PFObject, PFSubclassing {
     @NSManaged var note: String?
     @NSManaged var user: PFUser
     @NSManaged var image: PFFile?
+    @NSManaged var place: PFGeoPoint?
     
     override class func initialize() {
         struct Static {
