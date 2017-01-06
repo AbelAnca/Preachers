@@ -73,7 +73,7 @@ class PAddVisitVC: UIViewController {
                 }
                 else {
                     if let error = error {
-                        let errorString     = error.userInfo["error"] as! String
+                        let errorString     = error._userInfo["error"] as! String
                         let alert           = Utils.okAlert("Error", message: errorString)
                         self.present(alert, animated: true, completion: nil)
                     }

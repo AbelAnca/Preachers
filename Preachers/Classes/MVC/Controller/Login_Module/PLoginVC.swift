@@ -36,8 +36,6 @@ class PLoginVC: UIViewController, UITextFieldDelegate {
         
         txfUsername.text = "Abel Anca"
         txfPassword.text = "qwerty"
-        
-        NotificationCenter.defaultCenter().addObserver(self, selector: "reachabilityChanged_Notification:", name: ReachabilityChangedNotification, object: appDelegate.reachability)
 
         setupUI()
     }
@@ -45,15 +43,6 @@ class PLoginVC: UIViewController, UITextFieldDelegate {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        // Initial reachability check
-        if let reachability = appDelegate.reachability {
-            if reachability.isReachable() {
-                hideNoInternetConnectionView()
-            }
-            else {
-                showNoInternetConnectionView()
-            }
-        }
     }
     
     // MARK: - Notification Methods
@@ -219,13 +208,6 @@ class PLoginVC: UIViewController, UITextFieldDelegate {
     // MARK: - Action Methods
     
     @IBAction func btnGo_Action() {
-        // Check internet connection
-        if appDelegate.bIsNetworkReachable == false {
-            let alertView = Utils.noNetworkConnectioAlert()
-            self.present(alertView, animated: true, completion: nil)
-            
-            return
-        }
         
         if checkUsernameAndPassIsValid() == true {
             if isLoginSelected == false {

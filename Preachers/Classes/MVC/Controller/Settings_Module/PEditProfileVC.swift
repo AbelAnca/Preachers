@@ -94,7 +94,7 @@ class PEditProfileVC: UIViewController, UITextFieldDelegate {
                 else {
                     if let error = error {
                         KVNProgress.dismiss()
-                        let errorString        = error.userInfo["error"] as! String
+                        let errorString        = error._userInfo["error"] as! String
                         let alert              = Utils.okAlert("Error", message: errorString)
                         self.present(alert, animated: true, completion: nil)
                     }

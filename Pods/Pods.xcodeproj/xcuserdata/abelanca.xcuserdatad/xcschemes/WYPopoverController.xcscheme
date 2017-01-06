@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = 'ED9B62680D9D0ECD49C86CD75CAC3BD5'
+               BlueprintIdentifier = '74F30EC9374E54FED3D7FCA008586EA4'
                BlueprintName = 'WYPopoverController'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'WYPopoverController.framework'>

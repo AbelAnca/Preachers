@@ -1,33 +1,15 @@
 PODS:
-  - Bolts/Tasks (1.8.4)
   - KVNProgress (2.2.4)
-  - Parse (1.14.2):
-    - Bolts/Tasks (~> 1.8)
-  - ReachabilitySwift (3)
   - WYPopoverController (0.3.9)
 
 DEPENDENCIES:
   - KVNProgress (~> 2.2.1)
-  - Parse
-  - ReachabilitySwift (from `https://github.com/ashleymills/Reachability.swift`)
   - WYPopoverController
 
-EXTERNAL SOURCES:
-  ReachabilitySwift:
-    :git: https://github.com/ashleymills/Reachability.swift
-
-CHECKOUT OPTIONS:
-  ReachabilitySwift:
-    :commit: 3ef451e0c184c0b5050538cbec9f5ed26d2614b9
-    :git: https://github.com/ashleymills/Reachability.swift
-
 SPEC CHECKSUMS:
-  Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
   KVNProgress: 541edcea5a1fef592aceac8d791a410d38cb499d
-  Parse: 4335d65f40cb3d43190d723144bbe1afb9c38230
-  ReachabilitySwift: f5b9bb30a0777fac8f09ce8b067e32faeb29bb64
   WYPopoverController: a9db25ac2841a686acdc0f3a99bdb21545db32f4
 
-PODFILE CHECKSUM: 310cd37a2664c3b48b0b82248b7e878f1f7e6ef6
+PODFILE CHECKSUM: 63b73d2090328526565a5bd20337760dcd7f788b
 
 COCOAPODS: 1.1.1

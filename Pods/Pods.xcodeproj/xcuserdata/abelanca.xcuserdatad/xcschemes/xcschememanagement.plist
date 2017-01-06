@@ -4,27 +4,12 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>Bolts.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 		<key>KVNProgress.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>Parse.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 		<key>Pods-Preachers.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>ReachabilitySwift.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -37,32 +22,17 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>51CB0AF616C6306147B99C320EB6D3ED</key>
+		<key>598735DFE05199010FE8205A0C098C5A</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>5670A9E38C5D7926A310FC06C36EFE51</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>B9D5FC43126FDA9819EAF5865435A33A</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>ED9B62680D9D0ECD49C86CD75CAC3BD5</key>
+		<key>74F30EC9374E54FED3D7FCA008586EA4</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>EDF7BD6E9A2B7E7CCF2E1AC03F1E254D</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>F957EABCA56BD8F5B626798CC7B344D3</key>
 		<dict>
 			<key>primary</key>
 			<true/>

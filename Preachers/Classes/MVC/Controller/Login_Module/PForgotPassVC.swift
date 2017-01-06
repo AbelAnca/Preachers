@@ -27,36 +27,15 @@ class PForgotPassVC: UIViewController, UITextFieldDelegate {
         setupUI()
         txfEmail.text = "abel.anca95@gmail.com"
         
-        NotificationCenter.defaultCenter().addObserver(self, selector: "reachabilityChanged_Notification:", name: ReachabilityChangedNotification, object: appDelegate.reachability)
+        NotificationCenter.defaultCenter.addObserver(self, selector: "reachabilityChanged_Notification:", name: ReachabilityChangedNotification, object: appDelegate.reachability)
         setupUI()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
-        // Initial reachability check
-        if let reachability = appDelegate.reachability {
-            if reachability.isReachable() {
-                hideNoInternetConnectionView()
-            }
-            else {
-                showNoInternetConnectionView()
-            }
-        }
     }
     
     // MARK: - Notification Methods
-    
-    func reachabilityChanged_Notification(_ notification: Notification) {
-        if let reachability = notification.object as? Reachability {
-            if reachability.isReachable() {
-                hideNoInternetConnectionView()
-            }
-            else {
-                showNoInternetConnectionView()
-            }
-        }
-    }
 
     // MARK: - Custom Methods
     
@@ -130,18 +109,10 @@ class PForgotPassVC: UIViewController, UITextFieldDelegate {
     
     // MARK: - Action Methods
     @IBAction func btnBack_Action(_ sender: AnyObject) {
-        self.navigationController?.popViewController(animated: true)
+        let _ = self.navigationController?.popViewController(animated: true)
     }
     
     @IBAction func btnRequest_Action() {
-        // Check internet connection
-        if appDelegate.bIsNetworkReachable == false {
-            let alertView = Utils.noNetworkConnectioAlert()
-            self.present(alertView, animated: true, completion: nil)
-            
-            return
-        }
-        
         requestUsername_APICall()
     }
     
