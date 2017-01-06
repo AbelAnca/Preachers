@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Parse
 
 protocol PEditVisitVCDelegate {
     func didCancelEditVC(_ index: Int)
@@ -23,7 +22,6 @@ class PEditVisitVC: UIViewController {
     @IBOutlet var datePicker: UIDatePicker!
     
     var objId: String?
-    var currentPreach: PFObject?
     var date: String?
     var index: Int?
     
@@ -36,15 +34,6 @@ class PEditVisitVC: UIViewController {
     // MARK: - Custom Methods
     
     func loadParams() {
-        if let objectId = objId {
-            let query = PFQuery(className:"Preach")
-            query.getObjectInBackground(withId: objectId, block: { (object, error) -> Void in
-                if error == nil {
-                    self.currentPreach = object
-                    self.updateParams()
-                }
-            })
-        }
         setCurrentDate(Date())
     }
     
@@ -55,21 +44,6 @@ class PEditVisitVC: UIViewController {
     }
     
     func updateParams() {
-        if let preach = currentPreach {
-            txfBiblicalText.text        = preach.object(forKey: "biblicalText") as? String
-            txvMyPreach.text            = preach.object(forKey: "myPreach") as? String
-            txvObservation.text         = preach.object(forKey: "observation") as? String
-            
-            if let date = preach.object(forKey: "date") as? String {
-                let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "dd-MM-yyyy"
-                
-                if let date = dateFormatter.date(from: date) {
-                    datePicker.date = date
-                }
-                self.date = date
-            }
-        }
     }
     
     // MARK: - API Methods
@@ -84,30 +58,6 @@ class PEditVisitVC: UIViewController {
     }
     
     @IBAction func btnSave_Action(_ sender: AnyObject) {
-        if let preach = currentPreach {
-            preach["biblicalText"]         = txfBiblicalText.text
-            preach["myPreach"]             = txvMyPreach.text
-            preach["observation"]          = txvObservation.text
-            preach["date"]                 = date
-            preach.saveInBackground { (success, error) -> Void in
-                if error == nil {
-                    if success {
-                        self.dismiss(animated: true, completion: { () -> Void in
-                            if let index = self.index {
-                                self.delegate?.didCancelEditVC(index)
-                            }
-                        })
-                    }
-                }
-                else {
-                    if let error = error {
-                        let errorString        = error._userInfo["error"] as! String
-                        let alert              = Utils.okAlert("Error", message: errorString)
-                        self.present(alert, animated: true, completion: nil)
-                    }
-                }
-            }
-        }
     }
     
     @IBAction func datePicker_Action(_ sender: UIDatePicker) {

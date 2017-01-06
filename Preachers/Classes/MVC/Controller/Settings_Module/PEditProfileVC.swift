@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Parse
 import KVNProgress
 
 class PEditProfileVC: UIViewController, UITextFieldDelegate {
@@ -45,62 +44,9 @@ class PEditProfileVC: UIViewController, UITextFieldDelegate {
     // MARK: - API Methods
     
     func loadParams_APICall() {
-        let currentUser = PFUser.current()
-        if currentUser != nil {
-            
-            if let email = currentUser?.email {
-                txfEmail.text = "\(email)"
-            }
-            
-            if let firstname = currentUser?["firstname"] {
-                txfFirstName.text = "\(firstname)"
-            }
-            
-            if let lastname = currentUser?["lastname"] {
-                txfLastName.text = "\(lastname)"
-            }
-            
-            if let phone = currentUser?["phone"] {
-                txfPhone.text = "\(phone)"
-            }
-            
-            if let birthdate = currentUser?["birthdate"] as? String {
-                let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "dd-MM-yyyy"
-                
-                if let date = dateFormatter.date(from: birthdate) {
-                    datePicker.date = date
-                }
-                strBirthdate = birthdate
-            }
-        }
     }
     
     func saveParams_APICall() {
-        let user = PFUser.current()
-        if user != nil {
-            user?.setValue(self.txfPhone.text, forKey: "phone")
-            user?.setValue(self.strBirthdate, forKey: "birthdate")
-            user?.setValue(self.txfFirstName.text, forKey: "firstname")
-            user?.setValue(self.txfLastName.text, forKey: "lastname")
-            KVNProgress.show(withStatus: "Saving...")
-            user?.saveInBackground(block: { (success, error) -> Void in
-                if error == nil {
-                    if success {
-                        self.dismiss(animated: true, completion: nil)
-                        KVNProgress.dismiss()
-                    }
-                }
-                else {
-                    if let error = error {
-                        KVNProgress.dismiss()
-                        let errorString        = error._userInfo["error"] as! String
-                        let alert              = Utils.okAlert("Error", message: errorString)
-                        self.present(alert, animated: true, completion: nil)
-                    }
-                }
-            })
-        }
     }
 
     // MARK: - Action Methods

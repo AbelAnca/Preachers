@@ -7,9 +7,7 @@
 //
 
 import UIKit
-import Parse
 import KVNProgress
-import ReachabilitySwift
 
 class PForgotPassVC: UIViewController, UITextFieldDelegate {
 
@@ -26,8 +24,7 @@ class PForgotPassVC: UIViewController, UITextFieldDelegate {
         // Do any additional setup after loading the view.
         setupUI()
         txfEmail.text = "abel.anca95@gmail.com"
-        
-        NotificationCenter.defaultCenter.addObserver(self, selector: "reachabilityChanged_Notification:", name: ReachabilityChangedNotification, object: appDelegate.reachability)
+
         setupUI()
     }
     
@@ -55,57 +52,7 @@ class PForgotPassVC: UIViewController, UITextFieldDelegate {
         return false
     }
     
-    func hideNoInternetConnectionView() {
-        UIView.animate(withDuration: 0.5, delay: 0.0, options: UIViewAnimationOptions.curveEaseIn, animations: { () -> Void in
-            self.constXOriginNoNetworkView.constant = -40
-            self.viewNoNetworkConnection.alpha = 0
-            //self.viewNoNetworkConnection.hidden = true
-            self.view.layoutIfNeeded()
-            }) { (finished) -> Void in
-                
-        }
-    }
-    
-    func showNoInternetConnectionView() {
-        UIView.animate(withDuration: 0.5, delay: 0.0, options: UIViewAnimationOptions.curveEaseOut, animations: { () -> Void in
-            self.constXOriginNoNetworkView.constant = 0
-            self.viewNoNetworkConnection.alpha = 1
-            //self.viewNoNetworkConnection.hidden = false
-            
-            self.view.layoutIfNeeded()
-            }) { (finished) -> Void in
-                
-        }
-    }
-    
     // MARK: - API Methods
-    
-    func requestUsername_APICall() {
-        if verifyEmail() == true {
-            if let email = txfEmail.text {
-                KVNProgress.show(withStatus: "Waiting...")
-                PFUser.requestPasswordResetForEmail(inBackground: email, block: { (success, error) -> Void in
-                    if success == true {
-                        let forgotPassVC = appDelegate.storyboardLogin.instantiateViewController(withIdentifier: "PConfirmForgotPassVC") as! PConfirmForgotPassVC
-                        self.navigationController?.pushViewController(forgotPassVC, animated: true)
-                        KVNProgress.dismiss()
-                    }
-                    else {
-                        if let err = error {
-                            KVNProgress.dismiss()
-                            let alert = Utils.okAlert("Error", message: err.localizedDescription)
-                            self.present(alert, animated: true, completion: nil)
-                        }
-                    }
-                })
-            }
-        }
-        else {
-            let alert = Utils.okAlert("Email is not valid", message: "Please introduce a correct email address")
-            self.present(alert, animated: true, completion: nil)
-        }
-    }
-
     
     // MARK: - Action Methods
     @IBAction func btnBack_Action(_ sender: AnyObject) {
@@ -113,7 +60,8 @@ class PForgotPassVC: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func btnRequest_Action() {
-        requestUsername_APICall()
+        let forgotPassVC = appDelegate.storyboardLogin.instantiateViewController(withIdentifier: "PConfirmForgotPassVC") as! PConfirmForgotPassVC
+        self.navigationController?.pushViewController(forgotPassVC, animated: true)
     }
     
     // MARK: - UITextFieldDelegate Methods

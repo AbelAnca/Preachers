@@ -40,8 +40,6 @@
 		B59A0B331BBAE59D00F410D6 /* PChangeUsernameVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59A0B321BBAE59C00F410D6 /* PChangeUsernameVC.swift */; };
 		B59A0B3B1BBC835D00F410D6 /* PChurchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59A0B3A1BBC835D00F410D6 /* PChurchCell.swift */; };
 		B59A0B3D1BBC99FF00F410D6 /* PAddChurchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59A0B3C1BBC99FF00F410D6 /* PAddChurchVC.swift */; };
-		B5C9496F1BCE69640085BDA8 /* Preach.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C9496E1BCE69640085BDA8 /* Preach.swift */; };
-		B5C949711BCE69800085BDA8 /* Church.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C949701BCE69800085BDA8 /* Church.swift */; };
 		B5C949731BCE9D490085BDA8 /* PEditVisitVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C949721BCE9D490085BDA8 /* PEditVisitVC.swift */; };
 		B5C949751BCEA5B10085BDA8 /* PPreachVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C949741BCEA5B10085BDA8 /* PPreachVC.swift */; };
 		B5C9497A1BCF1D9D0085BDA8 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C949791BCF1D9D0085BDA8 /* UIColor.swift */; };
@@ -124,8 +122,6 @@
 		B59A0B321BBAE59C00F410D6 /* PChangeUsernameVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PChangeUsernameVC.swift; path = Preachers/Classes/MVC/Controller/Settings_Module/PChangeUsernameVC.swift; sourceTree = "<group>"; };
 		B59A0B3A1BBC835D00F410D6 /* PChurchCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PChurchCell.swift; path = Preachers/Classes/MVC/View/Cells/PChurchCell.swift; sourceTree = "<group>"; };
 		B59A0B3C1BBC99FF00F410D6 /* PAddChurchVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PAddChurchVC.swift; path = Preachers/Classes/MVC/Controller/Main_Module/PAddChurchVC.swift; sourceTree = "<group>"; };
-		B5C9496E1BCE69640085BDA8 /* Preach.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Preach.swift; path = Preachers/Libs/Preach.swift; sourceTree = "<group>"; };
-		B5C949701BCE69800085BDA8 /* Church.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Church.swift; path = Preachers/Libs/Church.swift; sourceTree = "<group>"; };
 		B5C949721BCE9D490085BDA8 /* PEditVisitVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PEditVisitVC.swift; path = Preachers/Classes/MVC/Controller/Main_Module/PEditVisitVC.swift; sourceTree = "<group>"; };
 		B5C949741BCEA5B10085BDA8 /* PPreachVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PPreachVC.swift; path = Preachers/Classes/MVC/Controller/Main_Module/PPreachVC.swift; sourceTree = "<group>"; };
 		B5C949791BCF1D9D0085BDA8 /* UIColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIColor.swift; path = Preachers/Classes/Utils/UIColor.swift; sourceTree = "<group>"; };
@@ -303,8 +299,6 @@
 		B57BAD1A1BABF315009781B0 /* Libs */ = {
 			isa = PBXGroup;
 			children = (
-				B5C9496E1BCE69640085BDA8 /* Preach.swift */,
-				B5C949701BCE69800085BDA8 /* Church.swift */,
 			);
 			name = Libs;
 			path = ..;
@@ -624,7 +618,6 @@
 				B5E04AD51C201C4A00422E17 /* PPreachCell.swift in Sources */,
 				B5FACC891BB9F227001C44C7 /* PEditProfileVC.swift in Sources */,
 				B57BAD351BAC1134009781B0 /* PLoginVC.swift in Sources */,
-				B5C9496F1BCE69640085BDA8 /* Preach.swift in Sources */,
 				B5C9497A1BCF1D9D0085BDA8 /* UIColor.swift in Sources */,
 				B57BAD331BAC1124009781B0 /* PMainVC.swift in Sources */,
 				B57BAD301BAC0E5A009781B0 /* PLandingVC.swift in Sources */,
@@ -633,7 +626,6 @@
 				B57BAD371BAC1B9B009781B0 /* PSetProfileVC.swift in Sources */,
 				B59A0B331BBAE59D00F410D6 /* PChangeUsernameVC.swift in Sources */,
 				B57DF5A11BB411A600B9E3ED /* PConfirmForgotPassVC.swift in Sources */,
-				B5C949711BCE69800085BDA8 /* Church.swift in Sources */,
 				B5FACC851BB9F1DD001C44C7 /* PSettingsVC.swift in Sources */,
 				B514D3141BADD144000AAE32 /* Utils.swift in Sources */,
 				B59A0B3D1BBC99FF00F410D6 /* PAddChurchVC.swift in Sources */,

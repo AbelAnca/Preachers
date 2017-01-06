@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Parse
 import KVNProgress
 
 class PSettingsVC: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -70,45 +69,6 @@ class PSettingsVC: UIViewController, UIImagePickerControllerDelegate, UINavigati
     // MARK: - API Methods
     
     func loadParams_APICall() {
-        let currentUser = PFUser.current()
-        if currentUser != nil {
-            
-            if let firstname = currentUser?["firstname"] {
-                lblName.text = "\(firstname)"
-            }
-            
-            if let lastname = currentUser?["lastname"] {
-                lblName.text = "\(lastname)"
-            }
-            
-            if let firstname = currentUser?["firstname"] {
-                if let lastname = currentUser?["lastname"] {
-                    lblName.text = "\(firstname) \(lastname)"
-                }
-            }
-            
-            if let birthdate = currentUser?["birthdate"] as? String {
-                lblBirthdate.text = birthdate
-            }
-
-            if let email = currentUser?.email {
-                lblEmail.text = email
-            }
-            
-            if let userPicture = currentUser?["profilePicture"] as? PFFile {
-                userPicture.getDataInBackground(block: { (data, error) -> Void in
-                    if error == nil {
-                        if let imageData = data {
-                            let image = UIImage(data:imageData)
-                            self.btnProfile.setImage(image, for: UIControlState())
-                        }
-                    }
-                    else {
-                        self.spinner.stopAnimating()
-                    }
-                })
-            }
-        }
     }
     
     // MARK: - Action Methods
@@ -132,27 +92,6 @@ class PSettingsVC: UIViewController, UIImagePickerControllerDelegate, UINavigati
         let alert = UIAlertController(title: "Important!", message: "Do you want to change your password?", preferredStyle:.alert)
         alert.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.default, handler: { (action) -> Void in
             
-            let currentUser = PFUser.current()
-            if let email = currentUser?.email {
-                KVNProgress.show(withStatus: "Reseting...")
-                PFUser.requestPasswordResetForEmail(inBackground: email, block: { (success, error) -> Void in
-                    if error == nil {
-                        if success {
-                            self.pushToChangePass()
-                            KVNProgress.dismiss()
-                        }
-                    }
-                    else {
-                        if let error = error {
-                            KVNProgress.dismiss()
-                            
-                            let errorString              = error.userInfo["error"] as! String
-                            let alert                    = Utils.okAlert("Error", message: errorString)
-                            self.present(alert, animated: true, completion: nil)
-                        }
-                    }
-                })
-            }
         }))
         alert.addAction(UIAlertAction(title: "No", style: UIAlertActionStyle.cancel, handler: { (action) -> Void in
             
@@ -165,25 +104,6 @@ class PSettingsVC: UIViewController, UIImagePickerControllerDelegate, UINavigati
         let alert = UIAlertController(title: "Important!", message: "Are you sure you want to Logout?", preferredStyle:.alert)
         alert.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.default, handler: { (action) -> Void in
             
-            KVNProgress.show(withStatus: "Logout...")
-            PFUser.logOutInBackground(block: { (error) -> Void in
-                if error == nil {
-                    self.removeObjectIdFromDefaults()
-                    self.presentLandingVC()
-                    
-                    KVNProgress.dismiss()
-                }
-                else {
-                    if let error = error {
-                        KVNProgress.dismiss()
-                        
-                        let errorString          = error.userInfo["error"] as! String
-                        let alert                = Utils.okAlert("Error", message: errorString)
-                        self.present(alert, animated: true, completion: nil)
-                    }
-                }
-            })
-            KVNProgress.dismiss()
         }))
         alert.addAction(UIAlertAction(title: "No", style: UIAlertActionStyle.cancel, handler: { (action) -> Void in
             
@@ -193,38 +113,8 @@ class PSettingsVC: UIViewController, UIImagePickerControllerDelegate, UINavigati
     
     // MARK: - UIImagePickerControllerDelegate Methods
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
-            let currentUser = PFUser.current()
-            if currentUser != nil {
-                self.spinner.startAnimating()
-                
-                if let imageData           = UIImageJPEGRepresentation(pickedImage, 1.0) {
-                    let imageFile          = PFFile(name:"image.jpg", data:imageData)
-                    
-                    imageFile?.saveInBackground(block: { (success, error) -> Void in
-                        if error == nil {
-                            if success {
-                                currentUser?.setObject(imageFile, forKey: "profilePicture")
-                                currentUser?.saveInBackground(block: { (succeded, error) -> Void in
-                                    if succeded {
-                                        self.loadParams_APICall()
-                                        self.spinner.stopAnimating()
-                                    }
-                                })
-                            }
-                        }
-                        else {
-                            if let error = error {
-                                self.spinner.stopAnimating()
-                                
-                                let errorString        = error.userInfo["error"] as! String
-                                let alert              = Utils.okAlert("Error", message: errorString)
-                                self.presentViewController(alert, animated: true, completion: nil)
-                            }
-                        }
-                    })
-                }
-            }
+        if (info[UIImagePickerControllerOriginalImage] as? UIImage) != nil {
+
         }
         dismiss(animated: true, completion: nil)
     }

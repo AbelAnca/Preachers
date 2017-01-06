@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Parse
 
 protocol PPreachVCDelegate {
     func didCancelPopover()
@@ -26,8 +25,6 @@ class PPreachVC: UIViewController, UITextFieldDelegate, UITextViewDelegate {
     @IBOutlet var btnEdit: UIButton!
     
     var objId: String?
-    var currentPreach: PFObject?
-    var currentChurch: PFObject?
     var index: Int?
     
     // MARK: - ViewController Methods
@@ -43,24 +40,10 @@ class PPreachVC: UIViewController, UITextFieldDelegate, UITextViewDelegate {
     
     // MARK: - Custom Methods
     func updateParams() {
-        if let preach = currentPreach {
-            txfBiblicalText.text            = preach.object(forKey: "biblicalText") as? String
-            txfNote.text                    = preach.object(forKey: "observation") as? String
-            txfPreach.text                  = preach.object(forKey: "myPreach") as? String
-        }
     }
     
     // MARK: - API Methods
     func loadParams() {
-        if let objectId = objId {
-            let query = PFQuery(className:"Preach")
-            query.getObjectInBackground(withId: objectId, block: { (object, error) -> Void in
-                if error == nil {
-                    self.currentPreach = object
-                    self.updateParams()
-                }
-            })
-        }
     }
     
     // MARK: - Action Methods
@@ -83,21 +66,6 @@ class PPreachVC: UIViewController, UITextFieldDelegate, UITextViewDelegate {
         let alert = UIAlertController(title: "Attention", message: "Are you sure you want to permanently delete this sermon?", preferredStyle: .alert)
         
         alert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { (action) -> Void in
-            let query = PFQuery(className:"Preach")
-            if let church = self.currentChurch {
-                query.whereKey("church", equalTo: church)
-                query.findObjectsInBackground { (objects, error) -> Void in
-                    if error == nil {
-                        if let index = self.index {
-                            if let objects = objects {
-                                let object = objects[index]
-                                object.deleteInBackground()
-                                self.delegate?.didCancelPopover()
-                            }
-                        }
-                    }
-                }
-            }
         }))
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         

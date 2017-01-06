@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Parse
 import KVNProgress
 // FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
 // Consider refactoring the code to use the non-optional operators.
@@ -45,7 +44,6 @@ class PEditChurchVC: UIViewController, UITextFieldDelegate, UITextViewDelegate, 
     @IBOutlet var spinner: UIActivityIndicatorView!
     @IBOutlet var imgChurch: UIImageView!
     
-    var currentChurch: PFObject?
     var objId: String?
     let imagePicker                    = UIImagePickerController()
     
@@ -75,95 +73,14 @@ class PEditChurchVC: UIViewController, UITextFieldDelegate, UITextViewDelegate, 
     }
     
     func loadParams() {
-        if let objectId = objId {
-            let query = PFQuery(className:"Church")
-            query.getObjectInBackground(withId: objectId, block: { (object, error) -> Void in
-                if error == nil {
-                    self.currentChurch = object
-                    self.updateParams()
-                }
-            })
-        }
     }
     
     func updateParams() {
-        if let church = currentChurch {
-            txfCity.text                = church.object(forKey: "city") as? String
-            txfName.text                = church.object(forKey: "name") as? String
-            txfAddress.text             = church.object(forKey: "address") as? String
-            txfPastor.text              = church.object(forKey: "pastor") as? String
-            txfDistance.text            = church.object(forKey: "distance") as? String
-            txvDescription.text         = church.object(forKey: "note") as? String
-            if let userPicture          = church.object(forKey: "image") as? PFFile {
-                spinner.startAnimating()
-                
-                userPicture.getDataInBackground(block: { (data, error) -> Void in
-                    if error == nil {
-                        if let imageData = data {
-                            let image                 = UIImage(data:imageData)
-                            self.imgChurch.image      = image
-                            self.spinner.stopAnimating()
-                        }
-                    }
-                    else {
-                        self.spinner.stopAnimating()
-                    }
-                })
-            }
-        }
     }
     
     // MARK: - API Methods
     
     func saveChurch_APICall() {
-        if txfCity.text?.utf16.count > 1 {
-            self.view.endEditing(true)
-            KVNProgress.show(withStatus: "Saving church...")
-            
-            if let objectId = objId {
-                let query = PFQuery(className:"Church")
-                query.getObjectInBackground(withId: objectId, block: { (object, error) -> Void in
-                    if error == nil {
-                        if let church = object {
-                            church["city"]         = self.txfCity.text!
-                            church["name"]         = self.txfName.text
-                            church["address"]      = self.txfAddress.text
-                            church["pastor"]       = self.txfPastor.text
-                            church["distance"]     = self.txfDistance.text
-                            church["note"]         = self.txvDescription.text
-                            church["user"]         = PFUser.current()!
-                            
-                            if let imageData = UIImageJPEGRepresentation(self.imgChurch.image!, 1.0) {
-                                let imageFile: PFFile = PFFile(name:"image.jpg", data:imageData)!
-                                imageFile.saveInBackground()
-                                church["image"]    = imageFile
-                            }
-                            
-                            church.saveInBackground(block: { (success, error) -> Void in
-                                if error == nil {
-                                    if success {
-                                        self.dismiss(animated: true, completion: nil)
-                                        KVNProgress.dismiss()
-                                    }
-                                }
-                                else {
-                                    KVNProgress.dismiss()
-                                    if let error = error {
-                                        let errorString         = error._userInfo["error"] as! String
-                                        let alert               = Utils.okAlert("Error", message: errorString)
-                                        self.present(alert, animated: true, completion: nil)
-                                    }
-                                }
-                            })
-                        }
-                    }
-                })
-            }
-        }
-        else {
-            let alert = Utils.okAlert("Upss", message: "The city is required")
-            present(alert, animated: true, completion: nil)
-        }
     }
     
     // MARK: - Action Methods

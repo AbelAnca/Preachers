@@ -18,7 +18,7 @@ class PConfirmForgotPassVC: UIViewController {
     
     // MARK: - Action Methods
     @IBAction func btnBack_Action(_ sender: AnyObject) {
-        self.navigationController?.popViewController(animated: true)
+        let _ = self.navigationController?.popViewController(animated: true)
     }
     
     // MARK: - StatusBar Methods

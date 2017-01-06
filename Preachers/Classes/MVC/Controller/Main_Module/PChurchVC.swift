@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Parse
 import MapKit
 import WYPopoverController
 import CoreLocation
@@ -64,16 +63,12 @@ class PChurchVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     var pointAnnotation:MKPointAnnotation!
     var pinAnnotationView:MKPinAnnotationView!
     
-    var arrPreaches: [PFObject]?
-    var currentChurch: PFObject?
-    
     var index: Int?
     var nrVisits: Int?
     var objId: String?
     
     lazy var popover                = WYPopoverController()
     var isAdd                       = false
-    var geoPoint: PFGeoPoint?
 
     // MARK: - ViewController Methods
     override func viewDidLoad() {
@@ -133,54 +128,8 @@ class PChurchVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     
     func action(_ gestureRecognizer: UIGestureRecognizer) {
         
-        if let _ = self.geoPoint {
-            let annotationsToRemove = mapView.annotations.filter { $0 !== mapView.userLocation }
-            mapView.removeAnnotations( annotationsToRemove )
-        }
-        
         let touchPoint = gestureRecognizer.location(in: self.mapView)
         let newCoordonate: CLLocationCoordinate2D = mapView.convert(touchPoint, toCoordinateFrom: self.mapView)
-        
-    
-        if let objectId = objId {
-            let query = PFQuery(className:"Church")
-            query.getObjectInBackground(withId: objectId, block: { (object, error) -> Void in
-                if error == nil {
-                    if let church = object {
-                        let newAnotation = MKPointAnnotation()
-                        
-                        newAnotation.coordinate = newCoordonate
-                        
-                        if let city = church.object(forKey: "city") as? String {
-                            newAnotation.title = city
-                        }
-                        
-                        if let address = church.object(forKey: "address") as? String {
-                            newAnotation.subtitle = address
-                        }
-
-                        let geoPoint = PFGeoPoint(latitude: newAnotation.coordinate.latitude, longitude: newAnotation.coordinate.longitude)
-                        self.geoPoint = geoPoint
-                        
-                        church["place"]         = geoPoint
-                        church.saveInBackground(block: { (success, error) -> Void in
-                            if error == nil {
-                                if success {
-                                    self.mapView.addAnnotation(newAnotation)
-                                 }
-                            }
-                            else {
-                                if let error = error {
-                                    let errorString         = error.userInfo["error"] as! String
-                                    let alert               = Utils.okAlert("Error", message: errorString)
-                                    self.present(alert, animated: true, completion: nil)
-                                }
-                            }
-                        })
-                    }
-                }
-            })
-        }
     }
     
     fileprivate func loadScreenForCurSelectedTab() {
@@ -208,81 +157,9 @@ class PChurchVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     }
     
     func loadParams() {
-        if let objectId = objId {
-            let query = PFQuery(className:"Church")
-            query.getObjectInBackground(withId: objectId, block: { (object, error) -> Void in
-                if error == nil {
-                    self.currentChurch = object
-                    self.updateParams()
-                    self.loadPreach()
-                }
-            })
-        }
     }
     
     func updateParams() {
-        if let church = currentChurch {
-
-            if let name = church.object(forKey: "name") as? String {
-                lblName.text = "\(name)"
-            }
-            
-            if let city = church.object(forKey: "city") as? String {
-                lblCity.text = "\(city)"
-            }
-
-            if let address = church.object(forKey: "address") as? String {
-                lblAddress.text     = "\(address)"
-            }
-            
-            if let distance = church.object(forKey: "distance") as? String {
-                lblDistance.text    = "\(distance)"
-            }
-            
-            if let pastor = church.object(forKey: "pastor") as? String {
-                lblPastor.text          = "\(pastor)"
-            }
-            
-            if let note = church.object(forKey: "note") as? String {
-                lblNote.text        = note
-            }
-            
-            if let place = church.object(forKey: "place") as? PFGeoPoint {
-                geoPoint = place
-                hideOrShowViewPlace(false)
-                findAddress_APICall()
-                isAdd = true
-                UIView.animate(withDuration: 0.5, animations: { () -> Void in
-                    self.btnAddCancelPlace.transform          = CGAffineTransform(rotationAngle: CGFloat(0 * M_PI))
-                    self.btnAddCancelPlace.backgroundColor    = UIColor.red
-                    self.hideOrShowViewPlace(false)
-                    self.viewTutorialPlace.isHidden             = true
-                })
-            }
-            else {
-                findMe_APICall()
-            }
-            
-            if let userPicture = church.object(forKey: "image") as? PFFile {
-                userPicture.getDataInBackground(block: { (data, error) -> Void in
-                    if error == nil {
-                        if let imageData = data {
-                            if let image = UIImage(data:imageData) {
-                                if image.size == CGSize(width: 200, height: 200) {
-                                    //self.imgChurch.backgroundColor  = UIColor.blackColor()
-                                    //self.imgChurch.image            = UIImage(named: "churchICO")
-                                }
-                                else {
-                                    self.imgChurch.image            = image
-                                }
-                            }
-                        }
-                    }
-                    else {
-                    }
-                })
-            }
-        }
     }
     
     func hideOrShowTutorialSermon(_ hide: Bool) {
@@ -322,71 +199,17 @@ class PChurchVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     // MARK: - API Methods
     
     func findMe_APICall() {
-        PFGeoPoint.geoPointForCurrentLocation { (geoPoint, error) -> Void in
-            if error == nil {
-                if let latitude = geoPoint?.latitude {
-                    if let longitude = geoPoint?.longitude {
-                        self.zoomToRegion(latitude, longitude: longitude)
-                    }
-                }
-            }
-        }
     }
     
     func findAddress_APICall() {
-        if let geoPoint = geoPoint {
-            let newAnotation = MKPointAnnotation()
-            
-            newAnotation.coordinate.latitude = geoPoint.latitude
-            newAnotation.coordinate.longitude = geoPoint.longitude
-            
-            if let church = currentChurch {
-                if let city = church.object(forKey: "city") as? String {
-                    newAnotation.title = city
-                }
-                
-                if let address = church.object(forKey: "address") as? String {
-                    newAnotation.subtitle = address
-                }
-            }
-            
-            zoomToRegion(geoPoint.latitude, longitude: geoPoint.longitude)
-            mapView.addAnnotation(newAnotation)
-        }
-        else {
-            let alert = Utils.okAlert("You don't have the address yet", message: "You have to press more than 2 second on map for create the address.")
-            present(alert, animated: false, completion: nil)
-        }
     }
     
     func loadPreach() {
-        let query = PFQuery(className:"Preach")
-        if let church = currentChurch {
-            query.whereKey("church", equalTo: church)
-            query.findObjectsInBackground { (objects, error) -> Void in
-                if error == nil {
-                    self.nrVisits         = objects?.count
-                    self.arrPreaches      = objects
-                    
-                    self.collectionView.reloadData()
-                }
-            }
-        }
     }
     
     // MARK: - UICollectionViewDataSource Methods
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if let churchs = arrPreaches {
-            if churchs.count == 0 {
-                hideOrShowTutorialSermon(false)
-            }
-            else {
-                hideOrShowTutorialSermon(true)
-            }
-            
-            return churchs.count
-        }
         
         hideOrShowTutorialSermon(true)
         return 0
@@ -395,37 +218,18 @@ class PChurchVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PPreachCell", for: indexPath) as! PPreachCell
         
-        if let preaches = arrPreaches {
-            let preach              = preaches[indexPath.row]
-            let date                = preach.object(forKey: "date") as? String
-            let  biblicalText = preach.object(forKey: "biblicalText") as? String
-            
-            if let date = date {
-                cell.lblDate.text       = "\(date)"
-            }
-            
-            if let biblicalText = biblicalText {
-                cell.lblBiblicalText.text = "\(biblicalText)"
-            }
-        }
         return cell
 
     }
     
     func selectItemAtIndex(_ index: Int) {
         let editChurchVC         = self.storyboard?.instantiateViewController(withIdentifier: "PPreachVC") as! PPreachVC
-        if let preachs           = arrPreaches {
-            let preach           = preachs[index]
-            editChurchVC.objId   = preach.objectId
-        }
+        
         
         if let ind = self.index {
             editChurchVC.index = ind
         }
         
-        if let currentChurch = currentChurch {
-            editChurchVC.currentChurch = currentChurch
-        }
         editChurchVC.delegate    = self
         
         let grayColor                               = UIColor.color(26, green: 26, blue: 26, alpha: 1)
@@ -463,7 +267,7 @@ class PChurchVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     
     @IBAction func btnAddVisits_Action(_ sender: AnyObject) {
         let addChurchVC              = storyboard?.instantiateViewController(withIdentifier: "PAddVisitVC") as! PAddVisitVC
-        addChurchVC.currentChurch    = self.currentChurch
+        
         present(addChurchVC, animated: true, completion: nil)
     }
     
@@ -513,44 +317,6 @@ class PChurchVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     }
 
     @IBAction func btnAddCancelAddress_Action() {
-        if isAdd == true {
-            if let _ = geoPoint {
-                let alert = UIAlertController(title: "Attention", message: "Are you sure you want to permanently delete this address?", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { (action) -> Void in
-                    self.isAdd = false
-
-                    if let church = self.currentChurch {
-                        church.remove(forKey: "place")
-                        church.saveInBackground()
-                    }
-                    
-                    self.geoPoint = nil
-                    
-                    UIView.animate(withDuration: 0.5, animations: { () -> Void in
-                        self.btnAddCancelPlace.transform          = CGAffineTransform(rotationAngle: CGFloat(-0.25 * M_PI))
-                        self.btnAddCancelPlace.backgroundColor    = UIColor.preachersBlue()
-                        self.hideOrShowViewPlace(true)
-                        self.viewTutorialPlace.isHidden             = false
-                    })
-                    
-                }))
-                alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-                
-                present(alert, animated: true, completion: nil)
-            }
-            else {
-                self.isAdd = false
-                
-                UIView.animate(withDuration: 0.5, animations: { () -> Void in
-                    self.btnAddCancelPlace.transform          = CGAffineTransform(rotationAngle: CGFloat(-0.25 * M_PI))
-                    self.btnAddCancelPlace.backgroundColor    = UIColor.preachersBlue()
-                    self.hideOrShowViewPlace(true)
-                    self.viewTutorialPlace.isHidden             = false
-                })
-            }
-            
-        }
-        else {
             let alert = UIAlertController(title: "Attention", message: "You have to press more than 2 second on map for create the address.", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
             
@@ -563,17 +329,12 @@ class PChurchVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
                 self.hideOrShowViewPlace(false)
                 self.viewTutorialPlace.isHidden             = true
             })
-        }
+        
     }
     
     @IBAction func btnShareAddress_Action(_ sender: AnyObject) {
-        if let geoPoint = geoPoint {
-            
-        }
-        else {
-            let alert = Utils.okAlert("You don't have the address yet", message: "You have to press more than 2 second on map for create the address.")
-            present(alert, animated: false, completion: nil)
-        }
+        let alert = Utils.okAlert("You don't have the address yet", message: "You have to press more than 2 second on map for create the address.")
+        present(alert, animated: false, completion: nil)
     }
     
     // MARK: - PPreachVCDelegate Methods

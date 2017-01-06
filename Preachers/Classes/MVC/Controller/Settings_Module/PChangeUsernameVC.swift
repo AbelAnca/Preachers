@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Parse
 import KVNProgress
 
 class PChangeUsernameVC: UIViewController, UITextFieldDelegate {
@@ -50,25 +49,7 @@ class PChangeUsernameVC: UIViewController, UITextFieldDelegate {
         let alert = UIAlertController(title: "Important!", message: "You can't reuse your old username once you change it.", preferredStyle: UIAlertControllerStyle.alert)
         alert.addAction(UIAlertAction(title: "Change username", style: UIAlertActionStyle.default, handler: { (action) -> Void in
             
-            let currentUser                = PFUser.current()
-            currentUser?.username          = self.txfNewUsername.text
-            
-            KVNProgress.show(withStatus: "Changing...")
-            currentUser?.saveInBackground(block: { (success, error) -> Void in
-                if error == nil {
-                    if success {
-                        KVNProgress.dismiss()
-                    }
-                }
-                else {
-                    if let error = error {
-                        KVNProgress.dismiss()
-                        let errorString     = error.userInfo["error"] as! String
-                        let alert           = Utils.okAlert("Error", message: errorString)
-                        self.present(alert, animated: true, completion: nil)
-                    }
-                }
-            })
+        
         }))
         
         alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: { (action) -> Void in

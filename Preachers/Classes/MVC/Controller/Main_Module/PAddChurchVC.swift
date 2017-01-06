@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Parse
 import KVNProgress
 // FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
 // Consider refactoring the code to use the non-optional operators.
@@ -71,75 +70,7 @@ class PAddChurchVC: UIViewController, UITextFieldDelegate, UITextViewDelegate, U
     // MARK: - API Methods
     
     func addChurch_APICall() {
-        if txfCity.text?.utf16.count > 1 {
-            self.view.endEditing(true)
-            KVNProgress.show(withStatus: "Adding church...")
-            
-            if let churchImage = imgChurch.image {
-                if let imageData = UIImageJPEGRepresentation(churchImage, 1.0) {
-                    let imageFile: PFFile = PFFile(name:"image.jpg", data:imageData)!
-                    imageFile.saveInBackground()
-                    
-                    let church = Church()
-                    church.city       = self.txfCity.text!
-                    church.name       = self.txfName.text
-                    church.address    = self.txfAddress.text
-                    church.pastor     = self.txfPastor.text
-                    church.distance   = self.txfDistance.text
-                    church.note       = self.txvDescription.text
-                    church.user       = PFUser.current()!
-                    church.image      = imageFile
-                    church.saveInBackground(block: { (success, error) -> Void in
-                        if error == nil {
-                            if success {
-                                self.dismiss(animated: true, completion: nil)
-                                KVNProgress.dismiss()
-                            }
-                        }
-                        else {
-                            if let error = error {
-                                KVNProgress.dismiss()
-                                
-                                let errorString       = error.userInfo["error"] as! String
-                                let alert             = Utils.okAlert("Error", message: errorString)
-                                self.present(alert, animated: true, completion: nil)
-                            }
-                        }
-                    })
-                }
-            }
-            else {
-                let church = Church()
-                church.city        = txfCity.text!
-                church.name        = txfName.text
-                church.address     = txfAddress.text
-                church.pastor      = txfPastor.text
-                church.distance    = txfDistance.text
-                church.note        = txvDescription.text
-                church.user        = PFUser.current()!
-                church.saveInBackground(block: { (success, error) -> Void in
-                    if error == nil {
-                        if success {
-                            self.dismiss(animated: true, completion: nil)
-                            KVNProgress.dismiss()
-                        }
-                    }
-                    else {
-                        if let error = error {
-                            KVNProgress.dismiss()
-                            
-                            let errorString       = error.userInfo["error"] as! String
-                            let alert             = Utils.okAlert("Error", message: errorString)
-                            self.present(alert, animated: true, completion: nil)
-                        }
-                    }
-                })
-            }
-        }
-        else {
-            let alert = Utils.okAlert("Upss", message: "The city is required")
-            present(alert, animated: true, completion: nil)
-        }
+        
     }
     
     // MARK: - Action Methods

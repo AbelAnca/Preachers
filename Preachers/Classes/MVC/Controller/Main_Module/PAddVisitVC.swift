@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Parse
 // FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
 // Consider refactoring the code to use the non-optional operators.
 fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
@@ -29,7 +28,6 @@ class PAddVisitVC: UIViewController {
     @IBOutlet var txvObservation: UITextView!
     @IBOutlet var datePiker: UIDatePicker!
     
-    var currentChurch: PFObject?
     var date: String?
     
     // MARK: - ViewController Methods
@@ -58,32 +56,6 @@ class PAddVisitVC: UIViewController {
     // MARK: - API Methods
     
     func saveVisit_APICall() {
-        if verifyBiblicalText() == true {
-            let preach                    = Preach()
-            preach.biblicalText           = txfBiblicalText.text
-            preach.myPreach               = txvMyPreach.text
-            preach.observation            = txvObservation.text
-            preach.date                   = date
-            preach.church                 = self.currentChurch!
-            preach.saveInBackground { (success, error) -> Void in
-                if error == nil {
-                    if success {
-                        self.dismiss(animated: true, completion: nil)
-                    }
-                }
-                else {
-                    if let error = error {
-                        let errorString     = error._userInfo["error"] as! String
-                        let alert           = Utils.okAlert("Error", message: errorString)
-                        self.present(alert, animated: true, completion: nil)
-                    }
-                }
-            }
-        }
-        else {
-            let alert = Utils.okAlert("Upss", message: "The biblical text is required")
-            present(alert, animated: true, completion: nil)
-        }
     }
     
     // MARK: - Action Methods
