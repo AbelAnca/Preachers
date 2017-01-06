@@ -16,7 +16,7 @@ class PForgotPassVC: UIViewController, UITextFieldDelegate {
     @IBOutlet var btnRequest: UIButton!
     @IBOutlet var txfEmail: UITextField!
     
-    @IBOutlet weak private var viewNoNetworkConnection: UIView!
+    @IBOutlet weak fileprivate var viewNoNetworkConnection: UIView!
     @IBOutlet weak var constXOriginNoNetworkView: NSLayoutConstraint!
     
     // MARK: - ViewController Methods
@@ -27,11 +27,11 @@ class PForgotPassVC: UIViewController, UITextFieldDelegate {
         setupUI()
         txfEmail.text = "abel.anca95@gmail.com"
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "reachabilityChanged_Notification:", name: ReachabilityChangedNotification, object: appDelegate.reachability)
+        NotificationCenter.defaultCenter().addObserver(self, selector: "reachabilityChanged_Notification:", name: ReachabilityChangedNotification, object: appDelegate.reachability)
         setupUI()
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
         // Initial reachability check
@@ -47,7 +47,7 @@ class PForgotPassVC: UIViewController, UITextFieldDelegate {
     
     // MARK: - Notification Methods
     
-    func reachabilityChanged_Notification(notification: NSNotification) {
+    func reachabilityChanged_Notification(_ notification: Notification) {
         if let reachability = notification.object as? Reachability {
             if reachability.isReachable() {
                 hideNoInternetConnectionView()
@@ -63,7 +63,7 @@ class PForgotPassVC: UIViewController, UITextFieldDelegate {
     func setupUI() {
         btnRequest.layer.cornerRadius          = 15.0
         btnRequest.layer.masksToBounds         = true
-        btnRequest.layer.borderColor           = UIColor.whiteColor().CGColor
+        btnRequest.layer.borderColor           = UIColor.white.cgColor
         btnRequest.layer.borderWidth           = 1.0
     }
     
@@ -77,7 +77,7 @@ class PForgotPassVC: UIViewController, UITextFieldDelegate {
     }
     
     func hideNoInternetConnectionView() {
-        UIView.animateWithDuration(0.5, delay: 0.0, options: UIViewAnimationOptions.CurveEaseIn, animations: { () -> Void in
+        UIView.animate(withDuration: 0.5, delay: 0.0, options: UIViewAnimationOptions.curveEaseIn, animations: { () -> Void in
             self.constXOriginNoNetworkView.constant = -40
             self.viewNoNetworkConnection.alpha = 0
             //self.viewNoNetworkConnection.hidden = true
@@ -88,7 +88,7 @@ class PForgotPassVC: UIViewController, UITextFieldDelegate {
     }
     
     func showNoInternetConnectionView() {
-        UIView.animateWithDuration(0.5, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
+        UIView.animate(withDuration: 0.5, delay: 0.0, options: UIViewAnimationOptions.curveEaseOut, animations: { () -> Void in
             self.constXOriginNoNetworkView.constant = 0
             self.viewNoNetworkConnection.alpha = 1
             //self.viewNoNetworkConnection.hidden = false
@@ -104,10 +104,10 @@ class PForgotPassVC: UIViewController, UITextFieldDelegate {
     func requestUsername_APICall() {
         if verifyEmail() == true {
             if let email = txfEmail.text {
-                KVNProgress.showWithStatus("Waiting...")
-                PFUser.requestPasswordResetForEmailInBackground(email, block: { (success, error) -> Void in
+                KVNProgress.show(withStatus: "Waiting...")
+                PFUser.requestPasswordResetForEmail(inBackground: email, block: { (success, error) -> Void in
                     if success == true {
-                        let forgotPassVC = appDelegate.storyboardLogin.instantiateViewControllerWithIdentifier("PConfirmForgotPassVC") as! PConfirmForgotPassVC
+                        let forgotPassVC = appDelegate.storyboardLogin.instantiateViewController(withIdentifier: "PConfirmForgotPassVC") as! PConfirmForgotPassVC
                         self.navigationController?.pushViewController(forgotPassVC, animated: true)
                         KVNProgress.dismiss()
                     }
@@ -115,7 +115,7 @@ class PForgotPassVC: UIViewController, UITextFieldDelegate {
                         if let err = error {
                             KVNProgress.dismiss()
                             let alert = Utils.okAlert("Error", message: err.localizedDescription)
-                            self.presentViewController(alert, animated: true, completion: nil)
+                            self.present(alert, animated: true, completion: nil)
                         }
                     }
                 })
@@ -123,21 +123,21 @@ class PForgotPassVC: UIViewController, UITextFieldDelegate {
         }
         else {
             let alert = Utils.okAlert("Email is not valid", message: "Please introduce a correct email address")
-            self.presentViewController(alert, animated: true, completion: nil)
+            self.present(alert, animated: true, completion: nil)
         }
     }
 
     
     // MARK: - Action Methods
-    @IBAction func btnBack_Action(sender: AnyObject) {
-        self.navigationController?.popViewControllerAnimated(true)
+    @IBAction func btnBack_Action(_ sender: AnyObject) {
+        self.navigationController?.popViewController(animated: true)
     }
     
     @IBAction func btnRequest_Action() {
         // Check internet connection
         if appDelegate.bIsNetworkReachable == false {
             let alertView = Utils.noNetworkConnectioAlert()
-            self.presentViewController(alertView, animated: true, completion: nil)
+            self.present(alertView, animated: true, completion: nil)
             
             return
         }
@@ -146,7 +146,7 @@ class PForgotPassVC: UIViewController, UITextFieldDelegate {
     }
     
     // MARK: - UITextFieldDelegate Methods
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField == txfEmail {
             txfEmail.resignFirstResponder()
             btnRequest_Action()
@@ -156,8 +156,8 @@ class PForgotPassVC: UIViewController, UITextFieldDelegate {
 
     // MARK: - StatusBar Methods
     
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return UIStatusBarStyle.LightContent
+    override var preferredStatusBarStyle : UIStatusBarStyle {
+        return UIStatusBarStyle.lightContent
     }
     
     // MARK: - MemoryManagement Methods

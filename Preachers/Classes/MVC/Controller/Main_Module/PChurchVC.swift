@@ -13,7 +13,7 @@ import WYPopoverController
 import CoreLocation
 
 enum PChurchTab: Int {
-    case Visits, Place, Details
+    case visits, place, details
 }
 
 class PChurchVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, WYPopoverControllerDelegate, PPreachVCDelegate, PEditVisitVCDelegate, MKMapViewDelegate, UISearchBarDelegate {
@@ -82,7 +82,7 @@ class PChurchVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         setupGestureRecognizerForMapView()
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         loadParams()
     }
@@ -90,10 +90,10 @@ class PChurchVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     // MARK: - Custom Methods
     
     func setupUI() {
-        imgChurch.backgroundColor                   = UIColor.clearColor()
+        imgChurch.backgroundColor                   = UIColor.clear
         imgChurch.layer.cornerRadius                = 75
         imgChurch.layer.borderWidth                 = 6
-        imgChurch.layer.borderColor                 = UIColor.whiteColor().CGColor
+        imgChurch.layer.borderColor                 = UIColor.white.cgColor
         imgChurch.clipsToBounds                     = true
         
         viewBackgroundImgChurch.layer.cornerRadius  = 69
@@ -106,7 +106,7 @@ class PChurchVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         mapView.showsUserLocation = true
     }
     
-    func setupButton(button: UIButton) {
+    func setupButton(_ button: UIButton) {
         button.layer.cornerRadius        = 22
         button.clipsToBounds             = true
     }
@@ -118,44 +118,44 @@ class PChurchVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         setupButton(btnSharePlace)
         setupButton(btnAddCancelPlace)
         
-        btnAddCancelPlace.transform          = CGAffineTransformMakeRotation(CGFloat(-0.25 * M_PI))
+        btnAddCancelPlace.transform          = CGAffineTransform(rotationAngle: CGFloat(-0.25 * M_PI))
     }
     
     
     
     func setupGestureRecognizerForMapView() {
-        let gestureRecognizer = UILongPressGestureRecognizer(target: self, action: "action:")
+        let gestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(PChurchVC.action(_:)))
         
         gestureRecognizer.minimumPressDuration = 2.0
         
         mapView.addGestureRecognizer(gestureRecognizer)
     }
     
-    func action(gestureRecognizer: UIGestureRecognizer) {
+    func action(_ gestureRecognizer: UIGestureRecognizer) {
         
         if let _ = self.geoPoint {
             let annotationsToRemove = mapView.annotations.filter { $0 !== mapView.userLocation }
             mapView.removeAnnotations( annotationsToRemove )
         }
         
-        let touchPoint = gestureRecognizer.locationInView(self.mapView)
-        let newCoordonate: CLLocationCoordinate2D = mapView.convertPoint(touchPoint, toCoordinateFromView: self.mapView)
+        let touchPoint = gestureRecognizer.location(in: self.mapView)
+        let newCoordonate: CLLocationCoordinate2D = mapView.convert(touchPoint, toCoordinateFrom: self.mapView)
         
     
         if let objectId = objId {
             let query = PFQuery(className:"Church")
-            query.getObjectInBackgroundWithId(objectId, block: { (object, error) -> Void in
+            query.getObjectInBackground(withId: objectId, block: { (object, error) -> Void in
                 if error == nil {
                     if let church = object {
                         let newAnotation = MKPointAnnotation()
                         
                         newAnotation.coordinate = newCoordonate
                         
-                        if let city = church.objectForKey("city") as? String {
+                        if let city = church.object(forKey: "city") as? String {
                             newAnotation.title = city
                         }
                         
-                        if let address = church.objectForKey("address") as? String {
+                        if let address = church.object(forKey: "address") as? String {
                             newAnotation.subtitle = address
                         }
 
@@ -163,7 +163,7 @@ class PChurchVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
                         self.geoPoint = geoPoint
                         
                         church["place"]         = geoPoint
-                        church.saveInBackgroundWithBlock({ (success, error) -> Void in
+                        church.saveInBackground(block: { (success, error) -> Void in
                             if error == nil {
                                 if success {
                                     self.mapView.addAnnotation(newAnotation)
@@ -173,7 +173,7 @@ class PChurchVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
                                 if let error = error {
                                     let errorString         = error.userInfo["error"] as! String
                                     let alert               = Utils.okAlert("Error", message: errorString)
-                                    self.presentViewController(alert, animated: true, completion: nil)
+                                    self.present(alert, animated: true, completion: nil)
                                 }
                             }
                         })
@@ -183,34 +183,34 @@ class PChurchVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         }
     }
     
-    private func loadScreenForCurSelectedTab() {
-        if curSelectedTab() == PChurchTab.Visits.rawValue {
-            viewVisits.hidden = false
-            viewPlace.hidden = true
-            viewDetails.hidden = true
+    fileprivate func loadScreenForCurSelectedTab() {
+        if curSelectedTab() == PChurchTab.visits.rawValue {
+            viewVisits.isHidden = false
+            viewPlace.isHidden = true
+            viewDetails.isHidden = true
         }
         else
-            if curSelectedTab() == PChurchTab.Place.rawValue {
-                viewVisits.hidden = true
-                viewPlace.hidden = true
-                viewDetails.hidden = false
+            if curSelectedTab() == PChurchTab.place.rawValue {
+                viewVisits.isHidden = true
+                viewPlace.isHidden = true
+                viewDetails.isHidden = false
         }
         else
-                if curSelectedTab() == PChurchTab.Details.rawValue {
-                    viewVisits.hidden = true
-                    viewPlace.hidden = false
-                    viewDetails.hidden = true
+                if curSelectedTab() == PChurchTab.details.rawValue {
+                    viewVisits.isHidden = true
+                    viewPlace.isHidden = false
+                    viewDetails.isHidden = true
         }
     }
     
-    private func curSelectedTab() -> Int {
+    fileprivate func curSelectedTab() -> Int {
         return segmentControl.selectedIndex
     }
     
     func loadParams() {
         if let objectId = objId {
             let query = PFQuery(className:"Church")
-            query.getObjectInBackgroundWithId(objectId, block: { (object, error) -> Void in
+            query.getObjectInBackground(withId: objectId, block: { (object, error) -> Void in
                 if error == nil {
                     self.currentChurch = object
                     self.updateParams()
@@ -223,52 +223,52 @@ class PChurchVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     func updateParams() {
         if let church = currentChurch {
 
-            if let name = church.objectForKey("name") as? String {
+            if let name = church.object(forKey: "name") as? String {
                 lblName.text = "\(name)"
             }
             
-            if let city = church.objectForKey("city") as? String {
+            if let city = church.object(forKey: "city") as? String {
                 lblCity.text = "\(city)"
             }
 
-            if let address = church.objectForKey("address") as? String {
+            if let address = church.object(forKey: "address") as? String {
                 lblAddress.text     = "\(address)"
             }
             
-            if let distance = church.objectForKey("distance") as? String {
+            if let distance = church.object(forKey: "distance") as? String {
                 lblDistance.text    = "\(distance)"
             }
             
-            if let pastor = church.objectForKey("pastor") as? String {
+            if let pastor = church.object(forKey: "pastor") as? String {
                 lblPastor.text          = "\(pastor)"
             }
             
-            if let note = church.objectForKey("note") as? String {
+            if let note = church.object(forKey: "note") as? String {
                 lblNote.text        = note
             }
             
-            if let place = church.objectForKey("place") as? PFGeoPoint {
+            if let place = church.object(forKey: "place") as? PFGeoPoint {
                 geoPoint = place
                 hideOrShowViewPlace(false)
                 findAddress_APICall()
                 isAdd = true
-                UIView.animateWithDuration(0.5, animations: { () -> Void in
-                    self.btnAddCancelPlace.transform          = CGAffineTransformMakeRotation(CGFloat(0 * M_PI))
-                    self.btnAddCancelPlace.backgroundColor    = UIColor.redColor()
+                UIView.animate(withDuration: 0.5, animations: { () -> Void in
+                    self.btnAddCancelPlace.transform          = CGAffineTransform(rotationAngle: CGFloat(0 * M_PI))
+                    self.btnAddCancelPlace.backgroundColor    = UIColor.red
                     self.hideOrShowViewPlace(false)
-                    self.viewTutorialPlace.hidden             = true
+                    self.viewTutorialPlace.isHidden             = true
                 })
             }
             else {
                 findMe_APICall()
             }
             
-            if let userPicture = church.objectForKey("image") as? PFFile {
-                userPicture.getDataInBackgroundWithBlock({ (data, error) -> Void in
+            if let userPicture = church.object(forKey: "image") as? PFFile {
+                userPicture.getDataInBackground(block: { (data, error) -> Void in
                     if error == nil {
                         if let imageData = data {
                             if let image = UIImage(data:imageData) {
-                                if image.size == CGSizeMake(200, 200) {
+                                if image.size == CGSize(width: 200, height: 200) {
                                     //self.imgChurch.backgroundColor  = UIColor.blackColor()
                                     //self.imgChurch.image            = UIImage(named: "churchICO")
                                 }
@@ -285,35 +285,35 @@ class PChurchVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         }
     }
     
-    func hideOrShowTutorialSermon(hide: Bool) {
+    func hideOrShowTutorialSermon(_ hide: Bool) {
         if hide == true {
             // Hide tutorial sermon
-            viewTutorialVistis.hidden = true
+            viewTutorialVistis.isHidden = true
         }
         else {
             // Show tutorial sermon
-            viewTutorialVistis.hidden = false
+            viewTutorialVistis.isHidden = false
         }
     }
     
-    func hideOrShowViewPlace(hide: Bool) {
+    func hideOrShowViewPlace(_ hide: Bool) {
         if hide == true {
-            mapView.hidden             = true
-            btnSharePlace.hidden       = true
-            btnShowSearchBar.hidden    = true
-            btnFindMe.hidden           = true
-            btnFindAddress.hidden      = true
+            mapView.isHidden             = true
+            btnSharePlace.isHidden       = true
+            btnShowSearchBar.isHidden    = true
+            btnFindMe.isHidden           = true
+            btnFindAddress.isHidden      = true
         }
         else {
-            mapView.hidden             = false
-            btnSharePlace.hidden       = false
-            btnShowSearchBar.hidden    = false
-            btnFindMe.hidden           = false
-            btnFindAddress.hidden      = false
+            mapView.isHidden             = false
+            btnSharePlace.isHidden       = false
+            btnShowSearchBar.isHidden    = false
+            btnFindMe.isHidden           = false
+            btnFindAddress.isHidden      = false
         }
     }
     
-    func zoomToRegion(latitude: Double, longitude: Double) {
+    func zoomToRegion(_ latitude: Double, longitude: Double) {
         let location = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
         let region = MKCoordinateRegionMakeWithDistance(location, 500.0, 700.0)
         mapView.setRegion(region, animated: true)
@@ -322,7 +322,7 @@ class PChurchVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     // MARK: - API Methods
     
     func findMe_APICall() {
-        PFGeoPoint.geoPointForCurrentLocationInBackground { (geoPoint, error) -> Void in
+        PFGeoPoint.geoPointForCurrentLocation { (geoPoint, error) -> Void in
             if error == nil {
                 if let latitude = geoPoint?.latitude {
                     if let longitude = geoPoint?.longitude {
@@ -341,11 +341,11 @@ class PChurchVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
             newAnotation.coordinate.longitude = geoPoint.longitude
             
             if let church = currentChurch {
-                if let city = church.objectForKey("city") as? String {
+                if let city = church.object(forKey: "city") as? String {
                     newAnotation.title = city
                 }
                 
-                if let address = church.objectForKey("address") as? String {
+                if let address = church.object(forKey: "address") as? String {
                     newAnotation.subtitle = address
                 }
             }
@@ -355,7 +355,7 @@ class PChurchVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         }
         else {
             let alert = Utils.okAlert("You don't have the address yet", message: "You have to press more than 2 second on map for create the address.")
-            presentViewController(alert, animated: false, completion: nil)
+            present(alert, animated: false, completion: nil)
         }
     }
     
@@ -363,7 +363,7 @@ class PChurchVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         let query = PFQuery(className:"Preach")
         if let church = currentChurch {
             query.whereKey("church", equalTo: church)
-            query.findObjectsInBackgroundWithBlock { (objects, error) -> Void in
+            query.findObjectsInBackground { (objects, error) -> Void in
                 if error == nil {
                     self.nrVisits         = objects?.count
                     self.arrPreaches      = objects
@@ -376,7 +376,7 @@ class PChurchVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     
     // MARK: - UICollectionViewDataSource Methods
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if let churchs = arrPreaches {
             if churchs.count == 0 {
                 hideOrShowTutorialSermon(false)
@@ -392,13 +392,13 @@ class PChurchVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         return 0
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("PPreachCell", forIndexPath: indexPath) as! PPreachCell
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PPreachCell", for: indexPath) as! PPreachCell
         
         if let preaches = arrPreaches {
             let preach              = preaches[indexPath.row]
-            let date                = preach.objectForKey("date") as? String
-            let  biblicalText = preach.objectForKey("biblicalText") as? String
+            let date                = preach.object(forKey: "date") as? String
+            let  biblicalText = preach.object(forKey: "biblicalText") as? String
             
             if let date = date {
                 cell.lblDate.text       = "\(date)"
@@ -412,8 +412,8 @@ class PChurchVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
 
     }
     
-    func selectItemAtIndex(index: Int) {
-        let editChurchVC         = self.storyboard?.instantiateViewControllerWithIdentifier("PPreachVC") as! PPreachVC
+    func selectItemAtIndex(_ index: Int) {
+        let editChurchVC         = self.storyboard?.instantiateViewController(withIdentifier: "PPreachVC") as! PPreachVC
         if let preachs           = arrPreaches {
             let preach           = preachs[index]
             editChurchVC.objId   = preach.objectId
@@ -434,183 +434,183 @@ class PChurchVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         popoverBackgroundView.tintColor             = grayColor
         popoverBackgroundView.fillTopColor          = grayColor
         popoverBackgroundView.fillBottomColor       = grayColor
-        popoverBackgroundView.outerStrokeColor      = UIColor.clearColor()
-        popoverBackgroundView.innerStrokeColor      = UIColor.clearColor()
+        popoverBackgroundView.outerStrokeColor      = UIColor.clear
+        popoverBackgroundView.innerStrokeColor      = UIColor.clear
         
         popover                                     = WYPopoverController(contentViewController: editChurchVC)
         popover.delegate                            = self
-        popover.presentPopoverFromRect(self.view.bounds, inView: self.view, permittedArrowDirections: .None, animated: true)
+        popover.presentPopover(from: self.view.bounds, in: self.view, permittedArrowDirections: .none, animated: true)
     }
     
     // MARK: - UICollectionViewDelegate Methods
     
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         self.index = indexPath.row
         selectItemAtIndex(indexPath.row)
     }
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: IndexPath) -> CGSize {
         
         // width of collection view
         let widthColl           = collectionView.frame.size.width
         let width               = widthColl - CGFloat(6)
         
         // set width and height for every cell
-        return CGSizeMake(width / 2 - 6, 54)
+        return CGSize(width: width / 2 - 6, height: 54)
     }
     
     // MARK: - Action Methods
     
-    @IBAction func btnAddVisits_Action(sender: AnyObject) {
-        let addChurchVC              = storyboard?.instantiateViewControllerWithIdentifier("PAddVisitVC") as! PAddVisitVC
+    @IBAction func btnAddVisits_Action(_ sender: AnyObject) {
+        let addChurchVC              = storyboard?.instantiateViewController(withIdentifier: "PAddVisitVC") as! PAddVisitVC
         addChurchVC.currentChurch    = self.currentChurch
-        presentViewController(addChurchVC, animated: true, completion: nil)
+        present(addChurchVC, animated: true, completion: nil)
     }
     
-    @IBAction func didSelectNewTab_Action(sender: AnyObject) {
+    @IBAction func didSelectNewTab_Action(_ sender: AnyObject) {
         loadScreenForCurSelectedTab()
     }
     
-    @IBAction func btnBack_Action(sender: AnyObject) {
-        dismissViewControllerAnimated(true, completion: nil)
+    @IBAction func btnBack_Action(_ sender: AnyObject) {
+        dismiss(animated: true, completion: nil)
     }
     
-    @IBAction func upGestureRecognizer_Action(sender: AnyObject) {
+    @IBAction func upGestureRecognizer_Action(_ sender: AnyObject) {
         constraintsOfPlace.constant = -160
-        self.imgChurch.hidden = true
-        self.viewBackgroundImgChurch.hidden = true
+        self.imgChurch.isHidden = true
+        self.viewBackgroundImgChurch.isHidden = true
         
-        UIView.animateWithDuration(1.0, animations: { () -> Void in
+        UIView.animate(withDuration: 1.0, animations: { () -> Void in
             self.view.layoutIfNeeded()
-            }) { (finished) -> Void in
-        }
+            }, completion: { (finished) -> Void in
+        }) 
     }
     
-    @IBAction func downGestureRecognizer_Action(sender: AnyObject) {
+    @IBAction func downGestureRecognizer_Action(_ sender: AnyObject) {
         constraintsOfPlace.constant = 0
         
-        UIView.animateWithDuration(1.0, animations: { () -> Void in
+        UIView.animate(withDuration: 1.0, animations: { () -> Void in
             self.view.layoutIfNeeded()
-            }) { (finished) -> Void in
-                self.imgChurch.hidden = false
-                self.viewBackgroundImgChurch.hidden = false
-        }
+            }, completion: { (finished) -> Void in
+                self.imgChurch.isHidden = false
+                self.viewBackgroundImgChurch.isHidden = false
+        }) 
     }
     
-    @IBAction func showSearcBar_Action(sender: AnyObject) {
+    @IBAction func showSearcBar_Action(_ sender: AnyObject) {
         searchController = UISearchController(searchResultsController: nil)
         searchController.hidesNavigationBarDuringPresentation = false
         searchController.searchBar.delegate = self
-        presentViewController(searchController, animated: true, completion: nil)
+        present(searchController, animated: true, completion: nil)
     }
     
-    @IBAction func btnFindMe_Action(sender: AnyObject) {
+    @IBAction func btnFindMe_Action(_ sender: AnyObject) {
         findMe_APICall()
     }
     
-    @IBAction func btnFindAddress_Action(sender: AnyObject) {
+    @IBAction func btnFindAddress_Action(_ sender: AnyObject) {
         findAddress_APICall()
     }
 
     @IBAction func btnAddCancelAddress_Action() {
         if isAdd == true {
             if let _ = geoPoint {
-                let alert = UIAlertController(title: "Attention", message: "Are you sure you want to permanently delete this address?", preferredStyle: .Alert)
-                alert.addAction(UIAlertAction(title: "Delete", style: .Destructive, handler: { (action) -> Void in
+                let alert = UIAlertController(title: "Attention", message: "Are you sure you want to permanently delete this address?", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { (action) -> Void in
                     self.isAdd = false
 
                     if let church = self.currentChurch {
-                        church.removeObjectForKey("place")
+                        church.remove(forKey: "place")
                         church.saveInBackground()
                     }
                     
                     self.geoPoint = nil
                     
-                    UIView.animateWithDuration(0.5, animations: { () -> Void in
-                        self.btnAddCancelPlace.transform          = CGAffineTransformMakeRotation(CGFloat(-0.25 * M_PI))
+                    UIView.animate(withDuration: 0.5, animations: { () -> Void in
+                        self.btnAddCancelPlace.transform          = CGAffineTransform(rotationAngle: CGFloat(-0.25 * M_PI))
                         self.btnAddCancelPlace.backgroundColor    = UIColor.preachersBlue()
                         self.hideOrShowViewPlace(true)
-                        self.viewTutorialPlace.hidden             = false
+                        self.viewTutorialPlace.isHidden             = false
                     })
                     
                 }))
-                alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+                alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
                 
-                presentViewController(alert, animated: true, completion: nil)
+                present(alert, animated: true, completion: nil)
             }
             else {
                 self.isAdd = false
                 
-                UIView.animateWithDuration(0.5, animations: { () -> Void in
-                    self.btnAddCancelPlace.transform          = CGAffineTransformMakeRotation(CGFloat(-0.25 * M_PI))
+                UIView.animate(withDuration: 0.5, animations: { () -> Void in
+                    self.btnAddCancelPlace.transform          = CGAffineTransform(rotationAngle: CGFloat(-0.25 * M_PI))
                     self.btnAddCancelPlace.backgroundColor    = UIColor.preachersBlue()
                     self.hideOrShowViewPlace(true)
-                    self.viewTutorialPlace.hidden             = false
+                    self.viewTutorialPlace.isHidden             = false
                 })
             }
             
         }
         else {
-            let alert = UIAlertController(title: "Attention", message: "You have to press more than 2 second on map for create the address.", preferredStyle: .Alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .Cancel, handler: nil))
+            let alert = UIAlertController(title: "Attention", message: "You have to press more than 2 second on map for create the address.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
             
-            presentViewController(alert, animated: true, completion: nil)
+            present(alert, animated: true, completion: nil)
             
             isAdd = true
-            UIView.animateWithDuration(0.5, animations: { () -> Void in
-                self.btnAddCancelPlace.transform          = CGAffineTransformMakeRotation(CGFloat(0 * M_PI))
-                self.btnAddCancelPlace.backgroundColor    = UIColor.redColor()
+            UIView.animate(withDuration: 0.5, animations: { () -> Void in
+                self.btnAddCancelPlace.transform          = CGAffineTransform(rotationAngle: CGFloat(0 * M_PI))
+                self.btnAddCancelPlace.backgroundColor    = UIColor.red
                 self.hideOrShowViewPlace(false)
-                self.viewTutorialPlace.hidden             = true
+                self.viewTutorialPlace.isHidden             = true
             })
         }
     }
     
-    @IBAction func btnShareAddress_Action(sender: AnyObject) {
+    @IBAction func btnShareAddress_Action(_ sender: AnyObject) {
         if let geoPoint = geoPoint {
             
         }
         else {
             let alert = Utils.okAlert("You don't have the address yet", message: "You have to press more than 2 second on map for create the address.")
-            presentViewController(alert, animated: false, completion: nil)
+            present(alert, animated: false, completion: nil)
         }
     }
     
     // MARK: - PPreachVCDelegate Methods
     
     func didCancelPopover() {
-        popover.dismissPopoverAnimated(true)
+        popover.dismissPopover(animated: true)
         loadParams()
     }
     
-    func didEditPreach(objectID: String) {
-        popover.dismissPopoverAnimated(true)
+    func didEditPreach(_ objectID: String) {
+        popover.dismissPopover(animated: true)
         
-        let editChurchVC         = self.storyboard?.instantiateViewControllerWithIdentifier("PEditVisitVC") as! PEditVisitVC
+        let editChurchVC         = self.storyboard?.instantiateViewController(withIdentifier: "PEditVisitVC") as! PEditVisitVC
         editChurchVC.objId       = objectID
         editChurchVC.delegate    = self
         editChurchVC.index       = self.index
         
-        presentViewController(editChurchVC, animated: true, completion: nil)
+        present(editChurchVC, animated: true, completion: nil)
     }
     
     // MARK: - WYPopoverControllerDelegate Methods
     
-    func popoverControllerShouldDismissPopover(popoverController: WYPopoverController!) -> Bool {
+    func popoverControllerShouldDismissPopover(_ popoverController: WYPopoverController!) -> Bool {
         return true
     }
     
     // MARK: - PEditVisitVCDelegate Methods
     
-    func didCancelEditVC(index: Int) {
+    func didCancelEditVC(_ index: Int) {
         selectItemAtIndex(index)
     }
     
     // MARK: - UISearchBarDelegate Methods
     
-    func searchBarSearchButtonClicked(searchBar: UISearchBar){
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar){
         searchBar.resignFirstResponder()
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
         /*
         if self.mapView.annotations.count != 0 {
             annotation = self.mapView.annotations[0]
@@ -621,11 +621,11 @@ class PChurchVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         localSearchRequest = MKLocalSearchRequest()
         localSearchRequest.naturalLanguageQuery = searchBar.text
         localSearch = MKLocalSearch(request: localSearchRequest)
-        localSearch.startWithCompletionHandler { (localSearchResponse, error) -> Void in
+        localSearch.start { (localSearchResponse, error) -> Void in
             
             if localSearchResponse == nil{
                 let alert = Utils.okAlert("Upss", message: "Place Not Found")
-                self.presentViewController(alert, animated: true, completion: nil)
+                self.present(alert, animated: true, completion: nil)
                 
                 return
             }
@@ -644,8 +644,8 @@ class PChurchVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     
     // MARK: - StatusBar Methods
     
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return UIStatusBarStyle.LightContent
+    override var preferredStatusBarStyle : UIStatusBarStyle {
+        return UIStatusBarStyle.lightContent
     }
 
     // MARK: - MemoryManagement Methods

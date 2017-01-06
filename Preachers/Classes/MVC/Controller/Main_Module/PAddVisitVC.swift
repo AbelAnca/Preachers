@@ -8,6 +8,19 @@
 
 import UIKit
 import Parse
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
 
 class PAddVisitVC: UIViewController {
 
@@ -22,15 +35,15 @@ class PAddVisitVC: UIViewController {
     // MARK: - ViewController Methods
     override func viewDidLoad() {
         super.viewDidLoad()
-        setCurrentDate(NSDate())
+        setCurrentDate(Date())
     }
 
     // MARK: - Custom Methods
     
-    func setCurrentDate(currentDate: NSDate) {
-        let dateFormatter             = NSDateFormatter()
+    func setCurrentDate(_ currentDate: Date) {
+        let dateFormatter             = DateFormatter()
         dateFormatter.dateFormat      = "dd-MM-yyyy"
-        date = dateFormatter.stringFromDate(currentDate)
+        date = dateFormatter.string(from: currentDate)
     }
     
     func verifyBiblicalText() -> Bool {
@@ -52,45 +65,45 @@ class PAddVisitVC: UIViewController {
             preach.observation            = txvObservation.text
             preach.date                   = date
             preach.church                 = self.currentChurch!
-            preach.saveInBackgroundWithBlock { (success, error) -> Void in
+            preach.saveInBackground { (success, error) -> Void in
                 if error == nil {
                     if success {
-                        self.dismissViewControllerAnimated(true, completion: nil)
+                        self.dismiss(animated: true, completion: nil)
                     }
                 }
                 else {
                     if let error = error {
                         let errorString     = error.userInfo["error"] as! String
                         let alert           = Utils.okAlert("Error", message: errorString)
-                        self.presentViewController(alert, animated: true, completion: nil)
+                        self.present(alert, animated: true, completion: nil)
                     }
                 }
             }
         }
         else {
             let alert = Utils.okAlert("Upss", message: "The biblical text is required")
-            presentViewController(alert, animated: true, completion: nil)
+            present(alert, animated: true, completion: nil)
         }
     }
     
     // MARK: - Action Methods
     
-    @IBAction func btnBack_Action(sender: AnyObject) {
-        dismissViewControllerAnimated(true, completion: nil)
+    @IBAction func btnBack_Action(_ sender: AnyObject) {
+        dismiss(animated: true, completion: nil)
     }
     
-    @IBAction func btnSave_Action(sender: AnyObject) {
+    @IBAction func btnSave_Action(_ sender: AnyObject) {
         saveVisit_APICall()
     }
     
-    @IBAction func datePicker_Action(sender: UIDatePicker) {
+    @IBAction func datePicker_Action(_ sender: UIDatePicker) {
         setCurrentDate(sender.date)
     }
     
     // MARK: - StatusBar Methods
     
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return UIStatusBarStyle.LightContent
+    override var preferredStatusBarStyle : UIStatusBarStyle {
+        return UIStatusBarStyle.lightContent
     }
     
     // MARK: - Memory Management Methods

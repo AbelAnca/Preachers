@@ -17,14 +17,14 @@ class PConfirmForgotPassVC: UIViewController {
     }
     
     // MARK: - Action Methods
-    @IBAction func btnBack_Action(sender: AnyObject) {
-        self.navigationController?.popViewControllerAnimated(true)
+    @IBAction func btnBack_Action(_ sender: AnyObject) {
+        self.navigationController?.popViewController(animated: true)
     }
     
     // MARK: - StatusBar Methods
     
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return UIStatusBarStyle.LightContent
+    override var preferredStatusBarStyle : UIStatusBarStyle {
+        return UIStatusBarStyle.lightContent
     }
 
     // MARK: - MemoryManagement Methods

@@ -18,7 +18,7 @@ class PLandingVC: UIViewController {
         // Do any additional setup after loading the view.
     }
 
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         if let _ = appDelegate.curUserID {
@@ -34,13 +34,13 @@ class PLandingVC: UIViewController {
     
     // MARK: - Custom Methods
     func showLoginVC() {
-        let navC        = appDelegate.storyboardLogin.instantiateViewControllerWithIdentifier("PLandingVC_NC") as! UINavigationController
-        self.navigationController?.presentViewController(navC, animated: true, completion: nil)
+        let navC        = appDelegate.storyboardLogin.instantiateViewController(withIdentifier: "PLandingVC_NC") as! UINavigationController
+        self.navigationController?.present(navC, animated: true, completion: nil)
     }
     
     func showMomentsVC() {
-        let mainVC         = self.storyboard?.instantiateViewControllerWithIdentifier("PMainVC_TB") as! UITabBarController
-        self.navigationController?.presentViewController(mainVC, animated: true, completion: nil)
+        let mainVC         = self.storyboard?.instantiateViewController(withIdentifier: "PMainVC_TB") as! UITabBarController
+        self.navigationController?.present(mainVC, animated: true, completion: nil)
     }
     
     // MARK: - MemoryManagement Methods

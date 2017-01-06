@@ -20,11 +20,11 @@ class PChurchCell: UITableViewCell {
         
         imgView.layer.cornerRadius        = 26.5
         imgView.layer.borderWidth         = 0
-        imgView.layer.borderColor         = UIColor.blackColor().CGColor
+        imgView.layer.borderColor         = UIColor.black.cgColor
         imgView.clipsToBounds             = true
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state

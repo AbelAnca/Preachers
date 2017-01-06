@@ -26,7 +26,7 @@ class PSettingsVC: UIViewController, UIImagePickerControllerDelegate, UINavigati
         setupUI()
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         loadParams_APICall()
     }
@@ -34,11 +34,11 @@ class PSettingsVC: UIViewController, UIImagePickerControllerDelegate, UINavigati
     // MARK: - Custom Methods
     
     func setupUI() {
-        btnProfile.imageView?.contentMode       = .ScaleAspectFill
-        btnProfile.backgroundColor              = UIColor.clearColor()
+        btnProfile.imageView?.contentMode       = .scaleAspectFill
+        btnProfile.backgroundColor              = UIColor.clear
         btnProfile.layer.cornerRadius           = 62
         btnProfile.layer.borderWidth            = 2
-        btnProfile.layer.borderColor            = UIColor.preachersBlue().CGColor
+        btnProfile.layer.borderColor            = UIColor.preachersBlue().cgColor
         btnProfile.clipsToBounds                = true
         
         imagePicker.delegate                    = self
@@ -46,31 +46,31 @@ class PSettingsVC: UIViewController, UIImagePickerControllerDelegate, UINavigati
     
     func setupImagePicker() {
         imagePicker.allowsEditing               = false
-        imagePicker.sourceType                  = .PhotoLibrary
+        imagePicker.sourceType                  = .photoLibrary
         
-        presentViewController(imagePicker, animated: true, completion: nil)
+        present(imagePicker, animated: true, completion: nil)
     }
     
     func presentLandingVC() {
-        let landVC = self.storyboard?.instantiateViewControllerWithIdentifier("PLandingVC_NC") as! UINavigationController
-        self.presentViewController(landVC, animated: true, completion: nil)
+        let landVC = self.storyboard?.instantiateViewController(withIdentifier: "PLandingVC_NC") as! UINavigationController
+        self.present(landVC, animated: true, completion: nil)
     }
     
     func pushToChangePass() {
-        let changePassVC = self.storyboard?.instantiateViewControllerWithIdentifier("PChangePassVC") as! PChangePassVC
-        self.presentViewController(changePassVC, animated: true, completion: nil)
+        let changePassVC = self.storyboard?.instantiateViewController(withIdentifier: "PChangePassVC") as! PChangePassVC
+        self.present(changePassVC, animated: true, completion: nil)
     }
     
     func removeObjectIdFromDefaults() {
         appDelegate.curUserID                    = nil
-        appDelegate.defaults.removeObjectForKey(k_UserDef_LoggedInUserID)
+        appDelegate.defaults.removeObject(forKey: k_UserDef_LoggedInUserID)
         appDelegate.defaults.synchronize()
     }
     
     // MARK: - API Methods
     
     func loadParams_APICall() {
-        let currentUser = PFUser.currentUser()
+        let currentUser = PFUser.current()
         if currentUser != nil {
             
             if let firstname = currentUser?["firstname"] {
@@ -96,11 +96,11 @@ class PSettingsVC: UIViewController, UIImagePickerControllerDelegate, UINavigati
             }
             
             if let userPicture = currentUser?["profilePicture"] as? PFFile {
-                userPicture.getDataInBackgroundWithBlock({ (data, error) -> Void in
+                userPicture.getDataInBackground(block: { (data, error) -> Void in
                     if error == nil {
                         if let imageData = data {
                             let image = UIImage(data:imageData)
-                            self.btnProfile.setImage(image, forState: .Normal)
+                            self.btnProfile.setImage(image, for: UIControlState())
                         }
                     }
                     else {
@@ -113,29 +113,29 @@ class PSettingsVC: UIViewController, UIImagePickerControllerDelegate, UINavigati
     
     // MARK: - Action Methods
     
-    @IBAction func btnChangeUsername_Action(sender: AnyObject) {
-        let changeUsernameVC = storyboard?.instantiateViewControllerWithIdentifier("PChangeUsernameVC") as! PChangeUsernameVC
-        presentViewController(changeUsernameVC, animated: true, completion: nil)
+    @IBAction func btnChangeUsername_Action(_ sender: AnyObject) {
+        let changeUsernameVC = storyboard?.instantiateViewController(withIdentifier: "PChangeUsernameVC") as! PChangeUsernameVC
+        present(changeUsernameVC, animated: true, completion: nil)
     }
 
-    @IBAction func btnProfile_Action(sender: AnyObject) {
+    @IBAction func btnProfile_Action(_ sender: AnyObject) {
         setupImagePicker()
     }
     
-    @IBAction func btnEditProfile_Action(sender: AnyObject) {
-        let editVC = storyboard?.instantiateViewControllerWithIdentifier("PEditProfileVC") as! PEditProfileVC
-        self.presentViewController(editVC, animated: true, completion: nil)
+    @IBAction func btnEditProfile_Action(_ sender: AnyObject) {
+        let editVC = storyboard?.instantiateViewController(withIdentifier: "PEditProfileVC") as! PEditProfileVC
+        self.present(editVC, animated: true, completion: nil)
     }
     
-    @IBAction func btnChangePass_Action(sender: AnyObject) {
+    @IBAction func btnChangePass_Action(_ sender: AnyObject) {
         
-        let alert = UIAlertController(title: "Important!", message: "Do you want to change your password?", preferredStyle:.Alert)
-        alert.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
+        let alert = UIAlertController(title: "Important!", message: "Do you want to change your password?", preferredStyle:.alert)
+        alert.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.default, handler: { (action) -> Void in
             
-            let currentUser = PFUser.currentUser()
+            let currentUser = PFUser.current()
             if let email = currentUser?.email {
-                KVNProgress.showWithStatus("Reseting...")
-                PFUser.requestPasswordResetForEmailInBackground(email, block: { (success, error) -> Void in
+                KVNProgress.show(withStatus: "Reseting...")
+                PFUser.requestPasswordResetForEmail(inBackground: email, block: { (success, error) -> Void in
                     if error == nil {
                         if success {
                             self.pushToChangePass()
@@ -148,25 +148,25 @@ class PSettingsVC: UIViewController, UIImagePickerControllerDelegate, UINavigati
                             
                             let errorString              = error.userInfo["error"] as! String
                             let alert                    = Utils.okAlert("Error", message: errorString)
-                            self.presentViewController(alert, animated: true, completion: nil)
+                            self.present(alert, animated: true, completion: nil)
                         }
                     }
                 })
             }
         }))
-        alert.addAction(UIAlertAction(title: "No", style: UIAlertActionStyle.Cancel, handler: { (action) -> Void in
+        alert.addAction(UIAlertAction(title: "No", style: UIAlertActionStyle.cancel, handler: { (action) -> Void in
             
         }))
-        self.presentViewController(alert, animated: true, completion: nil)
+        self.present(alert, animated: true, completion: nil)
     }
     
-    @IBAction func btnLogout_Action(sender: AnyObject) {
+    @IBAction func btnLogout_Action(_ sender: AnyObject) {
         
-        let alert = UIAlertController(title: "Important!", message: "Are you sure you want to Logout?", preferredStyle:.Alert)
-        alert.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
+        let alert = UIAlertController(title: "Important!", message: "Are you sure you want to Logout?", preferredStyle:.alert)
+        alert.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.default, handler: { (action) -> Void in
             
-            KVNProgress.showWithStatus("Logout...")
-            PFUser.logOutInBackgroundWithBlock({ (error) -> Void in
+            KVNProgress.show(withStatus: "Logout...")
+            PFUser.logOutInBackground(block: { (error) -> Void in
                 if error == nil {
                     self.removeObjectIdFromDefaults()
                     self.presentLandingVC()
@@ -179,33 +179,33 @@ class PSettingsVC: UIViewController, UIImagePickerControllerDelegate, UINavigati
                         
                         let errorString          = error.userInfo["error"] as! String
                         let alert                = Utils.okAlert("Error", message: errorString)
-                        self.presentViewController(alert, animated: true, completion: nil)
+                        self.present(alert, animated: true, completion: nil)
                     }
                 }
             })
             KVNProgress.dismiss()
         }))
-        alert.addAction(UIAlertAction(title: "No", style: UIAlertActionStyle.Cancel, handler: { (action) -> Void in
+        alert.addAction(UIAlertAction(title: "No", style: UIAlertActionStyle.cancel, handler: { (action) -> Void in
             
         }))
-        self.presentViewController(alert, animated: true, completion: nil)
+        self.present(alert, animated: true, completion: nil)
     }
     
     // MARK: - UIImagePickerControllerDelegate Methods
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
-            let currentUser = PFUser.currentUser()
+            let currentUser = PFUser.current()
             if currentUser != nil {
                 self.spinner.startAnimating()
                 
                 if let imageData           = UIImageJPEGRepresentation(pickedImage, 1.0) {
                     let imageFile          = PFFile(name:"image.jpg", data:imageData)
                     
-                    imageFile.saveInBackgroundWithBlock({ (success, error) -> Void in
+                    imageFile?.saveInBackground(block: { (success, error) -> Void in
                         if error == nil {
                             if success {
                                 currentUser?.setObject(imageFile, forKey: "profilePicture")
-                                currentUser?.saveInBackgroundWithBlock({ (succeded, error) -> Void in
+                                currentUser?.saveInBackground(block: { (succeded, error) -> Void in
                                     if succeded {
                                         self.loadParams_APICall()
                                         self.spinner.stopAnimating()
@@ -226,17 +226,17 @@ class PSettingsVC: UIViewController, UIImagePickerControllerDelegate, UINavigati
                 }
             }
         }
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
     
-    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
-        dismissViewControllerAnimated(true, completion: nil)
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
     }
     
     // MARK: - StatusBar Methods
     
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return UIStatusBarStyle.LightContent
+    override var preferredStatusBarStyle : UIStatusBarStyle {
+        return UIStatusBarStyle.lightContent
     }
     
     // MARK: - MemoryManagement Methods
@@ -246,10 +246,10 @@ class PSettingsVC: UIViewController, UIImagePickerControllerDelegate, UINavigati
     }
     
     // Example
-    class func scaleImageDown(image: UIImage) -> UIImage {
+    class func scaleImageDown(_ image: UIImage) -> UIImage {
         let fWidth      = image.size.width
         let fHeight     = image.size.height
-        var bounds      = CGRectZero
+        var bounds      = CGRect.zero
         
         if fWidth <= k_ResizeTo30PercentResolution && fHeight <= k_ResizeTo30PercentResolution {
             return image
@@ -266,16 +266,16 @@ class PSettingsVC: UIViewController, UIImagePickerControllerDelegate, UINavigati
             }
         }
         
-        let size = CGSizeMake(bounds.size.width, bounds.size.height)
+        let size = CGSize(width: bounds.size.width, height: bounds.size.height)
         let hasAlpha = false
         let scale: CGFloat = 2.0 // Automatically use scale factor of main screen
         
         UIGraphicsBeginImageContextWithOptions(size, !hasAlpha, scale)
-        image.drawInRect(CGRect(origin: CGPointZero, size: size))
+        image.draw(in: CGRect(origin: CGPoint.zero, size: size))
         
         let scaledImage = UIGraphicsGetImageFromCurrentImageContext()
         
-        return scaledImage
+        return scaledImage!
     }
     
     /*

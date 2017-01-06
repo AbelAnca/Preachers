@@ -11,7 +11,7 @@ import Parse
 
 protocol PPreachVCDelegate {
     func didCancelPopover()
-    func didEditPreach(objectID: String)
+    func didEditPreach(_ objectID: String)
 }
 
 class PPreachVC: UIViewController, UITextFieldDelegate, UITextViewDelegate {
@@ -36,7 +36,7 @@ class PPreachVC: UIViewController, UITextFieldDelegate, UITextViewDelegate {
         //loadParams()
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         loadParams()
     }
@@ -44,9 +44,9 @@ class PPreachVC: UIViewController, UITextFieldDelegate, UITextViewDelegate {
     // MARK: - Custom Methods
     func updateParams() {
         if let preach = currentPreach {
-            txfBiblicalText.text            = preach.objectForKey("biblicalText") as? String
-            txfNote.text                    = preach.objectForKey("observation") as? String
-            txfPreach.text                  = preach.objectForKey("myPreach") as? String
+            txfBiblicalText.text            = preach.object(forKey: "biblicalText") as? String
+            txfNote.text                    = preach.object(forKey: "observation") as? String
+            txfPreach.text                  = preach.object(forKey: "myPreach") as? String
         }
     }
     
@@ -54,7 +54,7 @@ class PPreachVC: UIViewController, UITextFieldDelegate, UITextViewDelegate {
     func loadParams() {
         if let objectId = objId {
             let query = PFQuery(className:"Preach")
-            query.getObjectInBackgroundWithId(objectId, block: { (object, error) -> Void in
+            query.getObjectInBackground(withId: objectId, block: { (object, error) -> Void in
                 if error == nil {
                     self.currentPreach = object
                     self.updateParams()
@@ -64,29 +64,29 @@ class PPreachVC: UIViewController, UITextFieldDelegate, UITextViewDelegate {
     }
     
     // MARK: - Action Methods
-    @IBAction func btnBack_Action(sender: AnyObject) {
+    @IBAction func btnBack_Action(_ sender: AnyObject) {
         delegate?.didCancelPopover()
     }
     
-    @IBAction func btnEdit_Action(sender: AnyObject) {
+    @IBAction func btnEdit_Action(_ sender: AnyObject) {
         if let objectId = objId {
             delegate?.didEditPreach(objectId)
         }
     }
     
-    @IBAction func btnShare_Action(sender: AnyObject) {
+    @IBAction func btnShare_Action(_ sender: AnyObject) {
         
     }
     
-    @IBAction func btnDelete_Action(sender: AnyObject) {
+    @IBAction func btnDelete_Action(_ sender: AnyObject) {
         
-        let alert = UIAlertController(title: "Attention", message: "Are you sure you want to permanently delete this sermon?", preferredStyle: .Alert)
+        let alert = UIAlertController(title: "Attention", message: "Are you sure you want to permanently delete this sermon?", preferredStyle: .alert)
         
-        alert.addAction(UIAlertAction(title: "Delete", style: .Destructive, handler: { (action) -> Void in
+        alert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { (action) -> Void in
             let query = PFQuery(className:"Preach")
             if let church = self.currentChurch {
                 query.whereKey("church", equalTo: church)
-                query.findObjectsInBackgroundWithBlock { (objects, error) -> Void in
+                query.findObjectsInBackground { (objects, error) -> Void in
                     if error == nil {
                         if let index = self.index {
                             if let objects = objects {
@@ -99,27 +99,27 @@ class PPreachVC: UIViewController, UITextFieldDelegate, UITextViewDelegate {
                 }
             }
         }))
-        alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         
-        presentViewController(alert, animated: true, completion: nil)
+        present(alert, animated: true, completion: nil)
     }
     
     // MARK: - UITextFieldDelegate Methods
     
-    func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         return false
     }
     
     // MARK: - UITextViewDelegate Methods
     
-    func textViewShouldBeginEditing(textView: UITextView) -> Bool {
+    func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
         return false
     }
     
     // MARK: - StatusBar Methods
     
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return UIStatusBarStyle.LightContent
+    override var preferredStatusBarStyle : UIStatusBarStyle {
+        return UIStatusBarStyle.lightContent
     }
     
     // MARK: - MemoryManagement Methods

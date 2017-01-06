@@ -9,6 +9,30 @@
 import UIKit
 import Parse
 import KVNProgress
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
 
 class PEditChurchVC: UIViewController, UITextFieldDelegate, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
@@ -38,22 +62,22 @@ class PEditChurchVC: UIViewController, UITextFieldDelegate, UITextViewDelegate, 
         imgChurch.layer.cornerRadius    = 98
         imgChurch.clipsToBounds         = true
         imgChurch.layer.borderWidth     = 2
-        imgChurch.layer.borderColor     = UIColor.preachersBlue().CGColor
+        imgChurch.layer.borderColor     = UIColor.preachersBlue().cgColor
         
         loadParams()
     }
     
     func setupImagePicker() {
         imagePicker.allowsEditing       = false
-        imagePicker.sourceType          = .PhotoLibrary
+        imagePicker.sourceType          = .photoLibrary
         
-        presentViewController(imagePicker, animated: true, completion: nil)
+        present(imagePicker, animated: true, completion: nil)
     }
     
     func loadParams() {
         if let objectId = objId {
             let query = PFQuery(className:"Church")
-            query.getObjectInBackgroundWithId(objectId, block: { (object, error) -> Void in
+            query.getObjectInBackground(withId: objectId, block: { (object, error) -> Void in
                 if error == nil {
                     self.currentChurch = object
                     self.updateParams()
@@ -64,16 +88,16 @@ class PEditChurchVC: UIViewController, UITextFieldDelegate, UITextViewDelegate, 
     
     func updateParams() {
         if let church = currentChurch {
-            txfCity.text                = church.objectForKey("city") as? String
-            txfName.text                = church.objectForKey("name") as? String
-            txfAddress.text             = church.objectForKey("address") as? String
-            txfPastor.text              = church.objectForKey("pastor") as? String
-            txfDistance.text            = church.objectForKey("distance") as? String
-            txvDescription.text         = church.objectForKey("note") as? String
-            if let userPicture          = church.objectForKey("image") as? PFFile {
+            txfCity.text                = church.object(forKey: "city") as? String
+            txfName.text                = church.object(forKey: "name") as? String
+            txfAddress.text             = church.object(forKey: "address") as? String
+            txfPastor.text              = church.object(forKey: "pastor") as? String
+            txfDistance.text            = church.object(forKey: "distance") as? String
+            txvDescription.text         = church.object(forKey: "note") as? String
+            if let userPicture          = church.object(forKey: "image") as? PFFile {
                 spinner.startAnimating()
                 
-                userPicture.getDataInBackgroundWithBlock({ (data, error) -> Void in
+                userPicture.getDataInBackground(block: { (data, error) -> Void in
                     if error == nil {
                         if let imageData = data {
                             let image                 = UIImage(data:imageData)
@@ -94,11 +118,11 @@ class PEditChurchVC: UIViewController, UITextFieldDelegate, UITextViewDelegate, 
     func saveChurch_APICall() {
         if txfCity.text?.utf16.count > 1 {
             self.view.endEditing(true)
-            KVNProgress.showWithStatus("Saving church...")
+            KVNProgress.show(withStatus: "Saving church...")
             
             if let objectId = objId {
                 let query = PFQuery(className:"Church")
-                query.getObjectInBackgroundWithId(objectId, block: { (object, error) -> Void in
+                query.getObjectInBackground(withId: objectId, block: { (object, error) -> Void in
                     if error == nil {
                         if let church = object {
                             church["city"]         = self.txfCity.text!
@@ -107,18 +131,18 @@ class PEditChurchVC: UIViewController, UITextFieldDelegate, UITextViewDelegate, 
                             church["pastor"]       = self.txfPastor.text
                             church["distance"]     = self.txfDistance.text
                             church["note"]         = self.txvDescription.text
-                            church["user"]         = PFUser.currentUser()!
+                            church["user"]         = PFUser.current()!
                             
                             if let imageData = UIImageJPEGRepresentation(self.imgChurch.image!, 1.0) {
-                                let imageFile: PFFile = PFFile(name:"image.jpg", data:imageData)
+                                let imageFile: PFFile = PFFile(name:"image.jpg", data:imageData)!
                                 imageFile.saveInBackground()
                                 church["image"]    = imageFile
                             }
                             
-                            church.saveInBackgroundWithBlock({ (success, error) -> Void in
+                            church.saveInBackground(block: { (success, error) -> Void in
                                 if error == nil {
                                     if success {
-                                        self.dismissViewControllerAnimated(true, completion: nil)
+                                        self.dismiss(animated: true, completion: nil)
                                         KVNProgress.dismiss()
                                     }
                                 }
@@ -127,7 +151,7 @@ class PEditChurchVC: UIViewController, UITextFieldDelegate, UITextViewDelegate, 
                                     if let error = error {
                                         let errorString         = error.userInfo["error"] as! String
                                         let alert               = Utils.okAlert("Error", message: errorString)
-                                        self.presentViewController(alert, animated: true, completion: nil)
+                                        self.present(alert, animated: true, completion: nil)
                                     }
                                 }
                             })
@@ -138,25 +162,25 @@ class PEditChurchVC: UIViewController, UITextFieldDelegate, UITextViewDelegate, 
         }
         else {
             let alert = Utils.okAlert("Upss", message: "The city is required")
-            presentViewController(alert, animated: true, completion: nil)
+            present(alert, animated: true, completion: nil)
         }
     }
     
     // MARK: - Action Methods
     
-    @IBAction func btnAddPhoto_Action(sender: AnyObject) {
+    @IBAction func btnAddPhoto_Action(_ sender: AnyObject) {
         setupImagePicker()
     }
-    @IBAction func btnBack_Action(sender: AnyObject) {
-        dismissViewControllerAnimated(true, completion: nil)
+    @IBAction func btnBack_Action(_ sender: AnyObject) {
+        dismiss(animated: true, completion: nil)
     }
     
-    @IBAction func btnSave_Action(sender: AnyObject) {
+    @IBAction func btnSave_Action(_ sender: AnyObject) {
         saveChurch_APICall()
     }
     
     // MARK: - UITextFieldDelegate Methods
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField == txfCity {
             txfName.becomeFirstResponder()
         }
@@ -180,7 +204,7 @@ class PEditChurchVC: UIViewController, UITextFieldDelegate, UITextViewDelegate, 
     }
     
     // MARK: - UITextViewDelegate Methods
-    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         if text == "\n" {
             txvDescription.resignFirstResponder()
             return false
@@ -189,24 +213,24 @@ class PEditChurchVC: UIViewController, UITextFieldDelegate, UITextViewDelegate, 
     }
     
     // MARK: - UIImagePickerControllerDelegate Methods
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
             imgChurch.image                     = pickedImage
             imgChurch.layer.borderWidth         = 2
-            imgChurch.layer.borderColor         = UIColor.darkGrayColor().CGColor
+            imgChurch.layer.borderColor         = UIColor.darkGray.cgColor
             
         }
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
     
-    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
-        dismissViewControllerAnimated(true, completion: nil)
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
     }
     
     // MARK: - StatusBar Methods
     
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return UIStatusBarStyle.LightContent
+    override var preferredStatusBarStyle : UIStatusBarStyle {
+        return UIStatusBarStyle.lightContent
     }
     
     // MARK: - MemoryManagement Methods

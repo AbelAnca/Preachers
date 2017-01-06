@@ -11,6 +11,10 @@ import Parse
 
 class Church : PFObject, PFSubclassing {
     
+    private static var __once: () = {
+            self.registerSubclass()
+        }()
+    
     @NSManaged var city: String
     @NSManaged var name: String?
     @NSManaged var address: String?
@@ -23,11 +27,9 @@ class Church : PFObject, PFSubclassing {
     
     override class func initialize() {
         struct Static {
-            static var onceToken : dispatch_once_t = 0;
+            static var onceToken : Int = 0;
         }
-        dispatch_once(&Static.onceToken) {
-            self.registerSubclass()
-        }
+        _ = Church.__once
     }
     
     static func parseClassName() -> String {

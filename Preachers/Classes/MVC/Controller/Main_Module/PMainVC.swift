@@ -30,7 +30,7 @@ class PMainVC: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITab
         setupUI()
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         loadParams_APICall()
     }
@@ -45,7 +45,7 @@ class PMainVC: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITab
     func filterList() {
         if isSearching == false {
             if var _ = arrChurchs {
-                arrChurchs!.sortInPlace {
+                arrChurchs!.sort {
                     return $1["city"] as! String > $0["city"] as! String
                 }
                 tblView.reloadData()
@@ -53,7 +53,7 @@ class PMainVC: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITab
         }
         else {
             if var _ = searchArrChurchs {
-                searchArrChurchs!.sortInPlace {
+                searchArrChurchs!.sort {
                     return $1["city"] as! String > $0["city"] as! String
                 }
                 tblView.reloadData()
@@ -61,7 +61,7 @@ class PMainVC: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITab
         }
     }
     
-    func searching(searchText: String) {
+    func searching(_ searchText: String) {
         if searchBar.text!.isEmpty {
             isSearching                  = false
             tblView.reloadData()
@@ -69,12 +69,12 @@ class PMainVC: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITab
             isSearching                  =  true
             searchArrChurchs?.removeAll()
             if let churchs = arrChurchs {
-                for var index = 0; index < churchs.count; index++
+                for index in 0 ..< churchs.count
                 {
                     let church           = churchs[index]
                     
                     if let city = church["city"] {
-                        if city.lowercaseString.rangeOfString(searchText.lowercaseString)  != nil {
+                        if (city as AnyObject).lowercased.range(of: searchText.lowercased())  != nil {
                             searchArrChurchs?.append((arrChurchs?[index])!)
                         }
                     }
@@ -87,8 +87,8 @@ class PMainVC: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITab
     // MARK: - API Methods
     func loadParams_APICall() {
         let query                           = PFQuery(className:"Church")
-        query.whereKey("user", equalTo: PFUser.currentUser()!)
-        query.findObjectsInBackgroundWithBlock { (objects, error) -> Void in
+        query.whereKey("user", equalTo: PFUser.current()!)
+        query.findObjectsInBackground { (objects, error) -> Void in
             if error == nil {
                 self.arrChurchs             = objects
                 self.searchArrChurchs       = objects
@@ -101,30 +101,30 @@ class PMainVC: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITab
     
     // MARK: - Action Methods
     
-    @IBAction func btnEdit_Action(sender: AnyObject) {
+    @IBAction func btnEdit_Action(_ sender: AnyObject) {
         if isEdit == false {
             isEdit               = true
-            tblView.editing      = true
+            tblView.isEditing      = true
         }
         else {
             isEdit               = false
-            tblView.editing      = false
+            tblView.isEditing      = false
         }
     }
     
-    @IBAction func btnAddChurch_Action(sender: AnyObject) {
-        let addChurchVC = storyboard?.instantiateViewControllerWithIdentifier("PAddChurchVC") as! PAddChurchVC
-        presentViewController(addChurchVC, animated: true, completion: nil)
+    @IBAction func btnAddChurch_Action(_ sender: AnyObject) {
+        let addChurchVC = storyboard?.instantiateViewController(withIdentifier: "PAddChurchVC") as! PAddChurchVC
+        present(addChurchVC, animated: true, completion: nil)
     }
 
     
     // MARK: - UITableViewDelegate Methods
-    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == UITableViewCellEditingStyle.Delete {
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == UITableViewCellEditingStyle.delete {
             
             let query = PFQuery(className:"Church")
-            query.whereKey("user", equalTo: PFUser.currentUser()!)
-            query.findObjectsInBackgroundWithBlock { (objects, error) -> Void in
+            query.whereKey("user", equalTo: PFUser.current()!)
+            query.findObjectsInBackground { (objects, error) -> Void in
                 if error == nil {
                     if let objects = objects {
                         let object = objects[indexPath.row]
@@ -133,7 +133,7 @@ class PMainVC: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITab
                         let query = PFQuery(className:"Preach")
                         
                         query.whereKey("church", equalTo: object)
-                        query.findObjectsInBackgroundWithBlock { (objects, error) -> Void in
+                        query.findObjectsInBackground { (objects, error) -> Void in
                             if error == nil {
                                 if let obj = objects {
                                     for objec in obj {
@@ -146,76 +146,76 @@ class PMainVC: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITab
                 }
             }
             
-            arrChurchs?.removeAtIndex(indexPath.row)
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
+            arrChurchs?.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: UITableViewRowAnimation.automatic)
         }
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         searchBar.text = ""
         
         if isEdit == true {
             if isSearching == true {
-                let editChurchVC         = self.storyboard?.instantiateViewControllerWithIdentifier("PEditChurchVC") as! PEditChurchVC
+                let editChurchVC         = self.storyboard?.instantiateViewController(withIdentifier: "PEditChurchVC") as! PEditChurchVC
                 if let churchs           = searchArrChurchs {
                     let church           = churchs[indexPath.row]
                     editChurchVC.objId   = church.objectId
                 }
-                self.presentViewController(editChurchVC, animated: true, completion: nil)
+                self.present(editChurchVC, animated: true, completion: nil)
             }
             else {
-                let editChurchVC         = self.storyboard?.instantiateViewControllerWithIdentifier("PEditChurchVC") as! PEditChurchVC
+                let editChurchVC         = self.storyboard?.instantiateViewController(withIdentifier: "PEditChurchVC") as! PEditChurchVC
                 if let churchs           = arrChurchs {
                     let church           = churchs[indexPath.row]
                     editChurchVC.objId   = church.objectId
                 }
-                self.presentViewController(editChurchVC, animated: true, completion: nil)
+                self.present(editChurchVC, animated: true, completion: nil)
             }
         }
         else {
             if isSearching == true {
-                let churchVC             = self.storyboard?.instantiateViewControllerWithIdentifier("PChurchVC") as! PChurchVC
+                let churchVC             = self.storyboard?.instantiateViewController(withIdentifier: "PChurchVC") as! PChurchVC
                 if let churchs           = searchArrChurchs {
                     let church           = churchs[indexPath.row]
                     churchVC.objId       = church.objectId
                 }
-                churchVC.modalTransitionStyle = .CrossDissolve
-                self.showViewController(churchVC, sender: nil)
+                churchVC.modalTransitionStyle = .crossDissolve
+                self.show(churchVC, sender: nil)
             }
             else {
-                let churchVC             = self.storyboard?.instantiateViewControllerWithIdentifier("PChurchVC") as! PChurchVC
+                let churchVC             = self.storyboard?.instantiateViewController(withIdentifier: "PChurchVC") as! PChurchVC
                 if let churchs           = arrChurchs {
                     let church           = churchs[indexPath.row]
                     churchVC.objId       = church.objectId
                 }
-                churchVC.modalTransitionStyle = .CrossDissolve
-                self.showViewController(churchVC, sender: nil)
+                churchVC.modalTransitionStyle = .crossDissolve
+                self.show(churchVC, sender: nil)
             }
         }
     }
     
     // MARK: - UITableViewDataSource Methods
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         if let churchs = arrChurchs {
             if churchs.count == 0 {
-                searchBar.hidden = true
-                viewTutorial.hidden = false
+                searchBar.isHidden = true
+                viewTutorial.isHidden = false
             }
             else {
-                searchBar.hidden = false
-                viewTutorial.hidden = true
+                searchBar.isHidden = false
+                viewTutorial.isHidden = true
             }
         }
         
         if isSearching == true {
             if let searchChurchs = searchArrChurchs {
                 if searchChurchs.count == 0 {
-                    btnEdit.hidden      = true
+                    btnEdit.isHidden      = true
                 }
                 else {
-                    btnEdit.hidden      = false
+                    btnEdit.isHidden      = false
                 }
                 
                 return searchChurchs.count
@@ -224,10 +224,10 @@ class PMainVC: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITab
         else {
             if let churchs = arrChurchs {
                 if churchs.count == 0 {
-                    btnEdit.hidden      = true
+                    btnEdit.isHidden      = true
                 }
                 else {
-                    btnEdit.hidden      = false
+                    btnEdit.isHidden      = false
                 }
                 return churchs.count
             }
@@ -238,18 +238,18 @@ class PMainVC: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITab
         return 0
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCellWithIdentifier("PChurchCell", forIndexPath: indexPath) as! PChurchCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "PChurchCell", for: indexPath) as! PChurchCell
         
         if isSearching == true {
             if let churchs = searchArrChurchs {
                 let church                  = churchs[indexPath.row]
-                cell.lblName.text           = church.objectForKey("city") as? String
-                cell.lblSubtitle.text       = church.objectForKey("name") as? String
+                cell.lblName.text           = church.object(forKey: "city") as? String
+                cell.lblSubtitle.text       = church.object(forKey: "name") as? String
                 
-                if let userPicture = church.objectForKey("image") as? PFFile {
-                    userPicture.getDataInBackgroundWithBlock({ (data, error) -> Void in
+                if let userPicture = church.object(forKey: "image") as? PFFile {
+                    userPicture.getDataInBackground(block: { (data, error) -> Void in
                         if error == nil {
                             if let imageData = data {
                                 let image           = UIImage(data:imageData)
@@ -264,11 +264,11 @@ class PMainVC: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITab
         else {
             if let churchs = arrChurchs {
                 let church                  = churchs[indexPath.row]
-                cell.lblName.text           = church.objectForKey("city") as? String
-                cell.lblSubtitle.text       = church.objectForKey("name") as? String
+                cell.lblName.text           = church.object(forKey: "city") as? String
+                cell.lblSubtitle.text       = church.object(forKey: "name") as? String
                 
-                if let userPicture = church.objectForKey("image") as? PFFile {
-                    userPicture.getDataInBackgroundWithBlock({ (data, error) -> Void in
+                if let userPicture = church.object(forKey: "image") as? PFFile {
+                    userPicture.getDataInBackground(block: { (data, error) -> Void in
                         if error == nil {
                             if let imageData = data {
                                 let image           = UIImage(data:imageData)
@@ -284,24 +284,24 @@ class PMainVC: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITab
     
     // MARK: - UISearchBarDelegate Methods
     
-    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         searching(searchText)
     }
     
-    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.showsCancelButton = false
         searchBar.resignFirstResponder()
     }
     
-    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.showsCancelButton        = false
         constraints.constant               = 0.0
-        self.vireTopBar.hidden             = false
+        self.vireTopBar.isHidden             = false
         
-        UIView.animateWithDuration(0.3, animations: { () -> Void in
+        UIView.animate(withDuration: 0.3, animations: { () -> Void in
             self.view.layoutIfNeeded()
-            }) { (finished) -> Void in
-        }
+            }, completion: { (finished) -> Void in
+        }) 
         searchBar.text = ""
         
         if let searchText = searchBar.text {
@@ -310,27 +310,27 @@ class PMainVC: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITab
         searchBar.resignFirstResponder()
     }
     
-    func searchBarShouldBeginEditing(searchBar: UISearchBar) -> Bool {
+    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
         
         searchBar.showsCancelButton         = true
         constraints.constant                = -44
         
         
-        UIView.animateWithDuration(0.3, animations: { () -> Void in
+        UIView.animate(withDuration: 0.3, animations: { () -> Void in
             self.view.layoutIfNeeded()
-            }) { (finished) -> Void in
-                self.vireTopBar.hidden      = true
-        }
+            }, completion: { (finished) -> Void in
+                self.vireTopBar.isHidden      = true
+        }) 
         return true
     }
     
     // MARK: - StatusBar Methods
     
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+    override var preferredStatusBarStyle : UIStatusBarStyle {
         if constraints.constant == 0 {
-            return UIStatusBarStyle.LightContent
+            return UIStatusBarStyle.lightContent
         }
-        return UIStatusBarStyle.Default
+        return UIStatusBarStyle.default
     }
 
     // MARK: - MemoryManagement Methods

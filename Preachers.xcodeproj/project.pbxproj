@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		B41A3A6F3BDDE3F8B3F12900 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6FB4A3FDBF6AE6C0CEB8383 /* Pods.framework */; };
+		2006B5FDCDE522B33544D4CB /* Pods_Preachers.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27D0EE3933CE4F0DA66EB72B /* Pods_Preachers.framework */; };
 		B5072A0C1BC5572400612B51 /* PEditChurchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5072A0B1BC5572400612B51 /* PEditChurchVC.swift */; };
 		B514D3141BADD144000AAE32 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B514D3131BADD144000AAE32 /* Utils.swift */; };
 		B51D4FED1BFCA7EF0071B0B4 /* ADVSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51D4FEC1BFCA7EF0071B0B4 /* ADVSegmentedControl.swift */; };
@@ -71,8 +71,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		22684A5E6E4A9A6BF9EA6BF4 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
-		501105494FF0BF9ADFB4F9D6 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		27D0EE3933CE4F0DA66EB72B /* Pods_Preachers.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Preachers.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6F4A9DF91EDA59F7E79A094F /* Pods-Preachers.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Preachers.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Preachers/Pods-Preachers.debug.xcconfig"; sourceTree = "<group>"; };
+		744A32F8DB22B823CD0BE7A5 /* Pods-Preachers.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Preachers.release.xcconfig"; path = "Pods/Target Support Files/Pods-Preachers/Pods-Preachers.release.xcconfig"; sourceTree = "<group>"; };
 		B5072A0B1BC5572400612B51 /* PEditChurchVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PEditChurchVC.swift; path = Preachers/Classes/MVC/Controller/Main_Module/PEditChurchVC.swift; sourceTree = "<group>"; };
 		B514D3131BADD144000AAE32 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Utils.swift; path = Preachers/Classes/Utils/Utils.swift; sourceTree = "<group>"; };
 		B51D4FEC1BFCA7EF0071B0B4 /* ADVSegmentedControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ADVSegmentedControl.swift; path = Preachers/Classes/MVC/View/ADVSegmentedControl.swift; sourceTree = "<group>"; };
@@ -154,7 +155,7 @@
 				B56549F21C241BD600532079 /* CoreLocation.framework in Frameworks */,
 				B56549F01C241BCA00532079 /* CoreData.framework in Frameworks */,
 				B56549EE1C241BB800532079 /* AVFoundation.framework in Frameworks */,
-				B41A3A6F3BDDE3F8B3F12900 /* Pods.framework in Frameworks */,
+				2006B5FDCDE522B33544D4CB /* Pods_Preachers.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -175,6 +176,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3F394F0CB9C17EC5D71D46BA /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				6F4A9DF91EDA59F7E79A094F /* Pods-Preachers.debug.xcconfig */,
+				744A32F8DB22B823CD0BE7A5 /* Pods-Preachers.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		58946F82E1960AB73D49C4FD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -191,17 +201,9 @@
 				B56549EF1C241BCA00532079 /* CoreData.framework */,
 				B56549ED1C241BB800532079 /* AVFoundation.framework */,
 				B6FB4A3FDBF6AE6C0CEB8383 /* Pods.framework */,
+				27D0EE3933CE4F0DA66EB72B /* Pods_Preachers.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		5E2A1EA5ED1EBD9DDA01C217 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				22684A5E6E4A9A6BF9EA6BF4 /* Pods.debug.xcconfig */,
-				501105494FF0BF9ADFB4F9D6 /* Pods.release.xcconfig */,
-			);
-			name = Pods;
 			sourceTree = "<group>";
 		};
 		B5525BAA1BF9E782008554BC /* Proxima Nova */ = {
@@ -230,8 +232,8 @@
 				B57BACFE1BABF301009781B0 /* PreachersTests */,
 				B57BAD091BABF301009781B0 /* PreachersUITests */,
 				B57BACE81BABF301009781B0 /* Products */,
-				5E2A1EA5ED1EBD9DDA01C217 /* Pods */,
 				58946F82E1960AB73D49C4FD /* Frameworks */,
+				3F394F0CB9C17EC5D71D46BA /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -431,12 +433,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B57BAD0F1BABF301009781B0 /* Build configuration list for PBXNativeTarget "Preachers" */;
 			buildPhases = (
-				3618C1E49EA387584AA383A2 /* Check Pods Manifest.lock */,
+				DECC626D2C5C37D38865B378 /* [CP] Check Pods Manifest.lock */,
 				B57BACE31BABF301009781B0 /* Sources */,
 				B57BACE41BABF301009781B0 /* Frameworks */,
 				B57BACE51BABF301009781B0 /* Resources */,
-				2DAB72A8A4D34EB70D14A4F2 /* Embed Pods Frameworks */,
-				1397734272B7968AB00AD84D /* Copy Pods Resources */,
+				5297BA679193567683978AE8 /* [CP] Embed Pods Frameworks */,
+				32CC6FAD934F6435C6251F4C /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -495,13 +497,16 @@
 					B57BACE61BABF301009781B0 = {
 						CreatedOnToolsVersion = 7.0;
 						DevelopmentTeam = 9A2GTY3B59;
+						LastSwiftMigration = 0820;
 					};
 					B57BACFA1BABF301009781B0 = {
 						CreatedOnToolsVersion = 7.0;
+						LastSwiftMigration = 0820;
 						TestTargetID = B57BACE61BABF301009781B0;
 					};
 					B57BAD051BABF301009781B0 = {
 						CreatedOnToolsVersion = 7.0;
+						LastSwiftMigration = 0820;
 						TestTargetID = B57BACE61BABF301009781B0;
 					};
 				};
@@ -555,49 +560,49 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		1397734272B7968AB00AD84D /* Copy Pods Resources */ = {
+		32CC6FAD934F6435C6251F4C /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Preachers/Pods-Preachers-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		2DAB72A8A4D34EB70D14A4F2 /* Embed Pods Frameworks */ = {
+		5297BA679193567683978AE8 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Embed Pods Frameworks";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Preachers/Pods-Preachers-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		3618C1E49EA387584AA383A2 /* Check Pods Manifest.lock */ = {
+		DECC626D2C5C37D38865B378 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -771,29 +776,29 @@
 		};
 		B57BAD101BABF301009781B0 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 22684A5E6E4A9A6BF9EA6BF4 /* Pods.debug.xcconfig */;
+			baseConfigurationReference = 6F4A9DF91EDA59F7E79A094F /* Pods-Preachers.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = Preachers/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.mumo.mobile;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "002b2568-76ea-4016-b357-132309356918";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
 		B57BAD111BABF301009781B0 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 501105494FF0BF9ADFB4F9D6 /* Pods.release.xcconfig */;
+			baseConfigurationReference = 744A32F8DB22B823CD0BE7A5 /* Pods-Preachers.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = Preachers/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.mumo.mobile;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "add87902-f686-46b8-8dcb-4f98c9bfd772";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -805,6 +810,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = P.PreachersTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Preachers.app/Preachers";
 			};
 			name = Debug;
@@ -817,6 +823,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = P.PreachersTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Preachers.app/Preachers";
 			};
 			name = Release;
@@ -828,6 +835,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = P.PreachersUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = Preachers;
 				USES_XCTRUNNER = YES;
 			};
@@ -840,6 +848,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = P.PreachersUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = Preachers;
 				USES_XCTRUNNER = YES;
 			};

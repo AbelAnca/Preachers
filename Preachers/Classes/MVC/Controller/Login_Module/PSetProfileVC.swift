@@ -20,7 +20,7 @@ class PSetProfileVC: UIViewController, UITextFieldDelegate {
     @IBOutlet var txfFirstName: UITextField!
     @IBOutlet var txfLastName: UITextField!
     
-    @IBOutlet weak private var viewNoNetworkConnection: UIView!
+    @IBOutlet weak fileprivate var viewNoNetworkConnection: UIView!
     @IBOutlet weak var constXOriginNoNetworkView: NSLayoutConstraint!
     
     var birthdate: String?
@@ -39,12 +39,12 @@ class PSetProfileVC: UIViewController, UITextFieldDelegate {
         txfFirstName.text = "Anca"
         txfLastName.text = "Abel"
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "reachabilityChanged_Notification:", name: ReachabilityChangedNotification, object: appDelegate.reachability)
+        NotificationCenter.defaultCenter().addObserver(self, selector: "reachabilityChanged_Notification:", name: ReachabilityChangedNotification, object: appDelegate.reachability)
         
         setupUI()
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
         // Initial reachability check
@@ -60,7 +60,7 @@ class PSetProfileVC: UIViewController, UITextFieldDelegate {
     
     // MARK: - Notification Methods
     
-    func reachabilityChanged_Notification(notification: NSNotification) {
+    func reachabilityChanged_Notification(_ notification: Notification) {
         if let reachability = notification.object as? Reachability {
             if reachability.isReachable() {
                 hideNoInternetConnectionView()
@@ -75,10 +75,10 @@ class PSetProfileVC: UIViewController, UITextFieldDelegate {
     func setupUI() {
         btnStart.layer.cornerRadius          = 15.0
         btnStart.layer.masksToBounds         = true
-        btnStart.layer.borderColor           = UIColor.whiteColor().CGColor
+        btnStart.layer.borderColor           = UIColor.white.cgColor
         btnStart.layer.borderWidth           = 1.0
         
-        setDateForBirthdate(NSDate())
+        setDateForBirthdate(Date())
     }
     
     func verifyEmail() -> Bool {
@@ -90,14 +90,14 @@ class PSetProfileVC: UIViewController, UITextFieldDelegate {
         return false
     }
     
-    func setDateForBirthdate(date: NSDate) {
-        let dateFormatter            = NSDateFormatter()
+    func setDateForBirthdate(_ date: Date) {
+        let dateFormatter            = DateFormatter()
         dateFormatter.dateFormat     = "dd-MM-yyyy"
-        birthdate                    = dateFormatter.stringFromDate(date)
+        birthdate                    = dateFormatter.string(from: date)
     }
     
     func hideNoInternetConnectionView() {
-        UIView.animateWithDuration(0.5, delay: 0.0, options: UIViewAnimationOptions.CurveEaseIn, animations: { () -> Void in
+        UIView.animate(withDuration: 0.5, delay: 0.0, options: UIViewAnimationOptions.curveEaseIn, animations: { () -> Void in
             self.constXOriginNoNetworkView.constant = -50
             self.viewNoNetworkConnection.alpha = 0
             //self.viewNoNetworkConnection.hidden = true
@@ -108,7 +108,7 @@ class PSetProfileVC: UIViewController, UITextFieldDelegate {
     }
     
     func showNoInternetConnectionView() {
-        UIView.animateWithDuration(0.5, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
+        UIView.animate(withDuration: 0.5, delay: 0.0, options: UIViewAnimationOptions.curveEaseOut, animations: { () -> Void in
             self.constXOriginNoNetworkView.constant = 0
             self.viewNoNetworkConnection.alpha = 1
             //self.viewNoNetworkConnection.hidden = false
@@ -125,18 +125,18 @@ class PSetProfileVC: UIViewController, UITextFieldDelegate {
         if let username = username {
             if let password = password {
                 if verifyEmail() == true {
-                    KVNProgress.showWithStatus("Waiting...")
-                    PFUser.logInWithUsernameInBackground(username, password:password) {
+                    KVNProgress.show(withStatus: "Waiting...")
+                    PFUser.logInWithUsername(inBackground: username, password:password) {
                         (user: PFUser?, error: NSError?) -> Void in
                         if user != nil {
                             if user?["emailVerified"] as? Bool == true {
                                 appDelegate.curUserID     = user?.objectId
                                 
                                 //>     Save user's ID locally, to know which user is logged in
-                                appDelegate.defaults.setObject(appDelegate.curUserID, forKey: k_UserDef_LoggedInUserID)
+                                appDelegate.defaults.set(appDelegate.curUserID, forKey: k_UserDef_LoggedInUserID)
                                 appDelegate.defaults.synchronize()
                                 
-                                self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
+                                self.navigationController?.dismiss(animated: true, completion: nil)
                                 KVNProgress.dismiss()
                             }
                             
@@ -145,14 +145,14 @@ class PSetProfileVC: UIViewController, UITextFieldDelegate {
                             user?.setValue(self.birthdate, forKey: "birthdate")
                             user?.setValue(self.txfFirstName.text, forKey: "firstname")
                             user?.setValue(self.txfLastName.text, forKey: "lastname")
-                            user?.saveInBackgroundWithBlock({ (success, error) -> Void in
+                            user?.saveInBackground(block: { (success, error) -> Void in
                                 if error == nil {
                                     if success {
                                         KVNProgress.dismiss()
-                                        let alert = UIAlertController(title: "Email adress verification!", message: "We have sent you an email that contains a link - you must click this link before you can continue.", preferredStyle:.Alert)
-                                        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Cancel, handler: { (action) -> Void in
+                                        let alert = UIAlertController(title: "Email adress verification!", message: "We have sent you an email that contains a link - you must click this link before you can continue.", preferredStyle:.alert)
+                                        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.cancel, handler: { (action) -> Void in
                                         }))
-                                        self.presentViewController(alert, animated: true, completion: nil)
+                                        self.present(alert, animated: true, completion: nil)
                                     }
                                 }
                                 else
@@ -161,7 +161,7 @@ class PSetProfileVC: UIViewController, UITextFieldDelegate {
                                         let errorString = error.userInfo["error"] as! String
                                         
                                         let alert = Utils.okAlert("Error", message: errorString)
-                                        self.presentViewController(alert, animated: true, completion: nil)
+                                        self.present(alert, animated: true, completion: nil)
                                 }
                             })
                         }
@@ -171,14 +171,14 @@ class PSetProfileVC: UIViewController, UITextFieldDelegate {
                                 let errorString = error.userInfo["error"] as! String
                                 
                                 let alert = Utils.okAlert("Error", message: errorString)
-                                self.presentViewController(alert, animated: true, completion: nil)
+                                self.present(alert, animated: true, completion: nil)
                             }
                         }
                     }
                 }
                 else {
                     let alert = Utils.okAlert("Email is not valid", message: "Please introduce a correct email address")
-                    self.presentViewController(alert, animated: true, completion: nil)
+                    self.present(alert, animated: true, completion: nil)
                 }
             }
         }
@@ -186,11 +186,11 @@ class PSetProfileVC: UIViewController, UITextFieldDelegate {
     
     // MARK: - Action Methods
 
-    @IBAction func btnStart_Action(sender: AnyObject) {
+    @IBAction func btnStart_Action(_ sender: AnyObject) {
         // Check internet connection
         if appDelegate.bIsNetworkReachable == false {
             let alertView = Utils.noNetworkConnectioAlert()
-            self.presentViewController(alertView, animated: true, completion: nil)
+            self.present(alertView, animated: true, completion: nil)
             
             return
         }
@@ -198,13 +198,13 @@ class PSetProfileVC: UIViewController, UITextFieldDelegate {
         login_APICall()
     }
     
-    @IBAction func datePicker_Action(sender: UIDatePicker) {
+    @IBAction func datePicker_Action(_ sender: UIDatePicker) {
         setDateForBirthdate(sender.date)
     }
     
     // MARK: - UITextFieldDelegate Methods
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         
         if textField == txfEmail {
             txfFirstName.becomeFirstResponder()
@@ -226,8 +226,8 @@ class PSetProfileVC: UIViewController, UITextFieldDelegate {
     
     // MARK: - StatusBar Methods
     
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return UIStatusBarStyle.LightContent
+    override var preferredStatusBarStyle : UIStatusBarStyle {
+        return UIStatusBarStyle.lightContent
     }
     
     // MARK: - MemoryManagement Methods

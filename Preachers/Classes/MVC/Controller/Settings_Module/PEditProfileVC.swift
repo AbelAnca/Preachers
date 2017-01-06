@@ -36,16 +36,16 @@ class PEditProfileVC: UIViewController, UITextFieldDelegate {
         return false
     }
     
-    func setBirthdateFromDatePicker(date: NSDate) {
-        let dateFormatter            = NSDateFormatter()
+    func setBirthdateFromDatePicker(_ date: Date) {
+        let dateFormatter            = DateFormatter()
         dateFormatter.dateFormat     = "dd-MM-yyyy"
-        strBirthdate                 = dateFormatter.stringFromDate(date)
+        strBirthdate                 = dateFormatter.string(from: date)
     }
     
     // MARK: - API Methods
     
     func loadParams_APICall() {
-        let currentUser = PFUser.currentUser()
+        let currentUser = PFUser.current()
         if currentUser != nil {
             
             if let email = currentUser?.email {
@@ -65,10 +65,10 @@ class PEditProfileVC: UIViewController, UITextFieldDelegate {
             }
             
             if let birthdate = currentUser?["birthdate"] as? String {
-                let dateFormatter = NSDateFormatter()
+                let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "dd-MM-yyyy"
                 
-                if let date = dateFormatter.dateFromString(birthdate) {
+                if let date = dateFormatter.date(from: birthdate) {
                     datePicker.date = date
                 }
                 strBirthdate = birthdate
@@ -77,17 +77,17 @@ class PEditProfileVC: UIViewController, UITextFieldDelegate {
     }
     
     func saveParams_APICall() {
-        let user = PFUser.currentUser()
+        let user = PFUser.current()
         if user != nil {
             user?.setValue(self.txfPhone.text, forKey: "phone")
             user?.setValue(self.strBirthdate, forKey: "birthdate")
             user?.setValue(self.txfFirstName.text, forKey: "firstname")
             user?.setValue(self.txfLastName.text, forKey: "lastname")
-            KVNProgress.showWithStatus("Saving...")
-            user?.saveInBackgroundWithBlock({ (success, error) -> Void in
+            KVNProgress.show(withStatus: "Saving...")
+            user?.saveInBackground(block: { (success, error) -> Void in
                 if error == nil {
                     if success {
-                        self.dismissViewControllerAnimated(true, completion: nil)
+                        self.dismiss(animated: true, completion: nil)
                         KVNProgress.dismiss()
                     }
                 }
@@ -96,7 +96,7 @@ class PEditProfileVC: UIViewController, UITextFieldDelegate {
                         KVNProgress.dismiss()
                         let errorString        = error.userInfo["error"] as! String
                         let alert              = Utils.okAlert("Error", message: errorString)
-                        self.presentViewController(alert, animated: true, completion: nil)
+                        self.present(alert, animated: true, completion: nil)
                     }
                 }
             })
@@ -105,21 +105,21 @@ class PEditProfileVC: UIViewController, UITextFieldDelegate {
 
     // MARK: - Action Methods
 
-    @IBAction func btnBack_Action(sender: AnyObject) {
-        self.dismissViewControllerAnimated(true, completion: nil)
+    @IBAction func btnBack_Action(_ sender: AnyObject) {
+        self.dismiss(animated: true, completion: nil)
     }
 
-    @IBAction func btnSave_Action(sender: AnyObject) {
+    @IBAction func btnSave_Action(_ sender: AnyObject) {
         saveParams_APICall()
     }
     
-    @IBAction func datePicker_Action(sender: UIDatePicker) {
+    @IBAction func datePicker_Action(_ sender: UIDatePicker) {
         setBirthdateFromDatePicker(sender.date)
     }
     
     // MARK: - UITextFieldDelegate Methods
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         
         if textField == txfEmail {
             txfFirstName.becomeFirstResponder()
@@ -141,8 +141,8 @@ class PEditProfileVC: UIViewController, UITextFieldDelegate {
     
     // MARK: - StatusBar Methods
     
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return UIStatusBarStyle.LightContent
+    override var preferredStatusBarStyle : UIStatusBarStyle {
+        return UIStatusBarStyle.lightContent
     }
     
     // MARK: - MemoryManagement Methods

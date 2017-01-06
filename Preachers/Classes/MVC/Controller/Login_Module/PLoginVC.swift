@@ -13,7 +13,7 @@ import ReachabilitySwift
 
 class PLoginVC: UIViewController, UITextFieldDelegate {
 
-    @IBOutlet weak private var viewNoNetworkConnection: UIView!
+    @IBOutlet weak fileprivate var viewNoNetworkConnection: UIView!
     @IBOutlet weak var constXOriginNoNetworkView: NSLayoutConstraint!
     
     // IBOutlet
@@ -26,7 +26,7 @@ class PLoginVC: UIViewController, UITextFieldDelegate {
     @IBOutlet var btnLogin: UIButton!
 
     let blueColor                  = UIColor(red: 89 / 255.0, green: 192 / 255.0, blue: 251 / 255.0, alpha: 1)
-    let whiteColor                 = UIColor.whiteColor()
+    let whiteColor                 = UIColor.white
     
     var isLoginSelected            = false
     
@@ -37,12 +37,12 @@ class PLoginVC: UIViewController, UITextFieldDelegate {
         txfUsername.text = "Abel Anca"
         txfPassword.text = "qwerty"
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "reachabilityChanged_Notification:", name: ReachabilityChangedNotification, object: appDelegate.reachability)
+        NotificationCenter.defaultCenter().addObserver(self, selector: "reachabilityChanged_Notification:", name: ReachabilityChangedNotification, object: appDelegate.reachability)
 
         setupUI()
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
         // Initial reachability check
@@ -58,7 +58,7 @@ class PLoginVC: UIViewController, UITextFieldDelegate {
     
     // MARK: - Notification Methods
     
-    func reachabilityChanged_Notification(notification: NSNotification) {
+    func reachabilityChanged_Notification(_ notification: Notification) {
         if let reachability = notification.object as? Reachability {
             if reachability.isReachable() {
                 hideNoInternetConnectionView()
@@ -74,22 +74,22 @@ class PLoginVC: UIViewController, UITextFieldDelegate {
     func setupUI() {
         txfUsername.layer.cornerRadius    = 15.0
         txfUsername.layer.masksToBounds   = true
-        txfUsername.layer.borderColor     = UIColor.whiteColor().CGColor
+        txfUsername.layer.borderColor     = UIColor.white.cgColor
         txfUsername.layer.borderWidth     = 1.0
         
         txfPassword.layer.cornerRadius    = 15.0
         txfPassword.layer.masksToBounds   = true
-        txfPassword.layer.borderColor     = UIColor.whiteColor().CGColor
+        txfPassword.layer.borderColor     = UIColor.white.cgColor
         txfPassword.layer.borderWidth     = 1.0
         
         btnGo.layer.cornerRadius          = 15.0
         btnGo.layer.masksToBounds         = true
-        btnGo.layer.borderColor           = UIColor.whiteColor().CGColor
+        btnGo.layer.borderColor           = UIColor.white.cgColor
         btnGo.layer.borderWidth           = 1.0 
     }
     
     func pushNextVC() {
-        let setProfileVC                  = appDelegate.storyboardLogin.instantiateViewControllerWithIdentifier("PSetProfileVC") as! PSetProfileVC
+        let setProfileVC                  = appDelegate.storyboardLogin.instantiateViewController(withIdentifier: "PSetProfileVC") as! PSetProfileVC
 
         setProfileVC.username             = txfUsername.text!
         setProfileVC.password             = txfPassword.text!
@@ -112,27 +112,27 @@ class PLoginVC: UIViewController, UITextFieldDelegate {
     }
     
     func selectSignUp() {
-        btnSignUp.selected      = true
-        btnSignUp.setTitleColor(blueColor, forState: .Normal)
+        btnSignUp.isSelected      = true
+        btnSignUp.setTitleColor(blueColor, for: UIControlState())
         
-        btnLogin.selected       = false
-        btnLogin.setTitleColor(whiteColor, forState: .Normal)
+        btnLogin.isSelected       = false
+        btnLogin.setTitleColor(whiteColor, for: UIControlState())
         
         isLoginSelected         = false
     }
     
     func selectLogin() {
-        btnSignUp.selected      = false
-        btnSignUp.setTitleColor(whiteColor, forState: .Normal)
+        btnSignUp.isSelected      = false
+        btnSignUp.setTitleColor(whiteColor, for: UIControlState())
         
-        btnLogin.selected       = true
-        btnLogin.setTitleColor(blueColor, forState: .Normal)
+        btnLogin.isSelected       = true
+        btnLogin.setTitleColor(blueColor, for: UIControlState())
         
         isLoginSelected         = true
     }
     
     func hideNoInternetConnectionView() {
-        UIView.animateWithDuration(0.5, delay: 0.0, options: UIViewAnimationOptions.CurveEaseIn, animations: { () -> Void in
+        UIView.animate(withDuration: 0.5, delay: 0.0, options: UIViewAnimationOptions.curveEaseIn, animations: { () -> Void in
             self.constXOriginNoNetworkView.constant = -20
             self.viewNoNetworkConnection.alpha = 0
             //self.viewNoNetworkConnection.hidden = true
@@ -143,7 +143,7 @@ class PLoginVC: UIViewController, UITextFieldDelegate {
     }
     
     func showNoInternetConnectionView() {
-        UIView.animateWithDuration(0.5, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
+        UIView.animate(withDuration: 0.5, delay: 0.0, options: UIViewAnimationOptions.curveEaseOut, animations: { () -> Void in
             self.constXOriginNoNetworkView.constant = 20
             self.viewNoNetworkConnection.alpha = 1
             //self.viewNoNetworkConnection.hidden = false
@@ -161,14 +161,14 @@ class PLoginVC: UIViewController, UITextFieldDelegate {
         user.username               = txfUsername.text
         user.password               = txfPassword.text
         
-        KVNProgress.showWithStatus("Waiting...")
-        user.signUpInBackgroundWithBlock {
+        KVNProgress.show(withStatus: "Waiting...")
+        user.signUpInBackground {
             (succeeded: Bool, error: NSError?) -> Void in
             if let error = error {
                 KVNProgress.dismiss()
                 let errorString = error.userInfo["error"] as! String
                 let alert = Utils.okAlert("Error", message: errorString)
-                self.presentViewController(alert, animated: true, completion: nil)
+                self.present(alert, animated: true, completion: nil)
             } else {
                 self.pushNextVC()
                 KVNProgress.dismiss()
@@ -177,18 +177,18 @@ class PLoginVC: UIViewController, UITextFieldDelegate {
     }
     
     func login_APICall() {
-        KVNProgress.showWithStatus("Waiting...")
-        PFUser.logInWithUsernameInBackground(txfUsername.text!, password:txfPassword.text!) {
+        KVNProgress.show(withStatus: "Waiting...")
+        PFUser.logInWithUsername(inBackground: txfUsername.text!, password:txfPassword.text!) {
             (user: PFUser?, error: NSError?) -> Void in
             if user != nil {
                 if user?["emailVerified"] as? Bool == true {
                     appDelegate.curUserID     = user?.objectId
                     
                     //>     Save user's ID locally, to know which user is logged in
-                    appDelegate.defaults.setObject(appDelegate.curUserID, forKey: k_UserDef_LoggedInUserID)
+                    appDelegate.defaults.set(appDelegate.curUserID, forKey: k_UserDef_LoggedInUserID)
                     appDelegate.defaults.synchronize()
                     
-                    self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
+                    self.navigationController?.dismiss(animated: true, completion: nil)
                     KVNProgress.dismiss()
                 }
                 else {
@@ -198,10 +198,10 @@ class PLoginVC: UIViewController, UITextFieldDelegate {
                     }
                     else {
                         KVNProgress.dismiss()
-                        let alert = UIAlertController(title: "Email adress verification!", message: "We have sent you an email that contains a link - you must click this link before you can continue.", preferredStyle:.Alert)
-                        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Cancel, handler: { (action) -> Void in
+                        let alert = UIAlertController(title: "Email adress verification!", message: "We have sent you an email that contains a link - you must click this link before you can continue.", preferredStyle:.alert)
+                        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.cancel, handler: { (action) -> Void in
                         }))
-                        self.presentViewController(alert, animated: true, completion: nil)
+                        self.present(alert, animated: true, completion: nil)
                     }
                 }
             } else {
@@ -209,7 +209,7 @@ class PLoginVC: UIViewController, UITextFieldDelegate {
                 if let error = error {
                     let errorString            = error.userInfo["error"] as! String
                     let alert                  = Utils.okAlert("Error", message: errorString)
-                    self.presentViewController(alert, animated: true, completion: nil)
+                    self.present(alert, animated: true, completion: nil)
                 }
             }
         }
@@ -222,7 +222,7 @@ class PLoginVC: UIViewController, UITextFieldDelegate {
         // Check internet connection
         if appDelegate.bIsNetworkReachable == false {
             let alertView = Utils.noNetworkConnectioAlert()
-            self.presentViewController(alertView, animated: true, completion: nil)
+            self.present(alertView, animated: true, completion: nil)
             
             return
         }
@@ -237,26 +237,26 @@ class PLoginVC: UIViewController, UITextFieldDelegate {
         }
         else {
             let alert = Utils.okAlert("Oops!", message: "Username and password should be at least 6 characters.")
-            self.presentViewController(alert, animated: true, completion: nil)
+            self.present(alert, animated: true, completion: nil)
         }
     }
     
-    @IBAction func btnForgotPass_Action(sender: AnyObject) {
-        let forgotPassVC = appDelegate.storyboardLogin.instantiateViewControllerWithIdentifier("PForgotPassVC") as! PForgotPassVC
+    @IBAction func btnForgotPass_Action(_ sender: AnyObject) {
+        let forgotPassVC = appDelegate.storyboardLogin.instantiateViewController(withIdentifier: "PForgotPassVC") as! PForgotPassVC
         self.navigationController?.pushViewController(forgotPassVC, animated: true)
     }
     
-    @IBAction func btnSignUp_Action(sender: AnyObject) {
+    @IBAction func btnSignUp_Action(_ sender: AnyObject) {
         selectSignUp()
     }
 
-    @IBAction func btnLogin_Action(sender: AnyObject) {
+    @IBAction func btnLogin_Action(_ sender: AnyObject) {
         selectLogin()
     }
     
     // MARK: - UITextFieldDelegate Methods
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         
         if textField == txfUsername {
             txfPassword.becomeFirstResponder()
@@ -270,8 +270,8 @@ class PLoginVC: UIViewController, UITextFieldDelegate {
     
     // MARK: - StatusBar Methods
     
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return UIStatusBarStyle.LightContent
+    override var preferredStatusBarStyle : UIStatusBarStyle {
+        return UIStatusBarStyle.lightContent
     }
 
     // MARK: - MemoryManagement Methods

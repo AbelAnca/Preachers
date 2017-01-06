@@ -10,7 +10,7 @@ import UIKit
 import Parse
 
 protocol PEditVisitVCDelegate {
-    func didCancelEditVC(index: Int)
+    func didCancelEditVC(_ index: Int)
 }
 
 class PEditVisitVC: UIViewController {
@@ -38,33 +38,33 @@ class PEditVisitVC: UIViewController {
     func loadParams() {
         if let objectId = objId {
             let query = PFQuery(className:"Preach")
-            query.getObjectInBackgroundWithId(objectId, block: { (object, error) -> Void in
+            query.getObjectInBackground(withId: objectId, block: { (object, error) -> Void in
                 if error == nil {
                     self.currentPreach = object
                     self.updateParams()
                 }
             })
         }
-        setCurrentDate(NSDate())
+        setCurrentDate(Date())
     }
     
-    func setCurrentDate(selectedDate: NSDate) {
-        let dateFormatter = NSDateFormatter()
+    func setCurrentDate(_ selectedDate: Date) {
+        let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd-MM-yyyy"
-        date = dateFormatter.stringFromDate(selectedDate)
+        date = dateFormatter.string(from: selectedDate)
     }
     
     func updateParams() {
         if let preach = currentPreach {
-            txfBiblicalText.text        = preach.objectForKey("biblicalText") as? String
-            txvMyPreach.text            = preach.objectForKey("myPreach") as? String
-            txvObservation.text         = preach.objectForKey("observation") as? String
+            txfBiblicalText.text        = preach.object(forKey: "biblicalText") as? String
+            txvMyPreach.text            = preach.object(forKey: "myPreach") as? String
+            txvObservation.text         = preach.object(forKey: "observation") as? String
             
-            if let date = preach.objectForKey("date") as? String {
-                let dateFormatter = NSDateFormatter()
+            if let date = preach.object(forKey: "date") as? String {
+                let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "dd-MM-yyyy"
                 
-                if let date = dateFormatter.dateFromString(date) {
+                if let date = dateFormatter.date(from: date) {
                     datePicker.date = date
                 }
                 self.date = date
@@ -75,24 +75,24 @@ class PEditVisitVC: UIViewController {
     // MARK: - API Methods
     
     // MARK: - Action Methods
-    @IBAction func btnBack_Action(sender: AnyObject) {
-        self.dismissViewControllerAnimated(true, completion: { () -> Void in
+    @IBAction func btnBack_Action(_ sender: AnyObject) {
+        self.dismiss(animated: true, completion: { () -> Void in
             if let index = self.index {
                 self.delegate?.didCancelEditVC(index)
             }
         })
     }
     
-    @IBAction func btnSave_Action(sender: AnyObject) {
+    @IBAction func btnSave_Action(_ sender: AnyObject) {
         if let preach = currentPreach {
             preach["biblicalText"]         = txfBiblicalText.text
             preach["myPreach"]             = txvMyPreach.text
             preach["observation"]          = txvObservation.text
             preach["date"]                 = date
-            preach.saveInBackgroundWithBlock { (success, error) -> Void in
+            preach.saveInBackground { (success, error) -> Void in
                 if error == nil {
                     if success {
-                        self.dismissViewControllerAnimated(true, completion: { () -> Void in
+                        self.dismiss(animated: true, completion: { () -> Void in
                             if let index = self.index {
                                 self.delegate?.didCancelEditVC(index)
                             }
@@ -103,21 +103,21 @@ class PEditVisitVC: UIViewController {
                     if let error = error {
                         let errorString        = error.userInfo["error"] as! String
                         let alert              = Utils.okAlert("Error", message: errorString)
-                        self.presentViewController(alert, animated: true, completion: nil)
+                        self.present(alert, animated: true, completion: nil)
                     }
                 }
             }
         }
     }
     
-    @IBAction func datePicker_Action(sender: UIDatePicker) {
+    @IBAction func datePicker_Action(_ sender: UIDatePicker) {
         setCurrentDate(sender.date)
     }
     
     // MARK: - StatusBar Methods
     
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return UIStatusBarStyle.LightContent
+    override var preferredStatusBarStyle : UIStatusBarStyle {
+        return UIStatusBarStyle.lightContent
     }
     
     // MARK: - MemoryManagement Methods
